@@ -1,0 +1,103 @@
+<div id="wrapper">
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
+    <!-- /Navigation -->
+    <!-- /ControlPanel -->
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- ControlPanel -->
+            <app-option [pantalla]="pantalla"></app-option>
+            <!-- /.ControlPanel -->
+        </div>
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Mis Mensajes
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="col-lg-12">
+                                    <tr>
+                                        <td class="col-lg-4">
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/mensajes']"><i class="fa fa-inbox fa-fw"></i> Bandeja Entrada</a>
+                                        </td>
+                                        <td class="col-lg-4">
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/enviados']"><i class="fa fa-paper-plane fa-fw"></i> Correos Enviados</a>
+                                        </td>
+                                        <td class="col-lg-4">
+                                            <a class="navbar-brand text-success" [routerLink]="['/mail']"><i class="fa fa-at fa-fw"></i> Nuevo Mensaje</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div *ngIf="formularioRelleno == true" class="text-success text-center">
+                                    El correo se envió correctamente.
+                                    <div>
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <form [formGroup]="forma2" (ngSubmit)="guardarMensaje()" novalidate="novalidate">
+                                        <input class="form-control" formControlName="remitente" type="hidden" value="{{ remitente }}">
+
+                                        <div class="form-group row" [ngClass]="{ 'text-danger': !forma2.controls['destinatario'].valid, 'text-success': forma2.controls['destinatario'].valid }">
+                                            <label class="col-3 col-form-label">Destinatario</label>
+                                            <div class="col-8">
+                                                <select class="form-control" formControlName="destinatario">
+                                                    <option *ngFor="let item of users" value="{{ item.userName }}"> {{ item.userName }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row" [ngClass]="{ 'text-danger': !forma2.controls['asunto'].valid, 'text-success': forma2.controls['asunto'].valid }">
+                                            <label class="col-3 col-form-label">Asunto</label>
+                                            <div class="col-8">
+                                                <input class="form-control" formControlName="asunto" type="text" placeholder="Asunto">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row" [ngClass]="{ 'text-danger': !forma2.controls['mensaje'].valid, 'text-success': forma2.controls['mensaje'].valid }">
+                                            <label class="col-3 col-form-label">Mensaje</label>
+                                            <div class="col-8">
+                                                <textarea class="form-control" formControlName="mensaje" placeholder="Mensaje"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="input-group col-md-11 text-center">
+                                                <button type="submit" [disabled]="!forma.valid" [ngClass]="{'btn-outline-danger' : !forma2.valid, 'btn-outline-primary' : forma2.valid}" class="btn">
+                                                    Enviar
+                                            </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-4 (nested) -->
+                        <div class="col-lg-8">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                        <!-- /.col-lg-8 (nested) -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-8 -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+
+<app-scripts></app-scripts>

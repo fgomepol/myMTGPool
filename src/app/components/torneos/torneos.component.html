@@ -1,0 +1,71 @@
+<div id="wrapper">
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
+    <!-- /Navigation -->
+    <!-- /ControlPanel -->
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- ControlPanel -->
+            <app-option [pantalla]="pantalla"></app-option>
+            <!-- /.ControlPanel -->
+        </div>
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Últimos Torneos
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="col-lg-12">
+                                    <tr>
+                                        <td class="col-lg-3">
+                                            <a class="navbar-brand text-success" [routerLink]="['/torneos','Vintage','1']">Vintage</a>
+                                        </td>
+                                        <td class="col-lg-3">
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/torneos','Legacy','1']">Legacy</a>
+                                        </td>
+                                        <td class="col-lg-3">
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/torneos','Modern','1']">Modern</a>
+                                        </td>
+                                        <td class="col-lg-3">
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/torneos','Standard','1']">Standard</a>
+                                        </td>
+                                        <td class="col-lg-3">
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/torneos','Commander','1']">Commander</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div [innerHtml]="html">
+
+                                </div>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.col-lg-4 (nested) -->
+                        <div class="col-lg-8">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                        <!-- /.col-lg-8 (nested) -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-8 -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+
+<app-scripts></app-scripts>

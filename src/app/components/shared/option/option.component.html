@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-bars fa-fw"></i> Panel de Opciones
+    </div>
+    <div>&nbsp;</div>
+    <div class="panel-body">
+        <div class="list-group">
+            <a class="list-group-item" [ngClass]="{ 'text-info': pantalla=='inicio'}" [routerLink]="['/home']"><i class="fa fa-home fa-fw"></i> Inicio</a>
+            <a class="list-group-item" [ngClass]="{ 'text-info': pantalla=='coleccion'}" [routerLink]="['/coleccion']"><i class="fa fa-book fa-fw"></i> Mi Colección</a>
+            <a class="list-group-item" [ngClass]="{ 'text-info': pantalla=='mazos' }" [routerLink]="['/mazos']"><i class="fa fa-archive fa-fw"></i> Mis Mazos</a>
+            <a class="list-group-item" [ngClass]="{ 'text-info': pantalla=='mensajes' }" [routerLink]="['/mensajes']"><i class="fa fa-envelope fa-fw"></i> Mis Mensajes <span *ngIf="nMensajes>0">({{ nMensajes }})</span></a>
+            <a class="list-group-item" [ngClass]="{ 'text-info': pantalla=='torneos' }" [routerLink]="['/torneos']"><i class="fa fa-calendar fa-fw"></i> Últimos Torneos</a>
+            <a class="list-group-item" [ngClass]="{ 'text-info': pantalla=='prestamos' }" [routerLink]="['/prestamos']"><i class="fa fa-edit fa-fw"></i> Cartas Prestadas</a>
+
+        </div>
+        <!-- /.list-group -->
+    </div>
+    <!-- /.panel-body -->
+</div>

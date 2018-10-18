@@ -1,0 +1,23 @@
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 5">
+    <table class="col-lg-12">
+        <tr>
+            <td class="col-lg-3">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                    <a class="navbar-brand" [routerLink]="['/home']">Bienvenido {{ forma.controls['firstName'].value }}</a>
+                </div>
+            </td>
+            <td class="col-lg-5"></td>
+            <td class="col-lg-4 text-right">
+                <a class="navbar-brand" [ngClass]="{ 'text-info': pantalla=='perfil' }" [routerLink]="['/perfil']"><i class="fa fa-user fa-fw"></i> Mi Perfil</a> &nbsp;
+                <a class="navbar-brand" [routerLink]="" (click)="logout();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+            </td>
+        </tr>
+    </table>
+    <!-- /.navbar-top-links -->
+</nav>

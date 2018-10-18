@@ -1,0 +1,151 @@
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Jumbotron Header -->
+    <header class="jumbotron my-4">
+        <h1 class="display-3">A Warm Welcome!</h1>
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
+
+    </header>
+
+    <!-- Page Features -->
+    <div *ngIf="formularioRelleno == true" class="text-success">
+        Te has dado de alta correctamente.
+    </div>
+
+    <div *ngIf="formularioRelleno == false">
+
+        <form [formGroup]="forma" (ngSubmit)="guardarCambios()" novalidate="novalidate">
+
+            <div class="form-group row" [ngClass]="{ 'text-danger': !forma.controls['firstName'].valid, 'text-success': forma.controls['firstName'].valid }">
+                <label class="col-1 col-form-label">&nbsp;</label>
+                <label class="col-2 col-form-label">Nombre</label>
+                <div class="col-8">
+
+                    <input class="form-control" formControlName="firstName" type="text" placeholder="Nombre">
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'text-danger': !forma.controls['lastName'].valid, 'text-success': forma.controls['lastName'].valid }">
+                <label class="col-1 col-form-label">&nbsp;</label>
+                <label class="col-2 col-form-label">Apellidos</label>
+                <div class="col-8">
+
+                    <input class="form-control" formControlName="lastName" type="text" placeholder="Apellido">
+                </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{ 'text-danger': !forma.controls['userName'].valid, 'text-success': forma.controls['userName'].valid }">
+                <label class="col-1 col-form-label">&nbsp;</label>
+                <label class="col-2 col-form-label">Usuario</label>
+                <div class="input-group col-md-8">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
+                    </div>
+
+                    <input class="form-control" (blur)="existeUsuario(forma.controls['userName']);" type="text" id="validationTooltipUsername" placeholder="Usuario" aria-describedby="validationTooltipUsernamePrepend" formControlName="userName">
+                </div>
+            </div>
+
+            <div *ngIf="forma.get('userName').hasError('minlength')" class="text-danger">
+                El usuario debe tener al menos 5 caracteres.
+            </div>
+
+            <div *ngIf="hayUsuario == true" class="text-danger">
+                El usuario ya existe.
+            </div>
+
+            <div class="form-group row" [ngClass]="{ 'text-danger': !forma.controls['password'].valid, 'text-success': forma.controls['password'].valid }">
+                <label class="col-1 col-form-label">&nbsp;</label>
+                <label class="col-2 col-form-label">Clave</label>
+                <div class="col-md-8">
+
+                    <input class="form-control" type="password" placeholder="Clave" formControlName="password">
+                </div>
+            </div>
+
+            <div *ngIf="forma.get('password').hasError('minlength')" class="form-control-feedback text-danger">
+                Por lo menos 8 caracteres.
+            </div>
+
+            <div class="form-group row" [ngClass]="{ 'text-danger': !forma.get('email').valid, 'text-success': forma.controls['email'].valid }">
+                <label class="col-1 col-form-label">&nbsp;</label>
+                <label class="col-2 col-form-label">Correo electrónico</label>
+                <div class="col-md-8">
+
+                    <input class="form-control" formControlName="email" type="email" placeholder="Correo electrónico">
+                </div>
+            </div>
+
+            <div *ngIf="forma.get('email').hasError('pattern')" class="form-control-feedback text-danger">
+                Debe introducir un email válido.
+            </div>
+
+            <div class="form-group row" [ngClass]="{ 'text-danger': !forma.get('pais').valid, 'text-success': forma.controls['pais'].valid }">
+                <label class="col-1 col-form-label">&nbsp;</label>
+                <label class="col-2 col-form-label">País</label>
+                <div class="col-md-8">
+                    <select class="form-control" formControlName="pais">
+                        <option *ngFor="let pais of paises" value="{{ pais.codigo }}">
+                        {{ pais.nombre }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{ 'text-danger': !forma.get('provincia').valid, 'text-success': forma.controls['provincia'].valid }">
+                <label class="col-1 col-form-label">&nbsp;</label>
+                <label class="col-2 col-form-label">Provincia</label>
+                <div class="col-md-8">
+
+                    <input class="form-control" type="text" placeholder="Provincia" formControlName="provincia">
+                </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{ 'text-danger': !forma.get('localidad').valid, 'text-success': forma.controls['localidad'].valid }">
+                <label class="col-1 col-form-label">&nbsp;</label>
+                <label class="col-2 col-form-label">Localidad</label>
+                <div class="col-md-8">
+
+                    <input class="form-control" type="text" placeholder="Localidad" formControlName="localidad">
+                </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{ 'text-danger': !forma.get('cp').valid, 'text-success': forma.controls['cp'].valid }">
+                <label class="col-1 col-form-label">&nbsp;</label>
+                <label class="col-2 col-form-label">Cp:</label>
+                <div class="col-md-8">
+
+                    <input class="form-control" type="text" placeholder="Cp" formControlName="cp">
+                </div>
+            </div>
+
+            <div *ngIf="forma.get('cp').hasError('minlength')" class="form-control-feedback text-danger">
+                Por lo menos 5 números.
+            </div>
+
+            <div *ngIf="forma.get('cp').hasError('pattern')" class="form-control-feedback text-danger">
+                Debe introducir un código postal válido.
+            </div>
+
+            <div class="form-group row">
+                <label class="col-5 col-form-label">&nbsp;</label>
+                <div class="input-group col-md-2 text-center">
+                    <button type="submit" [disabled]="!forma.valid" [ngClass]="{'btn-outline-danger' : !forma.valid, 'btn-outline-primary' : forma.valid}" class="btn">
+                            Guardar
+                        </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-2 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+    </div>
+    <!-- /.container -->
+</footer>

@@ -1,0 +1,39 @@
+.table-fixed thead {
+    width: 98%;
+}
+
+.table-fixed tbody {
+    height: 300px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+.table-fixed td {
+    height: 50px;
+}
+
+.table-fixed tbody td,
+.table-fixed thead>tr>th {
+    float: left;
+    border-bottom-width: 0;
+}
+
+.nth-child1 {
+    background-color: #F6F6F6;
+    color: #000;
+}
+
+.nth-child2 {
+    background-color: #FFF;
+    color: #000;
+}

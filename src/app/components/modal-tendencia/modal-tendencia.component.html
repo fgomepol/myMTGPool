@@ -1,0 +1,17 @@
+<ng-template #content2>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Tendencia de precios de {{ nombreCarta }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="cerrar()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div style="display: block">
+            <!--<canvas baseChart [datasets]="barChartData" [colors]="barChartColors" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>-->
+            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+    </div>
+</ng-template>
+
+<a [routerLink]="" (click)="open(content2)"><i class="material-icons text-info">bar_chart</i></a>
+<!--<a [routerLink]="" (mouseover)="open(content2)"><i class="fa fa-plus text-danger"></i></a>-->

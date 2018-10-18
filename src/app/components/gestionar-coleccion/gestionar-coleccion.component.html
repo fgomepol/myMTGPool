@@ -1,0 +1,148 @@
+<div id="wrapper">
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
+    <!-- /Navigation -->
+    <!-- /ControlPanel -->
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- ControlPanel -->
+            <app-option [pantalla]="pantalla"></app-option>
+            <!-- /.ControlPanel -->
+        </div>
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Mi Colección
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="col-lg-12">
+                                    <tr>
+                                        <td class="col-lg-4">
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/coleccion']"><i class="fa fa-plus-circle fa-fw"></i> Añadir cartas a colección</a>
+                                        </td>
+                                        <td class="col-lg-4">
+                                            <a class="navbar-brand text-success" [routerLink]="['/gestionarColeccion']"><i class="fa fa-pencil"></i> Gestionar colección</a>
+                                        </td>
+                                        <td class="col-lg-4">
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/datosColeccion']"><i class="fa fa-pie-chart"></i> Datos de colección</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div *ngIf="formularioRelleno==false" class="text-center">
+                                    <p class="text-black-50">Aún no ha introducido cartas en su coleccion por favor introduzca sus cartas <a class="text-info" [routerLink]="['/coleccion']">Añadir cartas a colección</a></p>
+                                </div>
+                                <div *ngIf="formularioRelleno">
+                                    <table class="col-lg-12 table-fixed">
+                                        <thead>
+                                            <tr class="table">
+                                                <th class="col-lg-1 text-center" style="border: 1px solid #ddd;">Edición</th>
+                                                <th class="col-lg-3 text-center" style="border: 1px solid #ddd;">Carta</th>
+                                                <th class="col-lg-1 text-center" style="border: 1px solid #ddd;">Estado</th>
+                                                <th class="col-lg-1 text-center" style="border: 1px solid #ddd;">Idioma</th>
+                                                <th class="col-lg-1 text-center" style="border: 1px solid #ddd;">Cantidad</th>
+                                                <th class="col-lg-1 text-center" style="border: 1px solid #ddd;">Foil</th>
+                                                <th class="col-lg-1 text-center" style="border: 1px solid #ddd;">Firmada</th>
+                                                <th class="col-lg-2 text-center" style="border: 1px solid #ddd;">Precio</th>
+                                                <th class="col-lg-1 text-center" style="border: 1px solid #ddd;">Opc.</th>
+                                            </tr>
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                        </thead>
+
+                                        <tr *ngFor="let carta of cartasColeccion | paginate: { itemsPerPage: 20, currentPage: page }; let impar = odd;let par = even;">
+                                            <td class="col-lg-1 text-center align-middle small">
+                                                <i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i>
+                                            </td>
+                                            <td class="col-lg-3 text-left align-middle small">
+                                                <a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a>
+                                            </td>
+                                            <td class="col-lg-1 text-center align-middle small">
+                                                {{ carta.estado }}
+                                            </td>
+                                            <td class="col-lg-1 text-center align-middle small">
+                                                {{ carta.idioma }}
+                                            </td>
+                                            <td class="col-lg-1 text-center align-middle small">
+                                                {{ carta.cantidad }}
+                                            </td>
+                                            <td class="col-lg-1 text-center align-middle small">
+                                                {{ carta.foil }}
+                                            </td>
+                                            <td class="col-lg-1 text-center align-middle small">
+                                                {{ carta.signed }}
+                                            </td>
+                                            <td class="col-lg-2 text-right align-middle small">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td width="70%">{{ carta.precio }} €</td>
+                                                        <td width="30%">
+                                                            <app-modal-tendencia [id]=carta.productId></app-modal-tendencia>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td class="col-lg-1 text-center align-middle small">
+                                                <a class="text-info" [routerLink]="['/modificarArticulo',carta.codColeccion]"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-lg-1">&nbsp;</td>
+                                            <td class="col-lg-3">&nbsp;</td>
+                                            <td class="col-lg-1">&nbsp;</td>
+                                            <td class="col-lg-1">&nbsp;</td>
+                                            <td class="col-lg-1">&nbsp;</td>
+                                            <td class="col-lg-1">&nbsp;</td>
+                                            <th class="col-lg-1" class="text-center">Total: </th>
+                                            <td class="col-lg-2 text-right align-middle small text-success">{{ totalamount | number }} €</td>
+                                            <td class="col-lg-1">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="9" class="text-center">
+                                                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>
+                                                    &nbsp;
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.col-lg-4 (nested) -->
+                        <div class="col-lg-8">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                        <!-- /.col-lg-8 (nested) -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-8 -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+
+<app-scripts></app-scripts>

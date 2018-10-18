@@ -1,0 +1,157 @@
+<div id="wrapper">
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
+    <!-- /Navigation -->
+    <!-- /ControlPanel -->
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- ControlPanel -->
+            <app-option [pantalla]="pantalla"></app-option>
+            <!-- /.ControlPanel -->
+        </div>
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Mi Colección
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="col-lg-12">
+                                    <tr>
+                                        <td class="col-lg-4">
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/coleccion']"><i class="fa fa-plus-circle fa-fw"></i> Añadir cartas a colección</a>
+                                        </td>
+                                        <td class="col-lg-4">
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/gestionarColeccion']"><i class="fa fa-pencil"></i> Gestionar colección</a>
+                                        </td>
+                                        <td class="col-lg-4">
+                                            <a class="navbar-brand text-success" [routerLink]="['/datosColeccion']"><i class="fa fa-pie-chart"></i> Datos de colección</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div *ngIf="formularioRelleno==false" class="text-center">
+                                    <p class="text-black-50">Aún no ha introducido cartas en su coleccion por favor introduzca sus cartas <a class="text-info" [routerLink]="['/coleccion']">Añadir cartas a colección</a></p>
+                                </div>
+                                <div *ngIf="formularioRelleno!=false">
+                                    <table style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">Valor total de tú colección:</th>
+                                                <td class="col-lg-8 text-black-50">
+                                                    {{ importeColeccion }} €
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">Tu colección por colores:</th>
+                                                <td class="col-lg-8 text-black-50">
+                                                    <!-- [labels]="doughnutChartLabels" -->
+                                                    <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                                                    <BR>
+                                                    <div class="text-center text-info">Número total de cartas en tu colección: {{ totalCartas }}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">Datos por porcentaje:</th>
+                                                <td class="col-lg-8 text-black-50">
+                                                    <table class="col-lg-12">
+                                                        <tr class="text-right">
+                                                            <td style="color: rgb(209, 0, 3); font-weight: bold">Rojas: </td>
+                                                            <td>{{ doughnutPercentage[0] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color: rgb(91, 154, 255); font-weight: bold">Azules: </td>
+                                                            <td>{{ doughnutPercentage[1] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color: rgb(22, 196, 45); font-weight: bold">Verdes: </td>
+                                                            <td>{{ doughnutPercentage[2] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color: rgb(0, 0, 0); font-weight: bold">Negras: </td>
+                                                            <td>{{ doughnutPercentage[3] }}</td>
+                                                            <td> %</td>
+                                                        </tr>
+                                                        <tr class="text-right">
+                                                            <td style="color: rgba(212, 198, 0, 0.637); font-weight: bold">Blancas: </td>
+                                                            <td>{{ doughnutPercentage[4] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color: rgb(182, 182, 182); font-weight: bold">Incoloras: </td>
+                                                            <td>{{ doughnutPercentage[5] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color: rgb(113, 81, 69); font-weight: bold">Tierras: </td>
+                                                            <td>{{ doughnutPercentage[6] }}</td>
+                                                            <td> %</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="12" class="col-lg-12 text-black-50">
+                                                                <hr>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="text-right">
+                                                            <td style="color: blueviolet; font-weight: bold">Míticas: </td>
+                                                            <td>{{ rarityPercentage[0] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color:rgb(233, 229, 14); font-weight: bold">Raras: </td>
+                                                            <td>{{ rarityPercentage[1] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color:darkgray; font-weight: bold">Infrecuentes: </td>
+                                                            <td>{{ rarityPercentage[2] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color:black; font-weight: bold">Comunes: </td>
+                                                            <td>{{ rarityPercentage[3] }}</td>
+                                                            <td> %</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="12" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.col-lg-4 (nested) -->
+                        <div class="col-lg-8">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                        <!-- /.col-lg-8 (nested) -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-8 -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+
+<app-scripts></app-scripts>

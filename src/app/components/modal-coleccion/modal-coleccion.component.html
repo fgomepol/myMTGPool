@@ -1,0 +1,80 @@
+<ng-template #content>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Añadir a la colección</h4>
+        <button type="button" class="close" aria-label="Close" (click)="cerrar()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div *ngIf="guardadaCarta == true" class="text-success text-center">
+        Las cartas se han añadido correctamente a tu colección.
+        <div>
+            &nbsp;
+        </div>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="forma" (ngSubmit)="guardarCartas()" novalidate="novalidate">
+            <table class="col-12">
+                <thead>
+                    <tr class="table">
+                        <th class="text-center" style="border: 1px solid #ddd;">Carta</th>
+                        <th class="text-center" style="border: 1px solid #ddd;">Estado</th>
+                        <th class="text-center" style="border: 1px solid #ddd;">Idioma</th>
+                        <th class="text-center" style="border: 1px solid #ddd;">Cantidad</th>
+                        <th class="text-center" style="border: 1px solid #ddd;">Foil</th>
+                        <th class="text-center" style="border: 1px solid #ddd;">Signed</th>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                </thead>
+
+                <tr>
+                    <td class="text-center align-middle small">
+                        {{ carta['name'] }}
+                    </td>
+                    <td class="text-center align-middle small">
+                        <select class="form-control small" formControlName="estado" name="estado">
+                      <option value="MI">Mint</option>
+                      <option value="NM">Near Mint</option>
+                      <option value="EX">Excelent</option>
+                      <option value="PL">Played</option>
+                      <option value="PO">Poor</option>
+                  </select>
+                    </td>
+                    <td class="text-center align-middle small">
+                        <select class="form-control small" formControlName="idioma" name="idioma">
+                            <option *ngFor="let idiomas of idiomasCartas[0];" value="{{ idiomas.idioma }}">{{ idiomas.idioma }}</option>
+                        </select>
+                    </td>
+                    <td class="text-center align-middle">
+                        <input type="number" formControlName="cantidad" name="cantidad" step="1" min="0" max="20">
+                    </td>
+                    <td class="text-center align-middle small">
+                        <select class="form-control small" formControlName="foil" name="foil">
+                      <option value="No">No</option>
+                      <option value="Si">Si</option>
+                  </select>
+                    </td>
+                    <td class="text-center align-middle small">
+                        <select class="form-control small" formControlName="signed" name="signed">
+                      <option value="No" selected>No</option>
+                      <option value="Si">Si</option>
+                  </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="6" class="text-center">
+                        <button type="submit" class="btn btn-outline-primary small">
+                      Añadir a la colección
+                  </button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</ng-template>
+
+<a [routerLink]="" (click)="open(content)"><i class="fa fa-plus text-success"></i></a>

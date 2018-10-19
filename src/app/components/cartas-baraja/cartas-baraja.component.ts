@@ -21,6 +21,9 @@ export class CartasBarajaComponent implements OnInit {
   public pantalla = 'torneos';
   public html: any;
   public cargado = false;
+  public formato = '';
+  public pagina = '';
+  public torneo = '';
 
   constructor(
     private storageService: StorageService,
@@ -34,7 +37,10 @@ export class CartasBarajaComponent implements OnInit {
     this.user = this.storageService.getCurrentUser();
 
     this.routerActivated.params.subscribe( params => {
-      this.servicio.cartasBaraja(params['id'], params['id2']).subscribe(data => {
+      this.servicio.cartasBaraja(params['id3'], params['id4'], params['id'], params['id2']).subscribe(data => {
+        this.formato = params['id'];
+        this.pagina = params['id2'];
+        this.torneo = params['id3'];
         this.html = this.sanitizer.bypassSecurityTrustHtml(data['_body']);
       });
     });

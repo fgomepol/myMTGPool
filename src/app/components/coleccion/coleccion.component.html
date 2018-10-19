@@ -180,7 +180,7 @@
                                         <tr *ngFor="let carta of cartasColeccion | paginate: { itemsPerPage: 25, currentPage: page }; let i = index;">
                                             <td class="text-center align-middle small"><i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i></td>
                                             <td class="text-center">
-                                                <!--<img src="{{ carta.imagen }}">-->
+                                                <!--<img src="{{ carta.imagen }}" >-->
                                             </td>
                                             <td class="text-center align-middle small">
                                                 <a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a>

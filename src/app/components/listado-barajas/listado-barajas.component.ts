@@ -21,6 +21,8 @@ export class ListadoBarajasComponent implements OnInit {
   public pantalla = 'torneos';
   public html: any;
   public cargado = false;
+  public formato = '';
+  public pagina = '';
 
   constructor(
     private storageService: StorageService,
@@ -34,7 +36,9 @@ export class ListadoBarajasComponent implements OnInit {
     this.user = this.storageService.getCurrentUser();
 
     this.routerActivated.params.subscribe( params => {
-      this.servicio.listaBarajasTorneo(params['id']).subscribe(data => {
+      this.servicio.listaBarajasTorneo(params['id3'], params['id'], params['id2']).subscribe(data => {
+        this.formato = params['id'];
+        this.pagina = params['id2'];
         this.html = this.sanitizer.bypassSecurityTrustHtml(data['_body']);
       });
     });

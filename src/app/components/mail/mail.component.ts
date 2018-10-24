@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
-import { AuthenticationService } from '../../service/authentication.service';
-import { Router } from '@angular/router';
 import { MtgService } from '../../service/mtg.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -37,7 +35,7 @@ export class MailComponent implements OnInit {
       'remitente': new FormControl('', Validators.required)
     });
 
-    this.users = this.storageService.loadDestinatario();
+    this.listadoContactos();
    }
 
   ngOnInit() {
@@ -65,11 +63,9 @@ export class MailComponent implements OnInit {
     }, error => console.error(error));
   }
 
-  public showSearchResults(event: any): void {
-    if (event.target.value.length >= 3) {
-      this.searching = true;
-    } else {
-      this.searching = false;
-    }
+  public listadoContactos() {
+    this.servicio.listadoContactos( this.storageService.getCurrentUser() ).subscribe( data => {
+      this.users = JSON.parse(data['_body']);
+    });
   }
 }

@@ -123,4 +123,16 @@ constructor(private http: Http) {}
   tendenciaCarta(id: number) {
     return this.http.get('http://localhost/mkmApi/coleccion.php?opcion=tendenciaCarta&id=' + id);
   }
+
+  guardarContacto(item: Object) {
+    return this.http.post('http://localhost/mkmApi/coleccion.php?opcion=guardarContacto', item);
+  }
+
+  eliminarContacto(usuario: number, id: number) {
+    return this.http.get('http://localhost/mkmApi/coleccion.php?opcion=eliminarContacto&usuario=' + usuario + '&id=' + id);
+  }
+
+  listadoContactos(id: number) {
+    return this.http.get('http://localhost/mkmApi/coleccion.php?opcion=listadoContactos&id=' + id);
+  }
 }

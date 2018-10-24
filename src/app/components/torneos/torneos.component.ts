@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
 import { BarajasService } from '../../service/barajas.service';
-import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -19,26 +18,27 @@ export class TorneosComponent implements OnInit {
 
   public user: number;
   public pantalla = 'torneos';
-  public html: SafeHtml;
   public formato = '';
   public pagina = '';
+  public torneos: any;
+  public loading: boolean;
 
   constructor(
     private storageService: StorageService,
     private servicio: BarajasService,
-    private routerActivated: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private routerActivated: ActivatedRoute
   ) {
    }
 
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
+    this.loading = true;
 
     this.routerActivated.params.subscribe( params => {
-      this.servicio.listadoTorneos(params['id'], params['id2']).subscribe(data => {
+      this.servicio.listadoTorneos(params['id']).subscribe(data => {
         this.formato = params['id'];
-        this.pagina = params['id2'];
-        this.html = this.sanitizer.bypassSecurityTrustHtml(data['_body']);
+        this.torneos = JSON.parse(data['_body']);
+        this.loading = false;
       });
     });
   }

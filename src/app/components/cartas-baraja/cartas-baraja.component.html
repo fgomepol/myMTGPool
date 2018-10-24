@@ -12,7 +12,7 @@
         <div class="col-lg-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Últimos Torneos
+                    Cartas de la baraja
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -22,10 +22,10 @@
                                 <table class="col-lg-12">
                                     <tr>
                                         <td class="col-lg-4">
-                                            <a class="navbar-brand text-danger" [routerLink]="['/listadoBarajas', formato, pagina, torneo]"><i class="material-icons text-danger">reply</i>Volver al torneo</a>
+                                            <a class="navbar-brand text-danger" [routerLink]="['/listadoBarajas', formato, torneo]"><i class="material-icons text-danger">reply</i>Volver al torneo</a>
                                         </td>
                                         <td class="col-lg-4">
-                                            <a class="navbar-brand text-danger" [routerLink]="['/torneos', formato, pagina]"><i class="material-icons text-danger">reply_all</i>Volver al formato</a>
+                                            <a class="navbar-brand text-danger" [routerLink]="['/torneos', formato]"><i class="material-icons text-danger">reply_all</i>Volver al formato</a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -34,7 +34,10 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <div [innerHtml]="html">
+
+                                <app-loading *ngIf="loading"></app-loading>
+
+                                <div *ngIf="!loading" [innerHtml]="html">
 
                                 </div>
                             </div>

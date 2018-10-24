@@ -39,6 +39,9 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { ListadoBarajasComponent } from './components/listado-barajas/listado-barajas.component';
 import { CartasBarajaComponent } from './components/cartas-baraja/cartas-baraja.component';
 import { ArquetipoComponent } from './components/arquetipo/arquetipo.component';
+import { ContactosComponent } from './components/contactos/contactos.component';
+import { ResultadosComponent } from './components/resultados/resultados.component';
+import { MetajuegoComponent } from './components/metajuego/metajuego.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +73,10 @@ import { ArquetipoComponent } from './components/arquetipo/arquetipo.component';
     SafeHtmlPipe,
     ListadoBarajasComponent,
     CartasBarajaComponent,
-    ArquetipoComponent
+    ArquetipoComponent,
+    ContactosComponent,
+    ResultadosComponent,
+    MetajuegoComponent
   ],
   imports: [
     BrowserModule,

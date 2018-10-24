@@ -12,36 +12,13 @@
         <div class="col-lg-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Arquetipo
+                    Resultados obtenidos del jugador <span class="text-info" style="font-weight: bold;">{{ jugador }}</span>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="table-responsive">
-                                formato {{ formato }}
-                                <table class="col-lg-12">
-                                    <tr>
-                                        <td class="col-lg-3">
-                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Vintage', 'text-black-50': formato!='Vintage' }" [routerLink]="['/torneos','Vintage']">Vintage</a>
-                                        </td>
-                                        <td class="col-lg-3">
-                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Legacy', 'text-black-50': formato!='Legacy' }" [routerLink]="['/torneos','Legacy']">Legacy</a>
-                                        </td>
-                                        <td class="col-lg-3">
-                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Modern', 'text-black-50': formato!='Modern' }" [routerLink]="['/torneos','Modern']">Modern</a>
-                                        </td>
-                                        <td class="col-lg-3">
-                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Standar', 'text-black-50': formato!='Standar' }" [routerLink]="['/torneos','Standard']">Standard</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                </table>
-
                                 <app-loading *ngIf="loading"></app-loading>
 
                                 <div *ngIf="!loading">
@@ -59,21 +36,21 @@
                                             </tr>
                                         </thead>
 
-                                        <tr *ngFor="let datos of datosArquetipo | paginate: { itemsPerPage: 30, currentPage: page }; let impar = odd;let par = even;">
+                                        <tr *ngFor="let resultado of resultados | paginate: { itemsPerPage: 30, currentPage: page }; let impar = odd;let par = even;">
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h6><a [routerLink]="['/cartasBaraja', formato, datos.idTorneo, datos.codigoBaraja ]">{{ datos.arquetipo }}</a></h6>
+                                                <h6><a [routerLink]="['/cartasBaraja', resultado.formato, resultado.idTorneo, resultado.codigoBaraja ]">{{ resultado.arquetipo }}</a></h6>
                                             </td>
                                             <td class="text-left" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h6><a [routerLink]="['/torneos', datos.idTorneo ]">{{ datos.nombre }}</a></h6>
+                                                <h6><a [routerLink]="['/listadoBarajas', resultado.formato, resultado.idTorneo ]">{{ resultado.nombre }}</a></h6>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h6><a [routerLink]="['/resultados', datos.jugadores ]">{{ datos.jugadores }}</a></h6>
+                                                <h6><a [routerLink]="['/listadoBarajas', resultado.formato, resultado.idTorneo ]">{{ resultado.jugadores }}</a></h6>
                                             </td>
-                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar, 'text-warning': datos.posicion>8, 'text-success': datos.posicion<8, 'text-danger': datos.posicion>16 }" style="font-weight: bold; font-size: 0.8em">
-                                                {{ datos.posicion }}
+                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar, 'text-warning': resultado.posicion>8, 'text-success': resultado.posicion<8, 'text-danger': resultado.posicion>16 }" style="font-weight: bold; font-size: 0.8em">
+                                                {{ resultado.posicion }}
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h6>{{ datos.fecha*1000 | date: 'dd/MM/yyyy' }}</h6>
+                                                <h6>{{ resultado.fecha*1000 | date: 'dd/MM/yyyy' }}</h6>
                                             </td>
                                         </tr>
                                         <tr>

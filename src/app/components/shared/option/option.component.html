@@ -10,6 +10,7 @@
             <a class="list-group-item" [ngClass]="{ 'text-info': pantalla=='mazos' }" [routerLink]="['/mazos']"><i class="fa fa-archive fa-fw"></i> Mis Mazos</a>
             <a class="list-group-item" [ngClass]="{ 'text-info': pantalla=='mensajes' }" [routerLink]="['/mensajes']"><i class="fa fa-envelope fa-fw"></i> Mis Mensajes <span *ngIf="nMensajes>0">({{ nMensajes }})</span></a>
             <a class="list-group-item" [ngClass]="{ 'text-info': pantalla=='torneos' }" [routerLink]="['/torneos']"><i class="fa fa-calendar fa-fw"></i> Últimos Torneos</a>
+            <a class="list-group-item" [ngClass]="{ 'text-info': pantalla=='metajuego' }" [routerLink]="['/metajuego']"><i class="material-icons">pie_chart</i> Metajuego</a>
             <a class="list-group-item" [ngClass]="{ 'text-info': pantalla=='prestamos' }" [routerLink]="['/prestamos']"><i class="fa fa-edit fa-fw"></i> Cartas Prestadas</a>
 
         </div>

@@ -12,7 +12,7 @@
         <div class="col-lg-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Últimos Torneos
+                    Listado de barajas
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -22,7 +22,7 @@
                                 <table class="col-lg-12">
                                     <tr>
                                         <td class="col-lg-4">
-                                            <a class="navbar-brand text-danger" [routerLink]="['/torneos', formato, pagina]"><i class="material-icons text-danger">reply</i>Volver al formato</a>
+                                            <a class="navbar-brand text-danger" [routerLink]="['/torneos', formato]"><i class="material-icons text-danger">reply</i>Volver al formato</a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -31,8 +31,45 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <div [innerHtml]="html">
 
+                                <app-loading *ngIf="loading"></app-loading>
+
+                                <div *ngIf="!loading">
+                                    <table class="col-lg-12" style="width: 100%">
+                                        <thead>
+                                            <tr class="table">
+                                                <th class="text-center" style="width: 35%; border: 1px solid #ddd;">Torneo</th>
+                                                <th class="text-center" style="width: 25%; border: 1px solid #ddd;">Arquetipo</th>
+                                                <th class="text-center" style="width: 30%; border: 1px solid #ddd;">Jugador</th>
+                                                <th class="text-center" style="width: 10%; border: 1px solid #ddd;">Posición</th>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="text-center">&nbsp;</td>
+                                            </tr>
+                                        </thead>
+
+                                        <tr *ngFor="let baraja of barajas; let impar = odd;let par = even;">
+                                            <td class="text-left" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                <h5><a [routerLink]="['/listadoBarajas', formato, baraja.idTorneo ]">{{ baraja.nombre }}</a></h5>
+                                            </td>
+                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                <h5><a [routerLink]="['/cartasBaraja', formato, baraja.idTorneo, baraja.codigoBaraja ]">{{ baraja.arquetipo }}</a></h5>
+                                            </td>
+                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                <h5><a [routerLink]="['/resultados', baraja.jugador ]">{{ baraja.jugador }}</a></h5>
+                                            </td>
+                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                <h5><a [routerLink]="['/cartasBaraja', formato, baraja.idTorneo, baraja.codigoBaraja ]">{{ baraja.posicion }}</a></h5>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <p>
+                                                    &nbsp;
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                             <!-- /.table-responsive -->

@@ -1,0 +1,141 @@
+<div id="wrapper">
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
+    <!-- /Navigation -->
+    <!-- /ControlPanel -->
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- ControlPanel -->
+            <app-option [pantalla]="pantalla"></app-option>
+            <!-- /.ControlPanel -->
+        </div>
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Mis Mensajes
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="col-lg-12">
+                                    <tr>
+                                        <td>
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/mensajes']"><i class="material-icons text-black-50">inbox</i> Bandeja Entrada</a>
+                                        </td>
+                                        <td>
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/enviados']"><i class="material-icons text-black-50">send</i> Correos Enviados</a>
+                                        </td>
+                                        <td>
+                                            <a class="navbar-brand text-black-50" [routerLink]="['/mail']"><i class="material-icons text-black-50">mail</i> Nuevo Mensaje</a>
+                                        </td>
+                                        <td>
+                                            <a class="navbar-brand text-info" [routerLink]="['/contactos']"><i class="material-icons text-info">group</i> Lista Contactos</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div *ngIf="formularioRelleno == true" class="text-success text-center">
+                                    El contacto se guardó correctamente.
+                                    <div>
+                                        &nbsp;
+                                    </div>
+                                </div>
+
+                                <div *ngIf="eliminado == true" class="text-success text-center">
+                                    El contacto se eliminó correctamente.
+                                    <div>
+                                        &nbsp;
+                                    </div>
+                                </div>
+
+                                <div *ngIf="errorBusqueda == true" class="text-danger text-center">
+                                    El contacto indicado no está dado de alta en la plataforma. Asegúrese de usar el nombre exacto del usuario.
+                                    <div>
+                                        &nbsp;
+                                    </div>
+                                </div>
+
+                                <div *ngIf="errorInsercion == true" class="text-danger text-center">
+                                    El contacto indicado ya esta añadido a la lista de contactos.
+                                    <div>
+                                        &nbsp;
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <form [formGroup]="forma2" (ngSubmit)="guardarMensaje()" novalidate="novalidate">
+                                        <input class="form-control" formControlName="remitente" type="hidden" value="{{ remitente }}">
+
+                                        <div class="form-group row">
+                                            <label class="col-3 col-form-label">Nuevo contacto</label>
+                                            <div class="col-8">
+                                                <input class="form-control" formControlName="contacto" type="text" placeholder="Contacto">
+                                            </div>
+                                            <button type="submit" [disabled]="!forma2.valid" [ngClass]="{'btn-light' : !forma2.valid, 'btn-light' : forma2.valid}" class="btn">
+                                              <i class="fa fa-plus text-success"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <table style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                <hr>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">Listado de contactos</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="text-center">
+                                                    <table class="col-lg-7 table-fixed">
+                                                        <tr>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                        <tr *ngFor="let contacto of contactos; let impar = odd;let par = even;">
+                                                            <td class="col-lg-5">&nbsp;</td>
+                                                            <td class="text-center align-middle text-black-50">{{ contacto.userName }}</td>
+                                                            <td class="text-center">
+                                                                <i [routerLink]="" (click)="eliminarContacto(contacto.Id);" class="fa fa-trash text-danger"></i>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-4 (nested) -->
+                        <div class="col-lg-8">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                        <!-- /.col-lg-8 (nested) -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-8 -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+
+<app-scripts></app-scripts>

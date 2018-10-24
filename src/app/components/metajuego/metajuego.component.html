@@ -1,0 +1,212 @@
+<div id="wrapper">
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
+    <!-- /Navigation -->
+    <!-- /ControlPanel -->
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- ControlPanel -->
+            <app-option [pantalla]="pantalla"></app-option>
+            <!-- /.ControlPanel -->
+        </div>
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Metajuego
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="col-lg-12">
+                                    <tr>
+                                        <td class="col-lg-3">
+                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Vintage', 'text-black-50': formato!='Vintage' }" [routerLink]="['/metajuego','Vintage']">Vintage</a>
+                                        </td>
+                                        <td class="col-lg-3">
+                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Legacy', 'text-black-50': formato!='Legacy' }" [routerLink]="['/metajuego','Legacy']">Legacy</a>
+                                        </td>
+                                        <td class="col-lg-3">
+                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Modern', 'text-black-50': formato!='Modern' }" [routerLink]="['/metajuego','Modern']">Modern</a>
+                                        </td>
+                                        <td class="col-lg-3">
+                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Standar', 'text-black-50': formato!='Standar' }" [routerLink]="['/metajuego','Standard']">Standard</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <app-loading *ngIf="loading"></app-loading>
+
+                                <div *ngIf="formato=='' && !loading">
+                                    <table style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2" class="text-center">TOP 5 Arquertipos del último mes</th>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">Vintage:</th>
+                                                <td class="col-lg-8 text-black-50">
+                                                    <ul class="list-group">
+                                                        <li *ngFor="let top of topVintage;" class="list-group-item"><a [routerLink]="['/arquetipo', 'Vintage', top.arquetipo ]">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</a></li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">Legacy:</th>
+                                                <td class="col-lg-8 text-black-50">
+                                                    <ul class="list-group">
+                                                        <li *ngFor="let top of topLegacy;" class="list-group-item"><a [routerLink]="['/arquetipo', 'Legacy', top.arquetipo ]">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</a></li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">Modern:</th>
+                                                <td class="col-lg-8 text-black-50">
+                                                    <ul class="list-group">
+                                                        <li *ngFor="let top of topModern;" class="list-group-item"><a [routerLink]="['/arquetipo', 'Modern', top.arquetipo ]">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</a></li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">Standard:</th>
+                                                <td class="col-lg-8 text-black-50">
+
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="formato!='' && !loading">
+                                    <table style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2" class="col-lg-12 text-center">Datos del metajuego del formato {{ formato }} del último mes</th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2" class="col-lg-12 text-center">&nbsp;</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-lg-8 text-black-50">
+                                                    <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                                                    <BR>
+                                                    <div class="text-center text-info">
+                                                        <h4>Total de barajas del último mes: {{ totalBarajas }}</h4>
+                                                    </div>
+                                                </td>
+                                                <td class="col-lg-4 text-black-50">
+                                                    <table width="100%">
+                                                        <tr *ngFor="let baraja of doughnutChartLabels; let i = index;">
+                                                            <td class="text-left" style="border: 1px solid #ddd;">
+                                                                <h5>
+                                                                    <a [routerLink]="['/arquetipo', formato, baraja ]">
+                                                                        <p style='text-indent: 0.5em'>{{ baraja }}</p>
+                                                                    </a>
+                                                                </h5>
+                                                            </td>
+                                                            <td class="text-center" style="border: 1px solid #ddd;">
+                                                                <h5><a [routerLink]="['/arquetipo', formato, baraja ]"> {{ doughnutPercentage[i] }} %</a></h5>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2" class="col-lg-12 text-center">Barajas de todo el Metajuego</th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2" class="col-lg-12 text-center">&nbsp;</th>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12">
+                                                    <div class="d-flex justify-content-center">
+                                                        <table width="75%">
+                                                            <tr *ngFor="let i of nFilas;">
+                                                                <td class="text-left" style="border: 1px solid #ddd;">
+                                                                    <h5>
+                                                                        <a [routerLink]="['/arquetipo', formato, barajas[i+(i-2)].baraja ]">
+                                                                            <p style='text-indent: 0.5em'>{{ barajas[i+(i-2)].baraja }}</p>
+                                                                        </a>
+                                                                    </h5>
+                                                                </td>
+                                                                <td class="text-center" style="border: 1px solid #ddd;">
+                                                                    <h5><a [routerLink]="['/arquetipo', formato, barajas[i+(i-2)].baraja ]"> {{ barajas[i+(i-2)].total }}</a></h5>
+                                                                </td>
+
+                                                                <td *ngIf="barajas[i+(i-1)]" class="text-left" style="border: 1px solid #ddd;">
+                                                                    <h5>
+                                                                        <a [routerLink]="['/arquetipo', formato, barajas[i+(i-1)].baraja ]">
+                                                                            <p style='text-indent: 0.5em'>{{ barajas[i+(i-1)].baraja }}</p>
+                                                                        </a>
+                                                                    </h5>
+                                                                </td>
+                                                                <td *ngIf="barajas[i+(i-1)]" class="text-center" style="border: 1px solid #ddd;">
+                                                                    <h5><a [routerLink]="['/arquetipo', formato, barajas[i+(i-1)].baraja ]"> {{ barajas[i+(i-1)].total }}</a></h5>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="12" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.col-lg-4 (nested) -->
+                        <div class="col-lg-8">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                        <!-- /.col-lg-8 (nested) -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-8 -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+
+<app-scripts></app-scripts>

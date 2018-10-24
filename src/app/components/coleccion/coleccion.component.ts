@@ -127,6 +127,7 @@ export class ColeccionComponent implements OnInit {
     this.servicio.cartaConcreta( this.idCarta).subscribe( data => {
       this.carta = data.json()[0];
     });
+
     this.idiomaDeCarta(this.idCarta);
 
     this.forma3.setValue({

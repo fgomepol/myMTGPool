@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
 import { BarajasService } from '../../service/barajas.service';
 import { ActivatedRoute } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-listado-barajas',
@@ -23,12 +22,13 @@ export class ListadoBarajasComponent implements OnInit {
   public cargado = false;
   public formato = '';
   public pagina = '';
+  public barajas: any;
+  public loading: boolean;
 
   constructor(
     private storageService: StorageService,
     private servicio: BarajasService,
-    private routerActivated: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private routerActivated: ActivatedRoute
   ) {
    }
 
@@ -36,10 +36,10 @@ export class ListadoBarajasComponent implements OnInit {
     this.user = this.storageService.getCurrentUser();
 
     this.routerActivated.params.subscribe( params => {
-      this.servicio.listaBarajasTorneo(params['id3'], params['id'], params['id2']).subscribe(data => {
+      this.servicio.listaBarajasTorneo(params['id2']).subscribe(data => {
         this.formato = params['id'];
-        this.pagina = params['id2'];
-        this.html = this.sanitizer.bypassSecurityTrustHtml(data['_body']);
+        this.barajas = JSON.parse(data['_body']);
+        this.loading = false;
       });
     });
   }

@@ -14,8 +14,8 @@ export class LoadingComponent implements OnInit {
     this.spinner.show();
 
     setTimeout(() => {
-        /** spinner ends after 5 seconds */
+        /** spinner ends after 300 seconds */
         this.spinner.hide();
-    }, 5000);
+    }, 300000);
   }
 }

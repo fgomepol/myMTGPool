@@ -43,7 +43,144 @@
 
                                 <app-loading *ngIf="loading"></app-loading>
 
-                                <div *ngIf="!loading">
+                                <div *ngIf="!loading && formato==''">
+                                    <table class='col-lg-12'>
+                                        <tr>
+                                            <th width='30%'>
+                                                <p class='text-center'>Metajuegos del Mes</p>
+                                            </th>
+                                            <th width='70%'>
+                                                <p class='text-center'>&Uacute;ltimos Torneos</p>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td class='row align-items-start'>
+                                                <table width='95%'>
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="thumbnails thumbnails-1">
+                                                                <li class="list-group">
+                                                                    <h5>Vintage</h5>
+                                                                    <div *ngIf="barajasVintage!=''" class="list-group-item">
+                                                                        <h5 *ngFor="let baraja of barajasVintage; let i = index;">{{ i + 1 }} · <a [routerLink]="['/arquetipo', 'Vintage', baraja]">{{ baraja }}</a></h5>
+                                                                    </div>
+                                                                    <div *ngIf="barajasVintage==''" class="list-group-item">
+                                                                        <h5 class="text-danger">No hay datos de Vintage</h5>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="list-group">
+                                                                    <h5>Legacy</h5>
+                                                                    <div *ngIf="barajasLegacy!=''" class="list-group-item">
+                                                                        <h5 *ngFor="let baraja of barajasLegacy; let i = index;">{{ i + 1 }} · <a [routerLink]="['/arquetipo', 'Legacy', baraja]">{{ baraja }}</a></h5>
+                                                                    </div>
+                                                                    <div *ngIf="barajasLegacy==''" class="list-group-item">
+                                                                        <h5 class="text-danger">No hay datos de Legacy</h5>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="list-group">
+                                                                    <h5>Modern</h5>
+                                                                    <div *ngIf="barajasModern!=''" class="list-group-item">
+                                                                        <h5 *ngFor="let baraja of barajasModern; let i = index;">{{ i + 1 }} · <a [routerLink]="['/arquetipo', 'Modern', baraja]">{{ baraja }}</a></h5>
+                                                                    </div>
+                                                                    <div *ngIf="barajasModern==''" class="list-group-item">
+                                                                        <h5 class="text-danger">No hay datos de Modern</h5>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="list-group">
+                                                                    <h5>Standard</h5>
+                                                                    <div *ngIf="barajasStandard!=''" class="list-group-item">
+                                                                        <h5 *ngFor="let baraja of barajasStandard; let i = index;">{{ i + 1 }} · <a [routerLink]="['/arquetipo', 'Standard', baraja]">{{ baraja }}</a></h5>
+                                                                    </div>
+                                                                    <div *ngIf="barajasStandard==''" class="list-group-item">
+                                                                        <h5 class="text-danger">No hay datos de Standard</h5>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td>
+                                                <ul class="slides">
+                                                    <li class="list-group">
+                                                        <div class="torneos_slide_formato">
+                                                            <h5 style="display:block;margin-bottom:0.3em;">
+                                                                Vintage
+                                                                <BR>
+
+                                                            </h5>
+                                                            <div *ngIf="torneosVintage.length>0" class="list-group-item">
+                                                                <span *ngFor="let torneo of torneosVintage; let i = index;">
+                                                                    <h5 style="margin:0.1em;"><a [routerLink]="['/listadoBarajas','Vintage',torneo.codTorneo]">{{ torneo.nombre }}</a></h5>
+                                                                    <h5 style="font-size:0.8em;margin-bottom:0.2em;">({{ torneo.jugadores }} - {{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }})</h5>
+                                                                </span>
+                                                            </div>
+                                                            <div *ngIf="torneosVintage.length==0" class="list-group-item">
+                                                                <h5 class="text-danger">No hay datos torneos de Vintage para este mes</h5>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group">
+                                                        <div class="torneos_slide_formato">
+                                                            <h5 style="display:block;margin-bottom:0.3em;">
+                                                                Legacy
+                                                                <BR>
+
+                                                            </h5>
+                                                            <div *ngIf="torneosLegacy.length>0" class="list-group-item">
+                                                                <span *ngFor="let torneo of torneosLegacy; let i = index;">
+                                                                    <h5 style="margin:0.1em;"><a [routerLink]="['/listadoBarajas','Legacy',torneo.codTorneo]">{{ torneo.nombre }}</a></h5>
+                                                                    <h5 style="font-size:0.8em;margin-bottom:0.2em;">({{ torneo.jugadores }} - {{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }})</h5>
+                                                                </span>
+                                                            </div>
+                                                            <div *ngIf="torneosLegacy.length==0" class="list-group-item">
+                                                                <h5 class="text-danger">No hay datos torneos de Legacy para este mes</h5>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group">
+                                                        <div class="torneos_slide_formato">
+                                                            <h5 style="display:block;margin-bottom:0.3em;">
+                                                                Modern
+                                                                <BR>
+                                                            </h5>
+                                                            <div *ngIf="torneosModern.length>0" class="list-group-item">
+                                                                <span *ngFor="let torneo of torneosModern; let i = index;">
+                                                                    <h5 style="margin:0.1em;"><a [routerLink]="['/listadoBarajas','Modern',torneo.codTorneo]">{{ torneo.nombre }}</a></h5>
+                                                                    <h5 style="font-size:0.8em;margin-bottom:0.2em;">({{ torneo.jugadores }} - {{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }})</h5>
+                                                                </span>
+                                                            </div>
+                                                            <div *ngIf="torneosModern.length==0" class="list-group-item">
+                                                                <h5 class="text-danger">No hay datos torneos de Modern para este mes</h5>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group">
+                                                        <div class="torneos_slide_formato">
+                                                            <h5 style="display:block;margin-bottom:0.3em;">
+                                                                Standard
+                                                                <BR>
+
+                                                            </h5>
+                                                            <div *ngIf="torneosStandard.length>0" class="list-group-item">
+                                                                <span *ngFor="let torneo of torneosStandard; let i = index;">
+                                                                    <h5 style="margin:0.1em;"><a [routerLink]="['/listadoBarajas','Standard',torneo.codTorneo]">{{ torneo.nombre }}</a></h5>
+                                                                    <h5 style="font-size:0.8em;margin-bottom:0.2em;">({{ torneo.jugadores }} - {{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }})</h5>
+                                                                </span>
+                                                            </div>
+                                                            <div *ngIf="torneosStandard.length==0" class="list-group-item">
+                                                                <h5 class="text-danger">No hay datos torneos de Standard para este mes</h5>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+
+                                <div *ngIf="!loading && formato!=''">
                                     <table class="col-lg-12" style="width: 100%">
                                         <thead>
                                             <tr class="table">

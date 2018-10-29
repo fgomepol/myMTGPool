@@ -43,7 +43,17 @@
 
                                 <app-loading *ngIf="loading"></app-loading>
 
-                                <div *ngIf="formato=='' && !loading">
+                                <div *ngIf="error">
+                                    <table style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2" class="text-center text-danger">No existen datos del metajuego seleccionado en estos momentos</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="formato=='' && !loading && !error">
                                     <table style="width:100%">
                                         <thead>
                                             <tr>
@@ -103,7 +113,7 @@
                                     </table>
                                 </div>
 
-                                <div *ngIf="formato!='' && !loading">
+                                <div *ngIf="formato!='' && !loading && !error">
                                     <table style="width:100%">
                                         <thead>
                                             <tr>

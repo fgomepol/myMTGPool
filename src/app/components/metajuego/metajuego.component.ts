@@ -25,6 +25,8 @@ export class MetajuegoComponent implements OnInit {
   public loading: boolean;
   public formato = '';
 
+  public error = false;
+
   public topVintage = '';
   public topLegacy = '';
   public topModern = '';
@@ -79,61 +81,73 @@ export class MetajuegoComponent implements OnInit {
         this.doughnutChartData.splice(0);
         this.doughnutPercentage.splice(0);
 
-        this.servicio.barajasUltimoMes(this.formato).subscribe( data => {
+        this.servicio.barajasUltimoMes(this.formato, 10).subscribe( data => {
+          // console.log(data);
+          if (data['_body'] !== 'no hay datos') {
+            this.error = false;
 
-         this.totalBarajas = data.json()['totalBarajas'];
+           this.totalBarajas = data.json()['totalBarajas'];
 
-          for (const baraja of data.json()['info']) {
+            for (const baraja of data.json()['info']) {
 
-            const percentage = Math.round((baraja / this.totalBarajas) * 100);
-            this.doughnutPercentage.push(percentage);
+              const percentage = Math.round((baraja / this.totalBarajas) * 100);
+              this.doughnutPercentage.push(percentage);
+            }
+
+            this.doughnutChartData = data.json()['info'];
+
+            let i = 0;
+            for (const baraja of data.json()['labels']) {
+              this.doughnutChartLabels[i] = baraja;
+              // this.donutColors[0].backgroundColor.push(this.random_rgba());
+              i++;
+            }
+
+            /*
+            for (let y = 0; y < 20; y++) {
+              this.donutColors[0].backgroundColor.push(this.random_rgba());
+            }
+            */
+          } else {
+            this.error = true;
           }
-
-          this.doughnutChartData = data.json()['info'];
-
-          let i = 0;
-          for (const baraja of data.json()['labels']) {
-            this.doughnutChartLabels[i] = baraja;
-            // this.donutColors[0].backgroundColor.push(this.random_rgba());
-            i++;
-          }
-
-          /*
-          for (let y = 0; y < 20; y++) {
-            this.donutColors[0].backgroundColor.push(this.random_rgba());
-          }
-          */
         });
 
         this.servicio.barajasMetajuego(this.formato).subscribe( data => {
 
-          this.nFilas.splice(0);
-          this.barajas.splice(0);
+          // console.log(data);
+          if (data['_body'] !== 'no hay datos') {
+            this.error = false;
+            this.nFilas.splice(0);
+            this.barajas.splice(0);
 
-          let i = 0;
-          let j = 0;
-          for (const baraja of data.json()) {
-            const divididas = baraja.split('/');
+            let i = 0;
+            let j = 0;
+            for (const baraja of data.json()) {
+              const divididas = baraja.split('/');
 
-            if (divididas[1]) {
-              const baraja1 = JSON.parse(divididas[0]);
-              const baraja2 = JSON.parse(divididas[1]);
+              if (divididas[1]) {
+                const baraja1 = JSON.parse(divididas[0]);
+                const baraja2 = JSON.parse(divididas[1]);
 
-              this.barajas.push(baraja1);
-              this.barajas.push(baraja2);
+                this.barajas.push(baraja1);
+                this.barajas.push(baraja2);
 
-              i++;
-              i++;
-              this.nFilas[j] = j + 1;
-              j++;
-            } else {
-              const baraja1 = JSON.parse(divididas[0]);
-              this.barajas.push(baraja1);
+                i++;
+                i++;
+                this.nFilas[j] = j + 1;
+                j++;
+              } else {
+                const baraja1 = JSON.parse(divididas[0]);
+                this.barajas.push(baraja1);
 
-              i++;
-              this.nFilas[j] = j + 1;
-              j++;
+                i++;
+                this.nFilas[j] = j + 1;
+                j++;
+              }
             }
+          } else {
+            this.error = true;
           }
         });
       }

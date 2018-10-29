@@ -32,11 +32,23 @@ export class BarajasService {
     return this.http.get('http://localhost/mkmApi/torneos.php?opcion=topArquetipos&formato=' + formato);
   }
 
-  barajasUltimoMes(formato: string) {
-    return this.http.get('http://localhost/mkmApi/torneos.php?opcion=barajasUltimoMes&formato=' + formato);
+  barajasUltimoMes(formato: string, limite: number) {
+    return this.http.get('http://localhost/mkmApi/torneos.php?opcion=barajasUltimoMes&formato=' + formato + '&limite=' + limite);
   }
 
   barajasMetajuego(formato: string) {
     return this.http.get('http://localhost/mkmApi/torneos.php?opcion=barajasMetajuego&formato=' + formato);
+  }
+
+  datosEstadisticosBaraja(idBaraja: number) {
+    return this.http.get('http://localhost/mkmApi/torneos.php?opcion=datosEstadisticosBaraja&idBaraja=' + idBaraja);
+  }
+
+  ultimos5Torneos(formato: string) {
+    return this.http.get('http://localhost/mkmApi/torneos.php?opcion=ultimos5Torneos&formato=' + formato);
+  }
+
+  comparacionColeccion(idBaraja: number) {
+    return this.http.get('http://localhost/mkmApi/torneos.php?opcion=comparacionColeccion&idBaraja=' + idBaraja);
   }
 }

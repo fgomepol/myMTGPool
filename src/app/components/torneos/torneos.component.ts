@@ -22,6 +22,19 @@ export class TorneosComponent implements OnInit {
   public pagina = '';
   public torneos: any;
   public loading: boolean;
+  public html;
+
+  public barajasVintage: any;
+  public barajasLegacy: any;
+  public barajasModern: any;
+  public barajasStandard: any;
+
+  public torneosVintage: any[] = [];
+  public torneosLegacy: any[] = [];
+  public torneosModern: any[] = [];
+  public torneosStandard: any[] = [];
+
+  public error = false;
 
   constructor(
     private storageService: StorageService,
@@ -36,9 +49,75 @@ export class TorneosComponent implements OnInit {
 
     this.routerActivated.params.subscribe( params => {
       this.servicio.listadoTorneos(params['id']).subscribe(data => {
-        this.formato = params['id'];
-        this.torneos = JSON.parse(data['_body']);
-        this.loading = false;
+        if (params['id']) {
+          this.formato = params['id'];
+          this.torneos = JSON.parse(data['_body']);
+          this.loading = false;
+        } else {
+          this.formato = '';
+          // Sacamos el top 3 de barajas de cada arquetipo
+
+          this.servicio.barajasUltimoMes('Vintage', 3).subscribe( data2 => {
+
+            if (data2['_body'] !== 'no hay datos') {
+              this.barajasVintage = data2.json()['labels'];
+            } else {
+              this.barajasVintage = '';
+            }
+          });
+
+          this.servicio.barajasUltimoMes('Legacy', 3).subscribe( data2 => {
+            if (data2['_body'] !== 'no hay datos') {
+              this.barajasLegacy = data2.json()['labels'];
+            } else {
+              this.barajasLegacy = '';
+            }
+          });
+
+          this.servicio.barajasUltimoMes('Modern', 3).subscribe( data2 => {
+            if (data2['_body'] !== 'no hay datos') {
+              this.barajasModern = data2.json()['labels'];
+            } else {
+              this.barajasModern = '';
+            }
+          });
+
+          this.servicio.barajasUltimoMes('Standard', 3).subscribe( data2 => {
+            if (data2['_body'] !== 'no hay datos') {
+              this.barajasStandard = data2.json()['labels'];
+            } else {
+              this.barajasStandard = '';
+            }
+          });
+
+          // Sacamos los últimos 5 torneos de cada arquetipo
+
+          this.servicio.ultimos5Torneos('Vintage').subscribe( data2 => {
+            if (data2['_body'] !== 'no hay datos') {
+              this.torneosVintage = data2.json();
+            }
+          });
+
+          this.servicio.ultimos5Torneos('Legacy').subscribe( data2 => {
+            if (data2['_body'] !== 'no hay datos') {
+              this.torneosLegacy = data2.json();
+            }
+          });
+
+          this.servicio.ultimos5Torneos('Modern').subscribe( data2 => {
+            if (data2['_body'] !== 'no hay datos') {
+              this.torneosModern = data2.json();
+            }
+          });
+
+          this.servicio.ultimos5Torneos('Standard').subscribe( data2 => {
+            if (data2['_body'] !== 'no hay datos') {
+              this.torneosStandard = data2.json();
+            }
+          });
+
+          this.loading = false;
+        }
       });
     });
   }

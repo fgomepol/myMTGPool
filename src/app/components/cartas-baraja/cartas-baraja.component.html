@@ -40,6 +40,145 @@
                                 <div *ngIf="!loading" [innerHtml]="html">
 
                                 </div>
+
+                                <div *ngIf="!loading">
+                                    <table style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">Valor medio de la baraja:</th>
+                                                <td class="col-lg-8 text-black-50">
+                                                    {{ importeBarajaEx }} - {{ importeBarajaNm }} €
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">Cartas para completar la baraja:</th>
+                                                <td class="col-lg-8 text-black-50">
+                                                    <div *ngIf="importeFaltaBarajaEx>0">
+                                                        <table width="85%" class="tabla_sin">
+                                                            <tr *ngFor="let cartas of cartasFaltan;">
+                                                                <td width="70%">
+                                                                    <h5><a [routerLink]="">{{ cartas.cantidad }} - {{ cartas.carta }}</a></h5>
+                                                                </td>
+                                                                <td width="30%">
+                                                                    <h5>{{ cartas.importeEx }} - {{ cartas.importeNm }} €</h5>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div *ngIf="importeFaltaBarajaEx==0">
+                                                        <h5>
+                                                            <p class="text-info" style="font-weight: bold">Esta baraja ya la tienes completa</p>
+                                                        </h5>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">Coste de inversión estimado:</th>
+                                                <td class="col-lg-8 text-success" style="font-weight: bold">
+                                                    <h5>{{ importeFaltaBarajaEx | number:'1.0-2' }} - {{ importeFaltaBarajaMn | number:'1.0-2' }} €</h5>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">Curva de mana:</th>
+                                                <td class="col-lg-8 text-black-50">
+                                                    <canvas baseChart [data]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">La baraja por colores:</th>
+                                                <td class="col-lg-8 text-black-50">
+                                                    <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-lg-4 text-center">Datos por porcentaje:</th>
+                                                <td class="col-lg-8 text-black-50">
+                                                    <table class="col-lg-12">
+                                                        <tr class="text-right">
+                                                            <td style="color: rgb(209, 0, 3); font-weight: bold">Rojas: </td>
+                                                            <td>{{ doughnutPercentage[0] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color: rgb(91, 154, 255); font-weight: bold">Azules: </td>
+                                                            <td>{{ doughnutPercentage[1] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color: rgb(22, 196, 45); font-weight: bold">Verdes: </td>
+                                                            <td>{{ doughnutPercentage[2] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color: rgb(0, 0, 0); font-weight: bold">Negras: </td>
+                                                            <td>{{ doughnutPercentage[3] }}</td>
+                                                            <td> %</td>
+                                                        </tr>
+                                                        <tr class="text-right">
+                                                            <td style="color: rgba(212, 198, 0, 0.637); font-weight: bold">Blancas: </td>
+                                                            <td>{{ doughnutPercentage[4] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color: rgb(182, 182, 182); font-weight: bold">Incoloras: </td>
+                                                            <td>{{ doughnutPercentage[5] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color: rgb(113, 81, 69); font-weight: bold">Tierras: </td>
+                                                            <td>{{ doughnutPercentage[6] }}</td>
+                                                            <td> %</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="12" class="col-lg-12 text-black-50">
+                                                                <hr>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="text-right">
+                                                            <td style="color: blueviolet; font-weight: bold">Míticas: </td>
+                                                            <td>{{ rarityPercentage[0] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color:rgb(233, 229, 14); font-weight: bold">Raras: </td>
+                                                            <td>{{ rarityPercentage[1] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color:darkgray; font-weight: bold">Infrecuentes: </td>
+                                                            <td>{{ rarityPercentage[2] }}</td>
+                                                            <td> %</td>
+                                                            <td style="color:black; font-weight: bold">Comunes: </td>
+                                                            <td>{{ rarityPercentage[3] }}</td>
+                                                            <td> %</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="12" class="col-lg-12 text-black-50">
+                                                    <hr>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                             <!-- /.table-responsive -->
                         </div>

@@ -4,6 +4,8 @@ import { MtgService } from '../../service/mtg.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartaModule } from '../../models/carta.module';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
+import { CartaBusquedaModule } from 'src/app/models/carta-busqueda.module';
 
 @Component({
   selector: 'app-coleccion',
@@ -28,7 +30,7 @@ export class ColeccionComponent implements OnInit {
   public formularioRelleno = false;
   public tipos;
   public subtipos;
-  public cartasColeccion: any[];
+  public cartasColeccion: CartaBusquedaModule[];
   public sitiosInteres: CartaModule[];
   public cartasFormulario: CartaModule[];
   public siteModel: CartaModule[];
@@ -45,7 +47,8 @@ export class ColeccionComponent implements OnInit {
     private storageService: StorageService,
     config: NgbModalConfig,
     private modalService: NgbModal,
-    private servicio: MtgService
+    private servicio: MtgService,
+    private router: Router
   ) {
 
     config.backdrop = 'static';
@@ -105,11 +108,9 @@ export class ColeccionComponent implements OnInit {
     this.loading = true;
 
     this.servicio.listaCartasBusqueda( this.forma2.value ).subscribe( data => {
-
       if (data['_body'] !== '') {
         this.cartasColeccion = JSON.parse(data['_body']);
-        this.siteModel = this.cartasColeccion;
-
+        this.siteModel = JSON.parse(data['_body']);
         this.formularioRelleno = true;
         this.loading = false;
       } else {
@@ -155,4 +156,12 @@ export class ColeccionComponent implements OnInit {
     window.open(url, '_blank');
   }
 
+  reseteaBusqueda() {
+    this.formularioRelleno = false;
+    this.siteModel.splice(0);
+    this.forma2.reset();
+    this.router.navigate(['coleccion']);
+  }
+
+  isNumber(val) { return typeof val === 'number'; }
 }

@@ -69,7 +69,7 @@
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h6><a [routerLink]="['/resultados', datos.jugadores ]">{{ datos.jugadores }}</a></h6>
                                             </td>
-                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar, 'text-warning': datos.posicion>8, 'text-success': datos.posicion<8, 'text-danger': datos.posicion>16 }" style="font-weight: bold; font-size: 0.8em">
+                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar, 'text-warning': datos.posicion>8, 'text-success': datos.posicion <= 8, 'text-danger': datos.posicion>16 }" style="font-weight: bold; font-size: 0.8em">
                                                 {{ datos.posicion }}
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">

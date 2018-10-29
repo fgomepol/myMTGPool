@@ -26,6 +26,62 @@ export class CartasBarajaComponent implements OnInit {
   public torneo = '';
   public baraja: any;
   public loading: boolean;
+  public cartasBaraja: any;
+  public totalCartas: number;
+  public importeBarajaEx: number;
+  public importeBarajaNm: number;
+  public cartasFaltan: any[];
+  public importeFaltaBarajaEx = 0;
+  public importeFaltaBarajaMn = 0;
+
+  // grafico para colores de la baraja
+  public doughnutChartLabels: string[] = ['Rojas', 'Azules', 'Verdes', 'Negras', 'Blancas', 'Incoloras', 'Tierras'];
+  public donutColors = [
+  {
+    backgroundColor: [
+      'rgba(209, 0, 3, 1)',
+      'rgba(91, 154, 255, 1)',
+      'rgba(22, 196, 45, 1)',
+      'rgba(0, 0, 0, 1)',
+      'rgba(212, 198, 0, 0.637)',
+      'rgba(182, 182, 182, 1)',
+      'rgba(113, 81, 69, 1)'
+    ]
+  }
+  ];
+
+  public doughnutChartType = 'doughnut';
+  public doughnutChartData: number[] = [];
+  public doughnutPercentage: number[] = [];
+  public rarityPercentage: number[] = [];
+
+  // grafico para curva de mana
+
+  public lineChartType = 'line';
+  public lineChartLegend = true;
+
+  // ['Coste 0', 'Coste 1', 'Coste 2', 'Coste 3', 'Coste 4', 'Coste 5', 'Coste 6', 'Coste 7', 'Coste 8', 'Coste 9', 'Coste 10', 'Coste 11', 'Coste 12', 'Coste 13', 'Coste 14', 'Coste 15', 'Coste 16']
+  public lineChartLabels: string[] = [];
+  public lineChartData: any[] = [];
+
+  public lineChartColors: Array<any> = [
+    { // grey
+      backgroundColor: 'rgba(148,159,177,0)',
+      borderColor: 'rgba(148,159,177,1)'
+    }
+  ];
+
+  public lineChartOptions: any = {
+    responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+          stepSize: 5
+        }
+      }]
+    }
+  };
 
   constructor(
     private storageService: StorageService,
@@ -47,9 +103,50 @@ export class CartasBarajaComponent implements OnInit {
         this.formato = params['id'];
         this.torneo = params['id2'];
         this.html = this.sanitizer.bypassSecurityTrustHtml(this.baraja[0].pagina);
-        this.loading = false;
+        this.cartasBaraja = this.baraja[0].cartasBaraja;
       });
+
+      this.servicio.datosEstadisticosBaraja(params['id3']).subscribe(data => {
+
+        this.doughnutChartData = [data.json()['R'], data.json()['U'], data.json()['G'], data.json()['B'], data.json()['W'], data.json()['I'], data.json()['L']];
+        this.doughnutPercentage = [ Math.round((data.json()['R'] / data.json()['total']) * 100), Math.round((data.json()['U'] / data.json()['total']) * 100), Math.round((data.json()['G'] / data.json()['total']) * 100), Math.round((data.json()['B'] / data.json()['total']) * 100), Math.round((data.json()['W'] / data.json()['total']) * 100), Math.round((data.json()['I'] / data.json()['total']) * 100), Math.round((data.json()['L'] / data.json()['total']) * 100)];
+        this.rarityPercentage = [ Math.round((data.json()['mythic'] / data.json()['total']) * 100), Math.round((data.json()['rare'] / data.json()['total']) * 100), Math.round((data.json()['uncommon'] / data.json()['total']) * 100), Math.round((data.json()['common'] / data.json()['total']) * 100) ];
+        this.importeBarajaEx = data.json()['importeEx'];
+        this.importeBarajaNm = data.json()['importeNm'];
+
+        const datosChart: string[] = [];
+
+        for (let i = 0; i <= 16; i++) {
+          if (data.json()[i] > 0) {
+            datosChart.push(data.json()[i]);
+            this.lineChartLabels.push('Coste ' + i);
+          }
+        }
+
+        // this.lineChartData.push( { data: datosChart, label: 'Costes'});
+        this.lineChartData = datosChart;
+      });
+
+      this.servicio.comparacionColeccion(params['id3']).subscribe(data => {
+        this.cartasFaltan = data.json();
+
+        for (const item of this.cartasFaltan) {
+          this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + parseFloat(item.importeEx);
+          this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + parseFloat(item.importeNm);
+        }
+      });
+
+      this.loading = false;
     });
+  }
+
+  // events
+  public chartClicked(e: any): void {
+    // console.log(e);
+  }
+
+  public chartHovered(e: any): void {
+    // console.log(e);
   }
 
 }

@@ -57,7 +57,7 @@
                                                 <tr>
                                                     <th class="col-lg-4 text-center">Nombre:</th>
                                                     <td class="col-lg-8 text-black-50">
-                                                        <input type="text" class="form-control" formControlName="nombre" placeholder="Nomrbe de la carta">
+                                                        <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre de la carta">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -161,6 +161,18 @@
                                 <app-loading *ngIf="loading"></app-loading>
 
                                 <div *ngIf="formularioRelleno && !loading">
+                                    <table class="col-lg-12">
+                                        <tr>
+                                            <td class="col-lg-4">
+                                                <a class="navbar-brand text-danger" [routerLink]="" (click)="reseteaBusqueda();"><i class="material-icons text-danger">reply</i>Nueva Búsqueda</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                    </table>
                                     <table class="col-lg-12 table-fixed">
                                         <thead>
                                             <tr class="table">
@@ -189,7 +201,8 @@
                                                 {{ carta.type | tipoCarta }}
                                             </td>
                                             <td class="text-center align-middle small">
-                                                <i *ngFor="let coste of carta.manaCostWeb.split(' ');" class="ms ms-{{ coste }} ms-cost ms-shadow"></i>
+                                                <span *ngIf="isNumber(carta.manaCostWeb)"><i class="ms ms-{{ carta.manaCostWeb }} ms-cost ms-shadow"></i></span>
+                                                <span *ngIf="!isNumber(carta.manaCostWeb)"><i *ngFor="let coste of carta.manaCostWeb.split(' ');" class="ms ms-{{ coste }} ms-cost ms-shadow"></i></span>
                                             </td>
                                             <td class="text-center align-middle small">
                                                 <app-modal-tendencia [id]=carta.productId></app-modal-tendencia>

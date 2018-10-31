@@ -16,7 +16,7 @@ import { MtgService } from '../../service/mtg.service';
 export class DatosColeccionComponent implements OnInit {
 
   public user: number;
-  public formularioRelleno = false;
+  public formularioRelleno: boolean;
   public importeColeccion: number;
   public totalCartas: number;
   public pantalla = 'coleccion';
@@ -57,6 +57,8 @@ export class DatosColeccionComponent implements OnInit {
       this.importeColeccion = data.json()[0].totalColeccion;
       if ( this.importeColeccion > 0) {
         this.formularioRelleno = true;
+      } else {
+        this.formularioRelleno = false;
       }
     });
 

@@ -60,11 +60,11 @@ export class ModalColeccionComponent {
     this.forma.setValue({
       idUsuario : this.user,
       idProducto : this.id,
-      estado : '',
+      estado : 'NM',
       cantidad : '',
-      foil : '',
-      signed : '',
-      idioma : ''
+      foil : 'No',
+      signed : 'No',
+      idioma : 'English'
     });
   }
 
@@ -81,7 +81,6 @@ export class ModalColeccionComponent {
   }
 
   idiomaDeCarta(id: number) {
-    console.log(id);
     this.servicio.idiomaDeCarta(id).subscribe(data => {
       this.idiomasCartas.push(data.json());
     });

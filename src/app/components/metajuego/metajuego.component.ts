@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
 import { BarajasService } from '../../service/barajas.service';
 import { ActivatedRoute } from '@angular/router';
@@ -15,14 +15,14 @@ import { BarajaModule } from '../../models/baraja.module';
     '../../vendor/font-awesome/css/font-awesome.min.css'
 ]
 })
-export class MetajuegoComponent implements OnInit {
+export class MetajuegoComponent implements OnInit, DoCheck {
 
   public user: number;
   public formularioRelleno = false;
   public importeColeccion: number;
   public totalCartas: number;
   public pantalla = 'metajuego';
-  public loading: boolean;
+  public loadingModern: boolean;
   public formato = '';
 
   public error = false;
@@ -70,7 +70,6 @@ export class MetajuegoComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.loading = true;
     this.user = this.storageService.getCurrentUser();
 
     this.routerActivated.params.subscribe( params => {
@@ -150,10 +149,13 @@ export class MetajuegoComponent implements OnInit {
             this.error = true;
           }
         });
+      } else {
+        this.loadingModern = true;
       }
     });
 
     if (this.formato === '') {
+
       this.servicio.topArquetipos('Vintage').subscribe(data => {
         this.topVintage = JSON.parse(data['_body']);
       });
@@ -166,8 +168,13 @@ export class MetajuegoComponent implements OnInit {
         this.topModern = JSON.parse(data['_body']);
       });
     }
+  }
 
-    this.loading = false;
+  ngDoCheck() {
+
+    if (this.topModern !== '') {
+      this.loadingModern = false;
+    }
   }
 
   // events

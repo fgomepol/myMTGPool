@@ -41,8 +41,6 @@
                                     </tr>
                                 </table>
 
-                                <app-loading *ngIf="loading"></app-loading>
-
                                 <div *ngIf="error">
                                     <table style="width:100%">
                                         <thead>
@@ -53,7 +51,9 @@
                                     </table>
                                 </div>
 
-                                <div *ngIf="formato=='' && !loading && !error">
+                                <app-loading *ngIf="loadingModern===true"></app-loading>
+
+                                <div *ngIf="formato=='' && !error">
                                     <table style="width:100%">
                                         <thead>
                                             <tr>
@@ -93,6 +93,7 @@
                                             <tr>
                                                 <th class="col-lg-4 text-center">Modern:</th>
                                                 <td class="col-lg-8 text-black-50">
+
                                                     <ul class="list-group">
                                                         <li *ngFor="let top of topModern;" class="list-group-item"><a [routerLink]="['/arquetipo', 'Modern', top.arquetipo ]">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</a></li>
                                                     </ul>
@@ -113,7 +114,7 @@
                                     </table>
                                 </div>
 
-                                <div *ngIf="formato!='' && !loading && !error">
+                                <div *ngIf="formato!='' && !error">
                                     <table style="width:100%">
                                         <thead>
                                             <tr>

@@ -17,7 +17,7 @@ import { MtgService } from '../../service/mtg.service';
 export class GestionarColeccionComponent implements OnInit {
 
   public user: number;
-  public formularioRelleno = false;
+  public formularioRelleno: boolean;
   public cartasColeccion: any[];
   public importeColeccion: number;
   public totalamount = 0;
@@ -44,6 +44,8 @@ export class GestionarColeccionComponent implements OnInit {
               this.totalamount += carta.precio;
           }
         });
+      } else {
+        this.formularioRelleno = false;
       }
     });
   }

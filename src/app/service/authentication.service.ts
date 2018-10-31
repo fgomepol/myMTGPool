@@ -7,6 +7,8 @@ import { LoginModule } from '../models/login.module';
 })
 export class AuthenticationService {
 
+  private baseUrl = 'http://localhost/mkmApi/coleccion.php';
+
   private localStorageService;
 
   constructor(private http: Http) {
@@ -14,11 +16,11 @@ export class AuthenticationService {
   }
 
   login(loginObj: LoginModule) {
-    return this.http.post('http://localhost/mkmApi/coleccion.php?opcion=login', loginObj);
+    return this.http.post(`${this.baseUrl}?opcion=login`, loginObj);
   }
 
   logout() {
-    return this.http.get('http://localhost/mkmApi/coleccion.php?opcion=logout');
+    return this.http.get(`${this.baseUrl}?opcion=logout`);
   }
 
   setDestinatarios(session: any): void {

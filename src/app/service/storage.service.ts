@@ -7,6 +7,8 @@ import { Http } from '@angular/http';
   providedIn: 'root'
 })
 export class StorageService {
+
+  public baseUrl = 'http://localhost/mkmApi/coleccion.php';
   private localStorageService;
   private currentSession: SessionModule = null;
   private destinatariosSession: SessionModule = null;
@@ -63,6 +65,6 @@ export class StorageService {
   }
 
   getUsuarios(id: number) {
-    return this.http.get('http://localhost/mkmApi/coleccion.php?opcion=listadoUsuarios&id=' + id);
+    return this.http.get(`${this.baseUrl}?opcion=listadoUsuarios&id=${ id }`);
   }
 }

@@ -7,14 +7,20 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-modal-coleccion',
   templateUrl: './modal-coleccion.component.html',
-  styleUrls: [],
+  styleUrls: [
+    '../../vendor/bootstrap/css/bootstrap.min.css',
+    '../../vendor/metisMenu/metisMenu.min.css',
+    '../../dist/css/sb-admin-2.css',
+    '../../vendor/morrisjs/morris.css',
+    '../../vendor/font-awesome/css/font-awesome.min.css'
+],
   // add NgbModalConfig and NgbModal to the component providers
   providers: [NgbModalConfig, NgbModal]
 })
 export class ModalColeccionComponent {
     public user: number;
     public idiomasCartas: any[] = [];
-    public carta: any;
+    public carta: any = '';
     public forma: FormGroup;
     public guardadaCarta = false;
     public idCarta = 0;
@@ -75,8 +81,13 @@ export class ModalColeccionComponent {
   }
 
   idiomaDeCarta(id: number) {
+    console.log(id);
     this.servicio.idiomaDeCarta(id).subscribe(data => {
       this.idiomasCartas.push(data.json());
     });
+  }
+
+  redireccionExterna(url: string) {
+    window.open(url, '_blank');
   }
 }

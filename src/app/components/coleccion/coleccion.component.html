@@ -195,10 +195,10 @@
                                                 <!--<img src="{{ carta.imagen }}" >-->
                                             </td>
                                             <td class="text-center align-middle small">
-                                                <a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a>
+                                                <h5><a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a></h5>
                                             </td>
                                             <td class="text-center align-middle small">
-                                                {{ carta.type | tipoCarta }}
+                                                <h5>{{ carta.type | tipoCarta }}</h5>
                                             </td>
                                             <td class="text-center align-middle small">
                                                 <span *ngIf="isNumber(carta.manaCostWeb)"><i class="ms ms-{{ carta.manaCostWeb }} ms-cost ms-shadow"></i></span>
@@ -215,8 +215,10 @@
                                             <td>&nbsp;</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="6" class="text-center">
-                                                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                            <td colspan="7" class="text-center">
+                                                <h5>
+                                                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                </h5>
                                             </td>
                                         </tr>
                                         <tr>

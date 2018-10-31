@@ -63,6 +63,6 @@ export class StorageService {
   }
 
   getUsuarios(id: number) {
-    return this.http.get('../../mkmApi/coleccion.php?opcion=listadoUsuarios&id=' + id);
+    return this.http.get('http://localhost/mkmApi/coleccion.php?opcion=listadoUsuarios&id=' + id);
   }
 }

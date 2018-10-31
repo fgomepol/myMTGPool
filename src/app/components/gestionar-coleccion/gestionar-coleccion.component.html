@@ -64,27 +64,29 @@
                                                 <i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i>
                                             </td>
                                             <td class="col-lg-3 text-left align-middle small">
-                                                <a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a>
+                                                <h5><a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a></h5>
                                             </td>
                                             <td class="col-lg-1 text-center align-middle small">
-                                                {{ carta.estado }}
+                                                <h5>{{ carta.estado }}</h5>
                                             </td>
                                             <td class="col-lg-1 text-center align-middle small">
-                                                {{ carta.idioma }}
+                                                <h5>{{ carta.idioma }}</h5>
                                             </td>
                                             <td class="col-lg-1 text-center align-middle small">
-                                                {{ carta.cantidad }}
+                                                <h5>{{ carta.cantidad }}</h5>
                                             </td>
                                             <td class="col-lg-1 text-center align-middle small">
-                                                {{ carta.foil }}
+                                                <h5>{{ carta.foil }}</h5>
                                             </td>
                                             <td class="col-lg-1 text-center align-middle small">
-                                                {{ carta.signed }}
+                                                <h5>{{ carta.signed }}</h5>
                                             </td>
                                             <td class="col-lg-2 text-right align-middle small">
                                                 <table width="100%">
                                                     <tr>
-                                                        <td width="70%">{{ carta.precio }} €</td>
+                                                        <td width="70%">
+                                                            <h5>{{ carta.precio }} €</h5>
+                                                        </td>
                                                         <td width="30%">
                                                             <app-modal-tendencia [id]=carta.productId></app-modal-tendencia>
                                                         </td>
@@ -103,7 +105,9 @@
                                             <td class="col-lg-1">&nbsp;</td>
                                             <td class="col-lg-1">&nbsp;</td>
                                             <th class="col-lg-1" class="text-center">Total: </th>
-                                            <td class="col-lg-2 text-right align-middle small text-success">{{ totalamount | number }} €</td>
+                                            <td class="col-lg-2 text-right align-middle small text-success">
+                                                <h5>{{ totalamount | number }} €</h5>
+                                            </td>
                                             <td class="col-lg-1">&nbsp;</td>
                                         </tr>
                                         <tr>
@@ -111,7 +115,9 @@
                                         </tr>
                                         <tr>
                                             <td colspan="9" class="text-center">
-                                                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                <h5>
+                                                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                </h5>
                                             </td>
                                         </tr>
                                         <tr>

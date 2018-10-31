@@ -162,10 +162,40 @@ export class ModalTendenciaComponent implements OnInit {
       const precioNm: string[] = [];
       const precioFoil: string[] = [];
 
+      let precioPoorAux = 0;
+      let precioExAux = 0;
+      let precioNmAux = 0;
+      let precioFoilAux = 0;
+
       for (const item of this.datos) {
         const date = new Date(item.day * 1000);
 
         this.lineChartLabels.push(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear());
+
+        if (item.lowPoor === 0) {
+          item.lowPoor = precioPoorAux;
+        } else {
+          precioPoorAux = item.lowPoor;
+        }
+
+        if (item.lowEx === 0) {
+          item.lowEx = precioExAux;
+        } else {
+          precioExAux = item.lowEx;
+        }
+
+        if (item.trend === 0) {
+          item.trend = precioNmAux;
+        } else {
+          precioNmAux = item.trend;
+        }
+
+        if (item.foil === 0) {
+          item.foil = precioFoilAux;
+        } else {
+          precioFoilAux = item.foil;
+        }
+
         precioLow.push(item.lowPoor);
         precioEx.push(item.lowEx);
         precioNm.push(item.trend);

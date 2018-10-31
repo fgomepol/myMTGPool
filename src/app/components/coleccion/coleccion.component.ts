@@ -3,7 +3,6 @@ import { StorageService } from '../../service/storage.service';
 import { MtgService } from '../../service/mtg.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartaModule } from '../../models/carta.module';
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
 import { CartaBusquedaModule } from 'src/app/models/carta-busqueda.module';
 
@@ -18,8 +17,7 @@ import { CartaBusquedaModule } from 'src/app/models/carta-busqueda.module';
     '../../vendor/font-awesome/css/font-awesome.min.css',
     '../../vendor/Keyrune/css/keyrune.css',
     '../../vendor/manaSet/css/mana.css?v=1.4.0'
-],
-providers: [NgbModalConfig, NgbModal]
+]
 })
 export class ColeccionComponent implements OnInit {
 
@@ -45,14 +43,9 @@ export class ColeccionComponent implements OnInit {
 
   constructor(
     private storageService: StorageService,
-    config: NgbModalConfig,
-    private modalService: NgbModal,
     private servicio: MtgService,
     private router: Router
   ) {
-
-    config.backdrop = 'static';
-    config.keyboard = false;
 
     this.forma2 = new FormGroup({
       'nombre': new FormControl(''),
@@ -108,6 +101,7 @@ export class ColeccionComponent implements OnInit {
     this.loading = true;
 
     this.servicio.listaCartasBusqueda( this.forma2.value ).subscribe( data => {
+
       if (data['_body'] !== '') {
         this.cartasColeccion = JSON.parse(data['_body']);
         this.siteModel = JSON.parse(data['_body']);
@@ -118,32 +112,6 @@ export class ColeccionComponent implements OnInit {
         this.loading = false;
       }
     }, error => console.error(error));
-  }
-
-  open(content, id) {
-
-    this.idCarta = id;
-    this.modalService.open(content);
-
-    this.servicio.cartaConcreta( this.idCarta).subscribe( data => {
-      this.carta = data.json()[0];
-    });
-
-    this.idiomaDeCarta(this.idCarta);
-
-    this.forma3.setValue({
-      idUsuario : this.user,
-      idProducto : this.idCarta,
-      estado : '',
-      cantidad : '',
-      foil : '',
-      signed : '',
-      idioma : ''
-    });
-  }
-
-  cerrar() {
-    this.modalService.dismissAll('Cross close');
   }
 
   idiomaDeCarta(id: number) {

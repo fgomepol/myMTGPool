@@ -202,7 +202,7 @@
                                             </td>
                                             <td class="text-center align-middle small">
                                                 <span *ngIf="isNumber(carta.manaCostWeb)"><i class="ms ms-{{ carta.manaCostWeb }} ms-cost ms-shadow"></i></span>
-                                                <span *ngIf="!isNumber(carta.manaCostWeb)"><i *ngFor="let coste of carta.manaCostWeb.split(' ');" class="ms ms-{{ coste }} ms-cost ms-shadow"></i></span>
+                                                <span *ngIf="!isNumber(carta.manaCostWeb)"><i *ngFor="let coste of carta.manaCostWeb.split(' ');" class="ms ms-{{ coste.replace('/','') }} ms-cost ms-shadow"></i></span>
                                             </td>
                                             <td class="text-center align-middle small">
                                                 <app-modal-tendencia [id]=carta.productId></app-modal-tendencia>

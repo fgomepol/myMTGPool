@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
 import { BarajasService } from '../../service/barajas.service';
 import { ActivatedRoute } from '@angular/router';
@@ -11,22 +11,23 @@ import { ActivatedRoute } from '@angular/router';
     '../../vendor/metisMenu/metisMenu.min.css',
     '../../dist/css/sb-admin-2.css',
     '../../vendor/morrisjs/morris.css',
-    '../../vendor/font-awesome/css/font-awesome.min.css'
+    '../../vendor/font-awesome/css/font-awesome.min.css',
+    '../mensajes/mensajes.component.css'
 ]
 })
-export class TorneosComponent implements OnInit {
+export class TorneosComponent implements OnInit, DoCheck {
 
   public user: number;
   public pantalla = 'torneos';
   public formato = '';
   public pagina = '';
   public torneos: any;
-  public loading: boolean;
+  public loadingModern: boolean;
   public html;
 
   public barajasVintage: any;
   public barajasLegacy: any;
-  public barajasModern: any;
+  public barajasModern: any = '';
   public barajasStandard: any;
 
   public torneosVintage: any[] = [];
@@ -45,19 +46,18 @@ export class TorneosComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
-    this.loading = true;
 
     this.routerActivated.params.subscribe( params => {
       this.servicio.listadoTorneos(params['id']).subscribe(data => {
         if (params['id']) {
           this.formato = params['id'];
           this.torneos = JSON.parse(data['_body']);
-          this.loading = false;
+          this.barajasModern = 'lleno';
         } else {
           this.formato = '';
           // Sacamos el top 3 de barajas de cada arquetipo
 
-          this.servicio.barajasUltimoMes('Vintage', 3).subscribe( data2 => {
+          this.servicio.barajasUltimoMes('Vintage', 8).subscribe( data2 => {
 
             if (data2['_body'] !== 'no hay datos') {
               this.barajasVintage = data2.json()['labels'];
@@ -66,7 +66,7 @@ export class TorneosComponent implements OnInit {
             }
           });
 
-          this.servicio.barajasUltimoMes('Legacy', 3).subscribe( data2 => {
+          this.servicio.barajasUltimoMes('Legacy', 8).subscribe( data2 => {
             if (data2['_body'] !== 'no hay datos') {
               this.barajasLegacy = data2.json()['labels'];
             } else {
@@ -74,7 +74,7 @@ export class TorneosComponent implements OnInit {
             }
           });
 
-          this.servicio.barajasUltimoMes('Modern', 3).subscribe( data2 => {
+          this.servicio.barajasUltimoMes('Modern', 8).subscribe( data2 => {
             if (data2['_body'] !== 'no hay datos') {
               this.barajasModern = data2.json()['labels'];
             } else {
@@ -82,7 +82,7 @@ export class TorneosComponent implements OnInit {
             }
           });
 
-          this.servicio.barajasUltimoMes('Standard', 3).subscribe( data2 => {
+          this.servicio.barajasUltimoMes('Standard', 8).subscribe( data2 => {
             if (data2['_body'] !== 'no hay datos') {
               this.barajasStandard = data2.json()['labels'];
             } else {
@@ -115,10 +115,17 @@ export class TorneosComponent implements OnInit {
               this.torneosStandard = data2.json();
             }
           });
-
-          this.loading = false;
         }
       });
     });
+  }
+
+  ngDoCheck() {
+
+    if (this.barajasModern !== '' || this.barajasModern !== '') {
+      this.loadingModern = false;
+    } else {
+      this.loadingModern = true;
+    }
   }
 }

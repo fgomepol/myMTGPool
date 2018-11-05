@@ -67,18 +67,25 @@ export class MetajuegoComponent implements OnInit, DoCheck {
     private servicio: BarajasService,
     private routerActivated: ActivatedRoute
   ) {
+
    }
 
   ngOnInit() {
+
+    this.loadingModern = true;
     this.user = this.storageService.getCurrentUser();
 
     this.routerActivated.params.subscribe( params => {
 
       if (params['id']) {
+
         this.formato = params['id'];
         this.doughnutChartLabels.splice(0);
         this.doughnutChartData.splice(0);
         this.doughnutPercentage.splice(0);
+
+        this.nFilas.splice(0);
+        this.barajas.splice(0);
 
         this.servicio.barajasUltimoMes(this.formato, 10).subscribe( data => {
           // console.log(data);
@@ -117,8 +124,6 @@ export class MetajuegoComponent implements OnInit, DoCheck {
           // console.log(data);
           if (data['_body'] !== 'no hay datos') {
             this.error = false;
-            this.nFilas.splice(0);
-            this.barajas.splice(0);
 
             let i = 0;
             let j = 0;
@@ -145,12 +150,11 @@ export class MetajuegoComponent implements OnInit, DoCheck {
                 j++;
               }
             }
+
           } else {
             this.error = true;
           }
         });
-      } else {
-        this.loadingModern = true;
       }
     });
 
@@ -171,9 +175,10 @@ export class MetajuegoComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-
-    if (this.topModern !== '') {
+    if ((this.formato === '' && this.topModern !== '') || (this.nFilas.length > 0 && this.formato !== '')) {
       this.loadingModern = false;
+    } else {
+      this.loadingModern = true;
     }
   }
 

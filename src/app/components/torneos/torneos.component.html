@@ -22,16 +22,16 @@
                                 <table class="col-lg-12">
                                     <tr>
                                         <td class="col-lg-3">
-                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Vintage', 'text-black-50': formato!='Vintage' }" [routerLink]="['/torneos','Vintage']">Vintage</a>
+                                            <a class="navbar-brand" style="font-weight: bold" [ngClass]="{ 'text-success': formato=='Vintage', 'text-black-50': formato!='Vintage' }" [routerLink]="['/torneos','Vintage']">Vintage</a>
                                         </td>
                                         <td class="col-lg-3">
-                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Legacy', 'text-black-50': formato!='Legacy' }" [routerLink]="['/torneos','Legacy']">Legacy</a>
+                                            <a class="navbar-brand" style="font-weight: bold" [ngClass]="{ 'text-success': formato=='Legacy', 'text-black-50': formato!='Legacy' }" [routerLink]="['/torneos','Legacy']">Legacy</a>
                                         </td>
                                         <td class="col-lg-3">
-                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Modern', 'text-black-50': formato!='Modern' }" [routerLink]="['/torneos','Modern']">Modern</a>
+                                            <a class="navbar-brand" style="font-weight: bold" [ngClass]="{ 'text-success': formato=='Modern', 'text-black-50': formato!='Modern' }" [routerLink]="['/torneos','Modern']">Modern</a>
                                         </td>
                                         <td class="col-lg-3">
-                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Standar', 'text-black-50': formato!='Standar' }" [routerLink]="['/torneos','Standard']">Standard</a>
+                                            <a class="navbar-brand" style="font-weight: bold" [ngClass]="{ 'text-success': formato=='Standar', 'text-black-50': formato!='Standar' }" [routerLink]="['/torneos','Standard']">Standard</a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -41,7 +41,7 @@
                                     </tr>
                                 </table>
 
-                                <app-loading *ngIf="loading"></app-loading>
+                                <app-loading *ngIf="loadingModern===true"></app-loading>
 
                                 <div *ngIf="!loading && formato==''">
                                     <table class='col-lg-12'>
@@ -213,7 +213,9 @@
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="text-center">
-                                                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                <h5>
+                                                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                </h5>
                                             </td>
                                         </tr>
                                     </table>

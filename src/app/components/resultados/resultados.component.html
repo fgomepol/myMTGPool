@@ -46,7 +46,7 @@
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h6><a [routerLink]="['/listadoBarajas', resultado.formato, resultado.idTorneo ]">{{ resultado.jugadores }}</a></h6>
                                             </td>
-                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar, 'text-warning': resultado.posicion>8, 'text-success': resultado.posicion<8, 'text-danger': resultado.posicion>16 }" style="font-weight: bold; font-size: 0.8em">
+                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar, 'text-warning': resultado.posicion>8, 'text-success': resultado.posicion<=8, 'text-danger': resultado.posicion>16 }" style="font-weight: bold; font-size: 0.8em">
                                                 {{ resultado.posicion }}
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
@@ -54,15 +54,10 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">
-                                                <p>
-                                                    &nbsp;
-                                                </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
                                             <td colspan="5" class="text-center">
-                                                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                <h6>
+                                                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                </h6>
                                             </td>
                                         </tr>
                                     </table>

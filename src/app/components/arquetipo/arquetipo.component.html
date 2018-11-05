@@ -19,20 +19,19 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="table-responsive">
-                                formato {{ formato }}
                                 <table class="col-lg-12">
                                     <tr>
                                         <td class="col-lg-3">
-                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Vintage', 'text-black-50': formato!='Vintage' }" [routerLink]="['/torneos','Vintage']">Vintage</a>
+                                            <a class="navbar-brand" style="font-weight: bold" [ngClass]="{ 'text-success': formato=='Vintage', 'text-black-50': formato!='Vintage' }" [routerLink]="['/torneos','Vintage']">Vintage</a>
                                         </td>
                                         <td class="col-lg-3">
-                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Legacy', 'text-black-50': formato!='Legacy' }" [routerLink]="['/torneos','Legacy']">Legacy</a>
+                                            <a class="navbar-brand" style="font-weight: bold" [ngClass]="{ 'text-success': formato=='Legacy', 'text-black-50': formato!='Legacy' }" [routerLink]="['/torneos','Legacy']">Legacy</a>
                                         </td>
                                         <td class="col-lg-3">
-                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Modern', 'text-black-50': formato!='Modern' }" [routerLink]="['/torneos','Modern']">Modern</a>
+                                            <a class="navbar-brand" style="font-weight: bold" [ngClass]="{ 'text-success': formato=='Modern', 'text-black-50': formato!='Modern' }" [routerLink]="['/torneos','Modern']">Modern</a>
                                         </td>
                                         <td class="col-lg-3">
-                                            <a class="navbar-brand" [ngClass]="{ 'text-success': formato=='Standar', 'text-black-50': formato!='Standar' }" [routerLink]="['/torneos','Standard']">Standard</a>
+                                            <a class="navbar-brand" style="font-weight: bold" [ngClass]="{ 'text-success': formato=='Standar', 'text-black-50': formato!='Standar' }" [routerLink]="['/torneos','Standard']">Standard</a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -48,11 +47,12 @@
                                     <table class="col-lg-12" style="width: 100%">
                                         <thead>
                                             <tr class="table">
-                                                <th class="text-center" style="width: 25%; border: 1px solid #ddd;">Arquetipo</th>
-                                                <th class="text-center" style="width: 35%; border: 1px solid #ddd;">Torneo</th>
+                                                <th class="text-center" style="width: 20%; border: 1px solid #ddd;">Arquetipo</th>
+                                                <th class="text-center" style="width: 30%; border: 1px solid #ddd;">Torneo</th>
                                                 <th class="text-center" style="width: 15%; border: 1px solid #ddd;">Nº Jugadores</th>
+                                                <th class="text-center" style="width: 15%; border: 1px solid #ddd;">Jugador</th>
                                                 <th class="text-center" style="width: 10%; border: 1px solid #ddd;">Posición</th>
-                                                <th class="text-center" style="width: 15%; border: 1px solid #ddd;">Fecha</th>
+                                                <th class="text-center" style="width: 10%; border: 1px solid #ddd;">Fecha</th>
                                             </tr>
                                             <tr>
                                                 <td colspan="5" class="text-center">&nbsp;</td>
@@ -61,13 +61,16 @@
 
                                         <tr *ngFor="let datos of datosArquetipo | paginate: { itemsPerPage: 30, currentPage: page }; let impar = odd;let par = even;">
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h6><a [routerLink]="['/cartasBaraja', formato, datos.idTorneo, datos.codigoBaraja ]">{{ datos.arquetipo }}</a></h6>
+                                                <h6><a [routerLink]="['/cartasBaraja', formato, datos.idTorneo, datos.codigoBaraja]">{{ datos.arquetipo }}</a></h6>
                                             </td>
                                             <td class="text-left" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h6><a [routerLink]="['/torneos', datos.idTorneo ]">{{ datos.nombre }}</a></h6>
+                                                <h6><a [routerLink]="['/listadoBarajas', formato, datos.idTorneo]">{{ datos.nombre }}</a></h6>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h6><a [routerLink]="['/resultados', datos.jugadores ]">{{ datos.jugadores }}</a></h6>
+                                                <h6><a [routerLink]="['/listadoBarajas', formato, datos.idTorneo]">{{ datos.jugadores }}</a></h6>
+                                            </td>
+                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                <h6><a [routerLink]="['/resultados', formato, datos.jugador]">{{ datos.jugador }}</a></h6>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar, 'text-warning': datos.posicion>8, 'text-success': datos.posicion <= 8, 'text-danger': datos.posicion>16 }" style="font-weight: bold; font-size: 0.8em">
                                                 {{ datos.posicion }}
@@ -77,15 +80,10 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">
-                                                <p>
-                                                    &nbsp;
-                                                </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
                                             <td colspan="5" class="text-center">
-                                                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                <h6>
+                                                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                </h6>
                                             </td>
                                         </tr>
                                     </table>

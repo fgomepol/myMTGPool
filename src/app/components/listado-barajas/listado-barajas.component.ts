@@ -11,7 +11,8 @@ import { ActivatedRoute } from '@angular/router';
     '../../vendor/metisMenu/metisMenu.min.css',
     '../../dist/css/sb-admin-2.css',
     '../../vendor/morrisjs/morris.css',
-    '../../vendor/font-awesome/css/font-awesome.min.css'
+    '../../vendor/font-awesome/css/font-awesome.min.css',
+    '../mensajes/mensajes.component.css'
 ]
 })
 export class ListadoBarajasComponent implements OnInit {

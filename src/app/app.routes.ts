@@ -44,7 +44,7 @@ const appRoutes: Routes = [
   { path: 'listadoBarajas/:id/:id2', component: ListadoBarajasComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'cartasBaraja/:id/:id2/:id3', component: CartasBarajaComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'arquetipo/:id/:id2', component: ArquetipoComponent, canActivate: [ AuthorizatedGuardComponent ] },
-  { path: 'resultados/:id', component: ResultadosComponent, canActivate: [ AuthorizatedGuardComponent ] },
+  { path: 'resultados/:id/:id2', component: ResultadosComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'metajuego', component: MetajuegoComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'metajuego/:id', component: MetajuegoComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'contactos', component: ContactosComponent, canActivate: [ AuthorizatedGuardComponent ] },

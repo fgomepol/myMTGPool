@@ -26,8 +26,8 @@ export class BarajasService {
     return this.http.get(`${this.baseUrl}?opcion=barajasArquetipo&formato=${formato}&tipoBaraja=${tipoBaraja}&page=${pagina}`);
   }
 
-  resultados(jugador: string) {
-    return this.http.get(`${this.baseUrl}?opcion=resultados&jugador=${jugador}`);
+  resultados(jugador: string, formato: string) {
+    return this.http.get(`${this.baseUrl}?opcion=resultados&jugador=${jugador}&formato=${formato}`);
   }
 
   topArquetipos(formato: string) {

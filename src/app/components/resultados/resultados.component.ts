@@ -11,7 +11,8 @@ import { ActivatedRoute } from '@angular/router';
     '../../vendor/metisMenu/metisMenu.min.css',
     '../../dist/css/sb-admin-2.css',
     '../../vendor/morrisjs/morris.css',
-    '../../vendor/font-awesome/css/font-awesome.min.css'
+    '../../vendor/font-awesome/css/font-awesome.min.css',
+    '../mensajes/mensajes.component.css'
 ]
 })
 
@@ -23,6 +24,7 @@ export class ResultadosComponent implements OnInit {
   public cargado = false;
   public jugador: string;
   public loading: boolean;
+  public formato: string;
 
   constructor(
     private storageService: StorageService,
@@ -36,9 +38,10 @@ export class ResultadosComponent implements OnInit {
     this.loading = true;
 
     this.routerActivated.params.subscribe( params => {
-      this.jugador = params['id'];
+      this.jugador = params['id2'];
+      this.formato = params['id'];
 
-      this.servicio.resultados(params['id']).subscribe(data => {
+      this.servicio.resultados(this.jugador, this.formato).subscribe(data => {
         this.resultados = JSON.parse(data['_body']);
         this.loading = false;
       });

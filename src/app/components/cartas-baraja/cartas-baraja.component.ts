@@ -12,7 +12,8 @@ import { DomSanitizer } from '@angular/platform-browser';
     '../../vendor/metisMenu/metisMenu.min.css',
     '../../dist/css/sb-admin-2.css',
     '../../vendor/morrisjs/morris.css',
-    '../../vendor/font-awesome/css/font-awesome.min.css'
+    '../../vendor/font-awesome/css/font-awesome.min.css',
+    '../../vendor/Keyrune/css/keyrune.css'
 ]
 })
 export class CartasBarajaComponent implements OnInit {
@@ -129,6 +130,7 @@ export class CartasBarajaComponent implements OnInit {
 
       this.servicio.comparacionColeccion(params['id3']).subscribe(data => {
         this.cartasFaltan = data.json();
+        console.log(data.json());
 
         for (const item of this.cartasFaltan) {
           this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + parseFloat(item.importeEx);
@@ -138,6 +140,10 @@ export class CartasBarajaComponent implements OnInit {
 
       this.loading = false;
     });
+  }
+
+  public redireccionExterna(url: string) {
+    window.open(url, '_blank');
   }
 
   // events

@@ -60,7 +60,7 @@
                                                         <td>
                                                             <ul class="thumbnails thumbnails-1">
                                                                 <li class="list-group">
-                                                                    <h5>Vintage</h5>
+                                                                    <h5 style="display:block;margin-bottom:0.3em;">Vintage</h5>
                                                                     <div *ngIf="barajasVintage!=''" class="list-group-item">
                                                                         <h5 *ngFor="let baraja of barajasVintage; let i = index;">{{ i + 1 }} · <a [routerLink]="['/arquetipo', 'Vintage', baraja]">{{ baraja }}</a></h5>
                                                                     </div>
@@ -69,7 +69,7 @@
                                                                     </div>
                                                                 </li>
                                                                 <li class="list-group">
-                                                                    <h5>Legacy</h5>
+                                                                    <h5 style="display:block;margin-bottom:0.3em;">Legacy</h5>
                                                                     <div *ngIf="barajasLegacy!=''" class="list-group-item">
                                                                         <h5 *ngFor="let baraja of barajasLegacy; let i = index;">{{ i + 1 }} · <a [routerLink]="['/arquetipo', 'Legacy', baraja]">{{ baraja }}</a></h5>
                                                                     </div>
@@ -78,7 +78,7 @@
                                                                     </div>
                                                                 </li>
                                                                 <li class="list-group">
-                                                                    <h5>Modern</h5>
+                                                                    <h5 style="display:block;margin-bottom:0.3em;">Modern</h5>
                                                                     <div *ngIf="barajasModern!=''" class="list-group-item">
                                                                         <h5 *ngFor="let baraja of barajasModern; let i = index;">{{ i + 1 }} · <a [routerLink]="['/arquetipo', 'Modern', baraja]">{{ baraja }}</a></h5>
                                                                     </div>
@@ -87,7 +87,7 @@
                                                                     </div>
                                                                 </li>
                                                                 <li class="list-group">
-                                                                    <h5>Standard</h5>
+                                                                    <h5 style="display:block;margin-bottom:0.3em;">Standard</h5>
                                                                     <div *ngIf="barajasStandard!=''" class="list-group-item">
                                                                         <h5 *ngFor="let baraja of barajasStandard; let i = index;">{{ i + 1 }} · <a [routerLink]="['/arquetipo', 'Standard', baraja]">{{ baraja }}</a></h5>
                                                                     </div>
@@ -105,9 +105,7 @@
                                                     <li class="list-group">
                                                         <div class="torneos_slide_formato">
                                                             <h5 style="display:block;margin-bottom:0.3em;">
-                                                                Vintage
-                                                                <BR>
-
+                                                                &nbsp;
                                                             </h5>
                                                             <div *ngIf="torneosVintage.length>0" class="list-group-item">
                                                                 <span *ngFor="let torneo of torneosVintage; let i = index;">
@@ -123,9 +121,7 @@
                                                     <li class="list-group">
                                                         <div class="torneos_slide_formato">
                                                             <h5 style="display:block;margin-bottom:0.3em;">
-                                                                Legacy
-                                                                <BR>
-
+                                                                &nbsp;
                                                             </h5>
                                                             <div *ngIf="torneosLegacy.length>0" class="list-group-item">
                                                                 <span *ngFor="let torneo of torneosLegacy; let i = index;">
@@ -141,8 +137,7 @@
                                                     <li class="list-group">
                                                         <div class="torneos_slide_formato">
                                                             <h5 style="display:block;margin-bottom:0.3em;">
-                                                                Modern
-                                                                <BR>
+                                                                &nbsp;
                                                             </h5>
                                                             <div *ngIf="torneosModern.length>0" class="list-group-item">
                                                                 <span *ngFor="let torneo of torneosModern; let i = index;">
@@ -158,9 +153,7 @@
                                                     <li class="list-group">
                                                         <div class="torneos_slide_formato">
                                                             <h5 style="display:block;margin-bottom:0.3em;">
-                                                                Standard
-                                                                <BR>
-
+                                                                &nbsp;
                                                             </h5>
                                                             <div *ngIf="torneosStandard.length>0" class="list-group-item">
                                                                 <span *ngFor="let torneo of torneosStandard; let i = index;">

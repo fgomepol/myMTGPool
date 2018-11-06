@@ -52,7 +52,8 @@
                                             <tr>
                                                 <th class="col-lg-4 text-center">Valor medio de la baraja:</th>
                                                 <td class="col-lg-8 text-black-50">
-                                                    {{ importeBarajaEx }} - {{ importeBarajaNm }} €
+                                                    <span *ngIf="importeBarajaNm>importeBarajaEx">{{ importeBarajaEx | number:'1.0-2' }} - {{ importeBarajaNm | number:'1.0-2' }} €</span>
+                                                    <span *ngIf="importeBarajaEx>importeBarajaNm">{{ importeBarajaNm | number:'1.0-2' }} - {{ importeBarajaEx | number:'1.0-2' }} €</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -61,23 +62,53 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th class="col-lg-4 text-center">Cartas para completar la baraja:</th>
-                                                <td class="col-lg-8 text-black-50">
+                                                <th colspan="2" class="col-lg-12 text-center">Cartas necesarias para completar esta baraja:</th>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12">
                                                     <div *ngIf="importeFaltaBarajaEx>0">
-                                                        <table width="85%" class="tabla_sin">
+                                                        <table width="100%">
+                                                            <thead>
+                                                                <tr class="table">
+                                                                    <th class="text-center" style="border: 1px solid #ddd;">Cantidad</th>
+                                                                    <th class="text-center" style="border: 1px solid #ddd;">Carta</th>
+                                                                    <th class="text-center" style="border: 1px solid #ddd;">Edición</th>
+                                                                    <th class="text-center" style="border: 1px solid #ddd;">Importe Total (EX-NM)</th>
+                                                                    <th class="text-center" style="border: 1px solid #ddd;">Tendencia</th>
+                                                                    <th class="text-center" style="border: 1px solid #ddd;">Añadir</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>&nbsp;</td>
+                                                                </tr>
+                                                            </thead>
                                                             <tr *ngFor="let cartas of cartasFaltan;">
-                                                                <td width="70%">
-                                                                    <h5><a [routerLink]="">{{ cartas.cantidad }} - {{ cartas.carta }}</a></h5>
+                                                                <td width="15%" class="text-center">
+                                                                    <h5><a [routerLink]="">{{ cartas.cantidad }}</a></h5>
                                                                 </td>
-                                                                <td width="30%">
-                                                                    <h5>{{ cartas.importeEx }} - {{ cartas.importeNm }} €</h5>
+                                                                <td width="40%">
+                                                                    <h5><a [routerLink]="" (click)="redireccionExterna(cartas.scryfallUri)">{{ cartas.carta }}</a></h5>
+                                                                </td>
+                                                                <td class="text-center align-middle small"><i class="ss ss-{{ cartas.icon }} ss-2x ss-{{ cartas.rarity }}"></i></td>
+                                                                <td class="text-center text-black-50">
+                                                                    <h5>{{ cartas.importeEx | number:'1.0-2' }} - {{ cartas.importeNm | number:'1.0-2' }} €</h5>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <app-modal-tendencia [id]=cartas.idCarta></app-modal-tendencia>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <app-modal-coleccion [id]=cartas.idCarta></app-modal-coleccion>
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                     </div>
                                                     <div *ngIf="importeFaltaBarajaEx==0">
                                                         <h5>
-                                                            <p class="text-info" style="font-weight: bold">Esta baraja ya la tienes completa</p>
+                                                            <p class="text-info" style="font-weight: bold">Esta baraja la tienes completa</p>
                                                         </h5>
                                                     </div>
                                                 </td>
@@ -90,7 +121,8 @@
                                             <tr>
                                                 <th class="col-lg-4 text-center">Coste de inversión estimado:</th>
                                                 <td class="col-lg-8 text-success" style="font-weight: bold">
-                                                    <h5>{{ importeFaltaBarajaEx | number:'1.0-2' }} - {{ importeFaltaBarajaMn | number:'1.0-2' }} €</h5>
+                                                    <h5 *ngIf="importeFaltaBarajaMn>importeFaltaBarajaEx">{{ importeFaltaBarajaEx | number:'1.0-2' }} - {{ importeFaltaBarajaMn | number:'1.0-2' }} €</h5>
+                                                    <h5 *ngIf="importeFaltaBarajaEx>importeFaltaBarajaMn">{{ importeFaltaBarajaMn | number:'1.0-2' }} - {{ importeFaltaBarajaEx | number:'1.0-2' }} €</h5>
                                                 </td>
                                             </tr>
                                             <tr>

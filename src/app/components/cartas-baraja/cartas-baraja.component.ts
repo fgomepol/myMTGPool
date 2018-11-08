@@ -25,6 +25,7 @@ export class CartasBarajaComponent implements OnInit {
   public formato = '';
   public pagina = '';
   public torneo = '';
+  public codigoBaraja: number;
   public baraja: any;
   public loading: boolean;
   public cartasBaraja: any;
@@ -103,6 +104,8 @@ export class CartasBarajaComponent implements OnInit {
 
         this.formato = params['id'];
         this.torneo = params['id2'];
+        this.codigoBaraja = params['id3'];
+
         this.html = this.sanitizer.bypassSecurityTrustHtml(this.baraja[0].pagina);
         this.cartasBaraja = this.baraja[0].cartasBaraja;
       });
@@ -152,6 +155,22 @@ export class CartasBarajaComponent implements OnInit {
 
   public chartHovered(e: any): void {
     // console.log(e);
+  }
+
+  public actualizaListado() {
+    this.servicio.comparacionColeccion(this.codigoBaraja).subscribe(data => {
+
+      this.cartasFaltan.splice(0);
+      this.cartasFaltan = data.json();
+
+      this.importeFaltaBarajaEx = 0;
+      this.importeFaltaBarajaMn = 0;
+
+      for (const item of this.cartasFaltan) {
+        this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + parseFloat(item.importeEx);
+        this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + parseFloat(item.importeNm);
+      }
+    });
   }
 
 }

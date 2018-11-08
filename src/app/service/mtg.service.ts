@@ -86,6 +86,14 @@ constructor(private http: Http) {}
     return this.http.get(`${this.baseUrl}?opcion=idiomaDeCarta&id=${id}`);
   }
 
+  codigoCarta(UID: number, edicion: number) {
+    return this.http.get(`${this.baseUrl}?opcion=codigoCarta&UID=${UID}&edicion=${edicion}`);
+  }
+
+  edicionCarta(UID: number) {
+    return this.http.get(`${this.baseUrl}?opcion=edicionCarta&UID=${UID}`);
+  }
+
   datosColeccion(usuario: number) {
     return this.http.get(`${this.baseUrl}?opcion=datosColeccion&usuario=${usuario}`);
   }

@@ -101,7 +101,6 @@ export class ColeccionComponent implements OnInit {
     this.loading = true;
 
     this.servicio.listaCartasBusqueda( this.forma2.value ).subscribe( data => {
-
       if (data['_body'] !== '') {
         this.cartasColeccion = JSON.parse(data['_body']);
         this.siteModel = JSON.parse(data['_body']);

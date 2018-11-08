@@ -176,12 +176,12 @@
                                     <table class="col-lg-12 table-fixed">
                                         <thead>
                                             <tr class="table">
-                                                <th class="text-center" style="border: 1px solid #ddd;">Edición</th>
+                                                <!--<th class="text-center" style="border: 1px solid #ddd;">Edición</th>-->
                                                 <th class="text-center" style="border: 1px solid #ddd;">Carta</th>
                                                 <th class="text-center" style="border: 1px solid #ddd;">Nombre</th>
                                                 <th class="text-center" style="border: 1px solid #ddd;">Tipo</th>
                                                 <th class="text-center" style="border: 1px solid #ddd;">Coste</th>
-                                                <th class="text-center" style="border: 1px solid #ddd;">Tendencia</th>
+                                                <!--<th class="text-center" style="border: 1px solid #ddd;">Tendencia</th>-->
                                                 <th class="text-center" style="border: 1px solid #ddd;">Añadir a colección</th>
                                             </tr>
                                             <tr>
@@ -190,7 +190,7 @@
                                         </thead>
 
                                         <tr *ngFor="let carta of cartasColeccion | paginate: { itemsPerPage: 25, currentPage: page }; let i = index;">
-                                            <td class="text-center align-middle small"><i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i></td>
+                                            <!--<td class="text-center align-middle small"><i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i></td>-->
                                             <td class="text-center">
                                                 <!--<img src="{{ carta.imagen }}">-->
                                             </td>
@@ -204,11 +204,12 @@
                                                 <span *ngIf="isNumber(carta.manaCostWeb)"><i class="ms ms-{{ carta.manaCostWeb }} ms-cost ms-shadow"></i></span>
                                                 <span *ngIf="!isNumber(carta.manaCostWeb) && carta.manaCostWeb!=''"><i *ngFor="let coste of carta.manaCostWeb.split(' ');" class="ms ms-{{ coste.replace('/','') }} ms-cost ms-shadow"></i></span>
                                             </td>
-                                            <td class="text-center align-middle small">
+                                            <!--<td class="text-center align-middle small">
                                                 <app-modal-tendencia [id]=carta.productId></app-modal-tendencia>
-                                            </td>
+                                            </td>-->
                                             <td class="text-center align-middle">
-                                                <app-modal-coleccion [id]=carta.productId></app-modal-coleccion>
+                                                <!-- <app-modal-coleccion [id]=carta.productId></app-modal-coleccion> -->
+                                                <app-modal-carta [id]=carta.productId></app-modal-carta>
                                             </td>
                                         </tr>
                                         <tr>

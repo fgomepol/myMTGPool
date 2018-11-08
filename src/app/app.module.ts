@@ -42,6 +42,7 @@ import { ArquetipoComponent } from './components/arquetipo/arquetipo.component';
 import { ContactosComponent } from './components/contactos/contactos.component';
 import { ResultadosComponent } from './components/resultados/resultados.component';
 import { MetajuegoComponent } from './components/metajuego/metajuego.component';
+import { ModalCartaComponent } from './components/modal-carta/modal-carta.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { MetajuegoComponent } from './components/metajuego/metajuego.component';
     ArquetipoComponent,
     ContactosComponent,
     ResultadosComponent,
-    MetajuegoComponent
+    MetajuegoComponent,
+    ModalCartaComponent
   ],
   imports: [
     BrowserModule,

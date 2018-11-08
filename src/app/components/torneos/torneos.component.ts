@@ -27,8 +27,8 @@ export class TorneosComponent implements OnInit, DoCheck {
 
   public barajasVintage: any;
   public barajasLegacy: any;
-  public barajasModern: any = '';
-  public barajasStandard: any;
+  public barajasModern: any;
+  public barajasStandard: any = '';
 
   public torneosVintage: any[] = [];
   public torneosLegacy: any[] = [];
@@ -42,6 +42,7 @@ export class TorneosComponent implements OnInit, DoCheck {
     private servicio: BarajasService,
     private routerActivated: ActivatedRoute
   ) {
+      this.loadingModern = true;
    }
 
   ngOnInit() {
@@ -121,8 +122,7 @@ export class TorneosComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-
-    if (this.barajasModern !== '' || this.barajasModern !== '') {
+    if (this.barajasStandard !== '' || this.barajasStandard !== '') {
       this.loadingModern = false;
     } else {
       this.loadingModern = true;

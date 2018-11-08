@@ -130,7 +130,6 @@ export class CartasBarajaComponent implements OnInit {
 
       this.servicio.comparacionColeccion(params['id3']).subscribe(data => {
         this.cartasFaltan = data.json();
-        console.log(data.json());
 
         for (const item of this.cartasFaltan) {
           this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + parseFloat(item.importeEx);

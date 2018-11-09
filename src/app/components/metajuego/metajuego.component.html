@@ -68,7 +68,11 @@
                                                 <th class="col-lg-4 text-center">Vintage:</th>
                                                 <td class="col-lg-8 text-black-50">
                                                     <ul class="list-group">
-                                                        <li *ngFor="let top of topVintage;" class="list-group-item"><a [routerLink]="['/arquetipo', 'Vintage', top.arquetipo ]">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</a></li>
+                                                        <li *ngFor="let top of topVintage;" class="list-group-item">
+                                                            <a [routerLink]="['/arquetipo', 'Vintage', top.arquetipo ]">
+                                                                <h5>{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5>
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -81,7 +85,11 @@
                                                 <th class="col-lg-4 text-center">Legacy:</th>
                                                 <td class="col-lg-8 text-black-50">
                                                     <ul class="list-group">
-                                                        <li *ngFor="let top of topLegacy;" class="list-group-item"><a [routerLink]="['/arquetipo', 'Legacy', top.arquetipo ]">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</a></li>
+                                                        <li *ngFor="let top of topLegacy;" class="list-group-item">
+                                                            <a [routerLink]="['/arquetipo', 'Legacy', top.arquetipo ]">
+                                                                <h5>{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5>
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -95,7 +103,11 @@
                                                 <td class="col-lg-8 text-black-50">
 
                                                     <ul class="list-group">
-                                                        <li *ngFor="let top of topModern;" class="list-group-item"><a [routerLink]="['/arquetipo', 'Modern', top.arquetipo ]">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</a></li>
+                                                        <li *ngFor="let top of topModern;" class="list-group-item">
+                                                            <a [routerLink]="['/arquetipo', 'Modern', top.arquetipo ]">
+                                                                <h5>{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5>
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -107,7 +119,13 @@
                                             <tr>
                                                 <th class="col-lg-4 text-center">Standard:</th>
                                                 <td class="col-lg-8 text-black-50">
-
+                                                    <ul class="list-group">
+                                                        <li *ngFor="let top of topStandard;" class="list-group-item">
+                                                            <a [routerLink]="['/arquetipo', 'Standard', top.arquetipo ]">
+                                                                <h5>{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </td>
                                             </tr>
                                         </thead>

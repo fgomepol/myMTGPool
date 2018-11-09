@@ -171,6 +171,10 @@ export class MetajuegoComponent implements OnInit, DoCheck {
       this.servicio.topArquetipos('Modern').subscribe(data => {
         this.topModern = JSON.parse(data['_body']);
       });
+
+      this.servicio.topArquetipos('Standard').subscribe(data => {
+        this.topStandard = JSON.parse(data['_body']);
+      });
     }
   }
 

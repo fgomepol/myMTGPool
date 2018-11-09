@@ -38,12 +38,12 @@
                                     </tr>
                                 </table>
 
-                                <app-loading *ngIf="formularioRelleno!==false && formularioRelleno!==true"></app-loading>
+                                <app-loading *ngIf="cargarPagina"></app-loading>
 
-                                <div *ngIf="formularioRelleno===false" class="text-center">
+                                <div *ngIf="formularioRelleno===false && !cargarPagina" class="text-center">
                                     <p class="text-black-50">Aún no ha introducido cartas en su coleccion por favor introduzca sus cartas <a class="text-info" [routerLink]="['/coleccion']">Añadir cartas a colección</a></p>
                                 </div>
-                                <div *ngIf="formularioRelleno===true">
+                                <div *ngIf="formularioRelleno===true && !cargarPagina">
                                     <table style="width:100%">
                                         <thead>
                                             <tr>
@@ -68,7 +68,9 @@
                                                     <!-- [labels]="doughnutChartLabels" -->
                                                     <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                                                     <BR>
-                                                    <div class="text-center text-info">Número total de cartas en tu colección: {{ totalCartas }}</div>
+                                                    <div class="text-center text-info">
+                                                        <h5>Número total de cartas en tu colección: {{ totalCartas }}</h5>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>

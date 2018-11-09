@@ -27,7 +27,7 @@ export class CartasBarajaComponent implements OnInit {
   public torneo = '';
   public codigoBaraja: number;
   public baraja: any;
-  public loading: boolean;
+  public loading = true;
   public cartasBaraja: any;
   public totalCartas: number;
   public importeBarajaEx: number;
@@ -95,7 +95,6 @@ export class CartasBarajaComponent implements OnInit {
 
    ngOnInit() {
     this.user = this.storageService.getCurrentUser();
-    this.loading = true;
 
     this.routerActivated.params.subscribe( params => {
       this.servicio.cartasBaraja(params['id2'], params['id3']).subscribe(data => {
@@ -107,6 +106,7 @@ export class CartasBarajaComponent implements OnInit {
         this.codigoBaraja = params['id3'];
 
         this.html = this.sanitizer.bypassSecurityTrustHtml(this.baraja[0].pagina);
+
         this.cartasBaraja = this.baraja[0].cartasBaraja;
       });
 
@@ -138,9 +138,9 @@ export class CartasBarajaComponent implements OnInit {
           this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + parseFloat(item.importeEx);
           this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + parseFloat(item.importeNm);
         }
-      });
 
-      this.loading = false;
+        this.loading = false;
+      });
     });
   }
 

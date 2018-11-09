@@ -24,7 +24,7 @@ export class ListadoBarajasComponent implements OnInit {
   public formato = '';
   public pagina = '';
   public barajas: any;
-  public loading: boolean;
+  public cargandoPagina = true;
 
   constructor(
     private storageService: StorageService,
@@ -39,8 +39,8 @@ export class ListadoBarajasComponent implements OnInit {
     this.routerActivated.params.subscribe( params => {
       this.servicio.listaBarajasTorneo(params['id2']).subscribe(data => {
         this.formato = params['id'];
-        this.barajas = JSON.parse(data['_body']);
-        this.loading = false;
+        this.barajas = data.json();
+        this.cargandoPagina = false;
       });
     });
   }

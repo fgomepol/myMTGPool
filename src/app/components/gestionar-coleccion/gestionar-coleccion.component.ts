@@ -110,4 +110,8 @@ export class GestionarColeccionComponent implements OnInit {
   muestraFiltros(valor: boolean) {
     this.ocultaFiltros = valor;
   }
+
+  reseteaBusqueda() {
+    this.forma.reset();
+  }
 }

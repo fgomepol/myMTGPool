@@ -145,4 +145,8 @@ constructor(private http: Http) {}
   listadoContactos(id: number) {
     return this.http.get(`${this.baseUrl}?opcion=listadoContactos&id=${id}`);
   }
+
+  buscadorColeccion(item: Object, usuario: number) {
+    return this.http.post(`${this.baseUrl}?opcion=buscadorColeccion`, [item, usuario]);
+  }
 }

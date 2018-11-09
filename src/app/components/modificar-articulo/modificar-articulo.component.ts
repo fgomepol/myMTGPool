@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
-import { AuthenticationService } from '../../service/authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MtgService } from '../../service/mtg.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ArticuloModule } from '../../models/articulo.module';
 
 @Component({
   selector: 'app-modificar-articulo',

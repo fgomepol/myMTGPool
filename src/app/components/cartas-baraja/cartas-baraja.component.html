@@ -65,24 +65,16 @@
                                                 <th colspan="2" class="col-lg-12 text-center">Cartas necesarias para completar esta baraja</th>
                                             </tr>
                                             <tr>
-                                                <td colspan="2" class="col-lg-12 text-black-50">
-                                                    &nbsp;
-                                                </td>
-                                            </tr>
-                                            <tr>
                                                 <td colspan="2" class="col-lg-12">
                                                     <div *ngIf="importeFaltaBarajaEx>0">
-                                                        <div class="text-right"><a class="navbar-brand text-success" [routerLink]="" (click)="actualizaListado();"><i class="material-icons">refresh</i>Actualizar listado</a>
-                                                            <BR>
-                                                            <BR>
-                                                        </div>
+                                                        <a class="navbar-brand text-success" [routerLink]="" (click)="actualizaListado();"><i class="material-icons">refresh</i>Actualizar listado</a>
                                                         <table width="100%">
                                                             <thead>
                                                                 <tr class="table">
                                                                     <th class="text-center" style="border: 1px solid #ddd;">Cantidad</th>
                                                                     <th class="text-center" style="border: 1px solid #ddd;">Carta</th>
                                                                     <th class="text-center" style="border: 1px solid #ddd;">Edición</th>
-                                                                    <th class="text-center" style="border: 1px solid #ddd;">Importe Total (EX-NM)</th>
+                                                                    <th class="text-center" style="border: 1px solid #ddd;">Importe (EX-NM)</th>
                                                                     <th class="text-center" style="border: 1px solid #ddd;">Tendencia</th>
                                                                     <th class="text-center" style="border: 1px solid #ddd;">Añadir</th>
                                                                 </tr>
@@ -110,19 +102,19 @@
                                                             </tr>
                                                         </table>
                                                     </div>
-                                                    <div *ngIf="importeFaltaBarajaEx==0">
+                                                    <div *ngIf="importeFaltaBarajaEx==0" class="text-center">
                                                         <h5>
                                                             <p class="text-info" style="font-weight: bold">Esta baraja la tienes completa</p>
                                                         </h5>
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr *ngIf="importeFaltaBarajaEx>0">
                                                 <td colspan="2" class="col-lg-12 text-black-50">
                                                     &nbsp;
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr *ngIf="importeFaltaBarajaEx>0">
                                                 <th class="col-lg-4 text-center">Coste de inversión estimado:</th>
                                                 <td class="col-lg-8 text-success" style="font-weight: bold">
                                                     <h5 *ngIf="importeFaltaBarajaMn>importeFaltaBarajaEx">{{ importeFaltaBarajaEx | number:'1.0-2' }} - {{ importeFaltaBarajaMn | number:'1.0-2' }} €</h5>

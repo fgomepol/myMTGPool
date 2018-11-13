@@ -5,11 +5,8 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div *ngIf="guardadaCarta == true" class="text-success text-center">
-        Las cartas se han añadido correctamente a tu colección.
-        <div>
-            &nbsp;
-        </div>
+    <div *ngIf="guardadaCarta == true" class="alert alert-success text-center" role="alert">
+        <p style="font-weight: bold">Las cartas se han añadido correctamente a tu colección.</p>
     </div>
     <div class="modal-body">
         <form [formGroup]="forma" (ngSubmit)="guardarCartas()" novalidate="novalidate">

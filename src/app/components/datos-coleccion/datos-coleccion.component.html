@@ -40,8 +40,8 @@
 
                                 <app-loading *ngIf="cargarPagina"></app-loading>
 
-                                <div *ngIf="formularioRelleno===false && !cargarPagina" class="text-center">
-                                    <p class="text-black-50">Aún no ha introducido cartas en su coleccion por favor introduzca sus cartas <a class="text-info" [routerLink]="['/coleccion']">Añadir cartas a colección</a></p>
+                                <div *ngIf="formularioRelleno===false && !cargarPagina" class="alert alert-warning text-center" role="alert">
+                                    <p style="font-weight: bold">Aún no ha introducido cartas en su coleccion por favor introduzca sus cartas <a class="text-info" [routerLink]="['/coleccion']">Añadir cartas a colección</a></p>
                                 </div>
                                 <div *ngIf="formularioRelleno===true && !cargarPagina">
                                     <table style="width:100%">

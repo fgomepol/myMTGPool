@@ -40,8 +40,8 @@
 
                                 <app-loading *ngIf="cargandoPagina"></app-loading>
 
-                                <div *ngIf="formularioRelleno===false && !cargandoPagina" class="text-center">
-                                    <p class="text-black-50">Aún no ha introducido cartas en su coleccion por favor introduzca sus cartas <a class="text-info" [routerLink]="['/coleccion']">Añadir cartas a colección</a></p>
+                                <div *ngIf="formularioRelleno===false && !cargandoPagina" class="alert alert-warning text-center" role="alert">
+                                    <p style="font-weight: bold">Aún no ha introducido cartas en su coleccion por favor introduzca sus cartas <a class="text-info" [routerLink]="['/coleccion']">Añadir cartas a colección</a></p>
                                 </div>
                                 <div *ngIf="formularioRelleno===true && !cargandoPagina">
                                     <table class="col-lg-12">
@@ -188,8 +188,8 @@
                                         </tr>
                                     </table>
 
-                                    <div *ngIf="noEncontrado && !cargandoPagina" class="text-center">
-                                        <h4 class="text-danger" style="font-weight: bold">La búsqueda realizada no ha devuelto resultados.</h4>
+                                    <div *ngIf="noEncontrado && !cargandoPagina" class="alert alert-danger text-center" role="alert">
+                                        <p style="font-weight: bold">La búsqueda realizada no ha devuelto resultados.</p>
                                     </div>
 
                                     <div *ngIf="!noEncontrado" class="text-center">

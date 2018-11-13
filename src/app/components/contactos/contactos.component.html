@@ -40,32 +40,20 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <div *ngIf="formularioRelleno == true" class="text-success text-center">
-                                    El contacto se guardó correctamente.
-                                    <div>
-                                        &nbsp;
-                                    </div>
+                                <div *ngIf="formularioRelleno == true" class="alert alert-success text-center" role="alert">
+                                    <p style="font-weight: bold">El contacto se guardó correctamente.</p>
                                 </div>
 
-                                <div *ngIf="eliminado == true" class="text-success text-center">
-                                    El contacto se eliminó correctamente.
-                                    <div>
-                                        &nbsp;
-                                    </div>
+                                <div *ngIf="eliminado == true" class="alert alert-success text-center" role="alert">
+                                    <p style="font-weight: bold">El contacto se eliminó correctamente.</p>
                                 </div>
 
-                                <div *ngIf="errorBusqueda == true" class="text-danger text-center">
-                                    El contacto indicado no está dado de alta en la plataforma. Asegúrese de usar el nombre exacto del usuario.
-                                    <div>
-                                        &nbsp;
-                                    </div>
+                                <div *ngIf="errorBusqueda == true" class="alert alert-danger text-center" role="alert">
+                                    <p style="font-weight: bold">El contacto indicado no está dado de alta en la plataforma. Asegúrese de usar el nombre exacto del usuario.</p>
                                 </div>
 
-                                <div *ngIf="errorInsercion == true" class="text-danger text-center">
-                                    El contacto indicado ya esta añadido a la lista de contactos.
-                                    <div>
-                                        &nbsp;
-                                    </div>
+                                <div *ngIf="errorInsercion == true" class="alert alert-danger text-center" role="alert">
+                                    <p style="font-weight: bold">El contacto indicado ya esta añadido a la lista de contactos.</p>
                                 </div>
 
                                 <div class="col-lg-12">

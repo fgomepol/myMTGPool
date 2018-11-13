@@ -9,8 +9,8 @@
     </header>
 
     <!-- Page Features -->
-    <div *ngIf="formularioRelleno == true" class="text-success">
-        Te has dado de alta correctamente.
+    <div *ngIf="formularioRelleno == true" class="alert alert-success text-center" role="alert">
+        <p style="font-weight: bold">Te has dado de alta correctamente.</p>
     </div>
 
     <div *ngIf="formularioRelleno == false">

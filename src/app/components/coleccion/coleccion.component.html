@@ -40,12 +40,10 @@
                                     </table>
                                 </div>
                                 <div *ngIf="!formularioRelleno && !loading">
-                                    <div *ngIf="guardadoCorrectamente == true" class="text-success text-center">
-                                        Las cartas se han añadido correctamente a tu colección.
-                                        <div>
-                                            &nbsp;
-                                        </div>
+                                    <div *ngIf="guardadoCorrectamente == true" class="alert alert-success text-center" role="alert">
+                                        <p style="font-weight: bold">Las cartas se han añadido correctamente a tu colección.</p>
                                     </div>
+
                                     <form [formGroup]="forma2" (ngSubmit)="guardarCambios()" novalidate="novalidate">
                                         <table style="width:100%">
                                             <thead>

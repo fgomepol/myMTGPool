@@ -68,9 +68,8 @@ export class DatosColeccionComponent implements OnInit {
       this.doughnutChartData = [data.json()['R'], data.json()['U'], data.json()['G'], data.json()['B'], data.json()['W'], data.json()['I'], data.json()['L']];
       this.doughnutPercentage = [ Math.round((data.json()['R'] / data.json()['total']) * 100), Math.round((data.json()['U'] / data.json()['total']) * 100), Math.round((data.json()['G'] / data.json()['total']) * 100), Math.round((data.json()['B'] / data.json()['total']) * 100), Math.round((data.json()['W'] / data.json()['total']) * 100), Math.round((data.json()['I'] / data.json()['total']) * 100), Math.round((data.json()['L'] / data.json()['total']) * 100)];
       this.rarityPercentage = [ Math.round((data.json()['mythic'] / data.json()['total']) * 100), Math.round((data.json()['rare'] / data.json()['total']) * 100), Math.round((data.json()['uncommon'] / data.json()['total']) * 100), Math.round((data.json()['common'] / data.json()['total']) * 100) ];
+      this.cargarPagina = false;
     });
-
-    this.cargarPagina = false;
   }
 
   // events

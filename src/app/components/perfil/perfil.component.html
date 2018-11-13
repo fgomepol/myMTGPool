@@ -48,8 +48,8 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="forma.get('password').hasError('minlength')" class="form-group row text-danger">
-                                    La clave debe teber por lo menos 8 caracteres.
+                                <div *ngIf="forma.get('password').hasError('minlength')" class="alert alert-danger" role="alert">
+                                    <p style="font-weight: bold">La clave debe teber por lo menos 8 caracteres.</p>
                                 </div>
 
                                 <div class="form-group row" [ngClass]="{ 'text-danger': !forma.get('email').valid, 'text-success': forma.controls['email'].valid }">
@@ -60,8 +60,8 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="forma.get('email').hasError('pattern')" class="form-group row text-danger">
-                                    Debe introducir un email válido.
+                                <div *ngIf="forma.get('email').hasError('pattern')" class="alert alert-danger" role="alert">
+                                    <p style="font-weight: bold">Debe introducir un email válido.</p>
                                 </div>
 
                                 <div class="form-group row" [ngClass]="{ 'text-danger': !forma.get('pais').valid, 'text-success': forma.controls['pais'].valid }">
@@ -78,7 +78,6 @@
                                 <div class="form-group row" [ngClass]="{ 'text-danger': !forma.get('provincia').valid, 'text-success': forma.controls['provincia'].valid }">
                                     <label class="col-3 col-form-label">Provincia</label>
                                     <div class="col-md-8">
-
                                         <input class="form-control" type="text" placeholder="Provincia" formControlName="provincia">
                                     </div>
                                 </div>
@@ -99,12 +98,9 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="forma.get('cp').hasError('minlength')" class="form-group row text-danger">
-                                    Por lo menos 5 números.
-                                </div>
-
-                                <div *ngIf="forma.get('cp').hasError('pattern')" class="form-group row text-danger">
-                                    Debe introducir un código postal válido.
+                                <div *ngIf="forma.get('cp').hasError('minlength') || forma.get('cp').hasError('pattern')" class="alert alert-danger" role="alert">
+                                    <p style="font-weight: bold" *ngIf="forma.get('cp').hasError('minlength')">Por lo menos 5 números.</p>
+                                    <p style="font-weight: bold" *ngIf="forma.get('cp').hasError('pattern')">Debe introducir un código postal válido.</p>
                                 </div>
 
                                 <div class="form-group row">

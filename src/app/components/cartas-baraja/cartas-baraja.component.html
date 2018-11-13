@@ -91,7 +91,7 @@
                                                                 </td>
                                                                 <td class="text-center align-middle small"><i class="ss ss-{{ cartas.icon }} ss-2x ss-{{ cartas.rarity }}"></i></td>
                                                                 <td class="text-center text-black-50">
-                                                                    <h5>{{ cartas.importeEx | number:'1.0-2' }} - {{ cartas.importeNm | number:'1.0-2' }} €</h5>
+                                                                    <h5>{{ cartas.importeEx * cartas.cantidad | number:'1.0-2' }} - {{ cartas.importeNm * cartas.cantidad | number:'1.0-2' }} €</h5>
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <app-modal-tendencia [id]=cartas.idCarta></app-modal-tendencia>

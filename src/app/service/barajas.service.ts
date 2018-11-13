@@ -10,8 +10,8 @@ export class BarajasService {
 
   constructor(private http: Http) { }
 
-  listaBarajasTorneo(idTorneo: string) {
-    return this.http.get(`${this.baseUrl}?opcion=listaBarajasTorneo&idTorneo=${idTorneo}`);
+  listaBarajasTorneo(idTorneo: string, usuario: number) {
+    return this.http.get(`${this.baseUrl}?opcion=listaBarajasTorneo&idTorneo=${idTorneo}&usuario=${usuario}`);
   }
 
   listadoTorneos(formato: string) {
@@ -42,6 +42,10 @@ export class BarajasService {
     return this.http.get(`${this.baseUrl}?opcion=barajasMetajuego&formato=${formato}`);
   }
 
+  barajasSugerencia(formato: string) {
+    return this.http.get(`${this.baseUrl}?opcion=barajasSugerencia&formato=${formato}`);
+  }
+
   datosEstadisticosBaraja(idBaraja: number) {
     return this.http.get(`${this.baseUrl}?opcion=datosEstadisticosBaraja&idBaraja=${idBaraja}`);
   }
@@ -50,7 +54,7 @@ export class BarajasService {
     return this.http.get(`${this.baseUrl}?opcion=ultimos5Torneos&formato=${formato}`);
   }
 
-  comparacionColeccion(idBaraja: number) {
-    return this.http.get(`${this.baseUrl}?opcion=comparacionColeccion&idBaraja=${idBaraja}`);
+  comparacionColeccion(idBaraja: number, usuario: number) {
+    return this.http.get(`${this.baseUrl}?opcion=comparacionColeccion&idBaraja=${idBaraja}&usuario=${usuario}`);
   }
 }

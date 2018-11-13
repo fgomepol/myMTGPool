@@ -37,7 +37,7 @@ export class ListadoBarajasComponent implements OnInit {
     this.user = this.storageService.getCurrentUser();
 
     this.routerActivated.params.subscribe( params => {
-      this.servicio.listaBarajasTorneo(params['id2']).subscribe(data => {
+      this.servicio.listaBarajasTorneo(params['id2'], this.user).subscribe(data => {
         this.formato = params['id'];
         this.barajas = data.json();
         this.cargandoPagina = false;

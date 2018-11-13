@@ -76,6 +76,7 @@ export class ModalCartaComponent  {
 
   guardarCartas() {
     this.servicio.guardarCartasColeccion(this.forma.value, this.user).subscribe(data => {
+
       if (data['_body'] !== '') {
         this.guardadaCarta = true;
       }

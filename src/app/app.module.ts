@@ -43,6 +43,7 @@ import { ContactosComponent } from './components/contactos/contactos.component';
 import { ResultadosComponent } from './components/resultados/resultados.component';
 import { MetajuegoComponent } from './components/metajuego/metajuego.component';
 import { ModalCartaComponent } from './components/modal-carta/modal-carta.component';
+import { SugerenciaInversionComponent } from './components/sugerencia-inversion/sugerencia-inversion.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { ModalCartaComponent } from './components/modal-carta/modal-carta.compon
     ContactosComponent,
     ResultadosComponent,
     MetajuegoComponent,
-    ModalCartaComponent
+    ModalCartaComponent,
+    SugerenciaInversionComponent
   ],
   imports: [
     BrowserModule,

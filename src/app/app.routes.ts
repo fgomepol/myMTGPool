@@ -22,6 +22,7 @@ import { ArquetipoComponent } from './components/arquetipo/arquetipo.component';
 import { ContactosComponent } from './components/contactos/contactos.component';
 import { ResultadosComponent } from './components/resultados/resultados.component';
 import { MetajuegoComponent } from './components/metajuego/metajuego.component';
+import { SugerenciaInversionComponent } from './components/sugerencia-inversion/sugerencia-inversion.component';
 
 const appRoutes: Routes = [
   { path: 'index', component: IndexComponent },
@@ -41,6 +42,7 @@ const appRoutes: Routes = [
   { path: 'prestamos', component: PrestamosComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'mail', component: MailComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'home', component: HomeComponent, canActivate: [ AuthorizatedGuardComponent ] },
+  { path: 'sugerencias', component: SugerenciaInversionComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'listadoBarajas/:id/:id2', component: ListadoBarajasComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'cartasBaraja/:id/:id2/:id3', component: CartasBarajaComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'arquetipo/:id/:id2', component: ArquetipoComponent, canActivate: [ AuthorizatedGuardComponent ] },

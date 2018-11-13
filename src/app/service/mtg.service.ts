@@ -149,4 +149,8 @@ constructor(private http: Http) {}
   buscadorColeccion(item: Object, usuario: number) {
     return this.http.post(`${this.baseUrl}?opcion=buscadorColeccion`, [item, usuario]);
   }
+
+  buscarBarajasInverir(item: Object, usuario: number) {
+    return this.http.post(`${this.baseUrl}?opcion=buscarBarajasInverir`, [item, usuario]);
+  }
 }

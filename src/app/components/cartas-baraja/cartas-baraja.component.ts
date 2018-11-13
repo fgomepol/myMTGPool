@@ -131,14 +131,13 @@ export class CartasBarajaComponent implements OnInit {
         this.lineChartData = datosChart;
       });
 
-      this.servicio.comparacionColeccion(params['id3']).subscribe(data => {
+      this.servicio.comparacionColeccion(params['id3'], this.user).subscribe(data => {
         this.cartasFaltan = data.json();
 
         for (const item of this.cartasFaltan) {
-          this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + parseFloat(item.importeEx);
-          this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + parseFloat(item.importeNm);
+          this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + (parseFloat(item.importeEx) * parseFloat(item.cantidad));
+          this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + (parseFloat(item.importeNm) * parseFloat(item.cantidad));
         }
-
         this.loading = false;
       });
     });
@@ -158,7 +157,7 @@ export class CartasBarajaComponent implements OnInit {
   }
 
   public actualizaListado() {
-    this.servicio.comparacionColeccion(this.codigoBaraja).subscribe(data => {
+    this.servicio.comparacionColeccion(this.codigoBaraja, this.user).subscribe(data => {
 
       this.cartasFaltan.splice(0);
       this.cartasFaltan = data.json();

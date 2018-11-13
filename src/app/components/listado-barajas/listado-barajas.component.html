@@ -63,7 +63,7 @@
                                                 <h5><a [ngClass]="{ 'text-warning': baraja.posicion>8, 'text-success': baraja.posicion<=8, 'text-danger': baraja.posicion>16 }" [routerLink]="['/cartasBaraja', formato, baraja.idTorneo, baraja.codigoBaraja ]">{{ baraja.posicion }}</a></h5>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h5><span [ngClass]="{'text-success': baraja.cantidadQueFalta===baraja.cantidadBaraja, 'text-warning': baraja.cantidadQueFalta>=baraja.cantidadBaraja-14 && baraja.cantidadQueFalta<baraja.cantidadBaraja, 'text-danger': baraja.cantidadQueFalta<baraja.cantidadBaraja-15 }">{{ baraja.cantidadQueFalta }}</span>/
+                                                <h5><span [ngClass]="{'text-success': baraja.cantidadQueFalta===baraja.cantidadBaraja, 'text-warning': baraja.cantidadQueFalta>=baraja.cantidadBaraja-14 && baraja.cantidadQueFalta<baraja.cantidadBaraja, 'text-danger': baraja.cantidadQueFalta<=baraja.cantidadBaraja-15 }">{{ baraja.cantidadQueFalta }}</span>/
                                                     <span class="text-success">{{ baraja.cantidadBaraja }}</span>
                                                 </h5>
                                             </td>

@@ -1,0 +1,165 @@
+<div id="wrapper">
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
+    <!-- /Navigation -->
+    <!-- /ControlPanel -->
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- ControlPanel -->
+            <app-option [pantalla]="pantalla"></app-option>
+            <!-- /.ControlPanel -->
+        </div>
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Sugerencias de Inversión
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <div *ngIf="!loading">
+                                    <form [formGroup]="forma" (ngSubmit)="guardarCambios()" novalidate="novalidate">
+                                        <table style="width:80%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-lg-4 text-center">Formato:</th>
+                                                    <td class="col-lg-8 text-black-50">
+                                                        <select class="form-control" formControlName="formato" (change)="listadoBarajas($event.target.value);">
+                                                            <option value="Vintage">Vintage</option>
+                                                            <option value="Legacy">Legacy</option>
+                                                            <option value="Modern">Modern</option>
+                                                            <option value="Standard">Standard</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-center" [ngClass]="{ 'text-danger': !forma.controls['minimo'].valid, 'text-success': forma.controls['minimo'].valid }">Minimo:</th>
+                                                    <td class="col-lg-8 text-black-50">
+                                                        <input type="number" formControlName="minimo" name="minimo" step="10" min="0" [ngClass]="{ 'text-danger': !forma.controls['minimo'].valid, 'text-success': forma.controls['minimo'].valid }">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-center" [ngClass]="{ 'text-danger': !forma.controls['maximo'].valid, 'text-success': forma.controls['maximo'].valid }">Máximo:</th>
+                                                    <td class="col-lg-8 text-black-50">
+                                                        <input type="number" formControlName="maximo" name="maximo" step="10" min="1" [ngClass]="{ 'text-danger': !forma.controls['maximo'].valid, 'text-success': forma.controls['maximo'].valid }">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-center">Arquetipo:</th>
+                                                    <td class="col-lg-8 text-black-50">
+                                                        <select class="form-control" formControlName="arquetipo">
+                                                            <option value="">
+                                                                    Seleccione Arquetipo
+                                                            </option>
+                                                            <option *ngFor="let barajas of arquetipos" value="{{ barajas['arquetipo'] }}">
+                                                                {{ barajas['arquetipo'] }}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        <BR>
+                                        <div class="form-group row">
+                                            <div class="input-group col-md-12 text-center">
+                                                <button type="submit" class="btn btn-outline-primary">
+                                                    Buscar Sugerencias
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <app-loading *ngIf="loading"></app-loading>
+
+                                <div *ngIf="!loading && vacio" class="alert alert-danger text-center" role="alert">
+                                    <p style="font-weight: bold">No existen sugerencias con los criterios indicados.</p>
+                                </div>
+
+                                <div *ngIf="formularioRelleno && !loading">
+                                    <table class="col-lg-12 table-fixed">
+                                        <thead>
+                                            <tr class="table">
+                                                <th class="text-center" style="border: 1px solid #ddd;">Torneo</th>
+                                                <th class="text-center" style="border: 1px solid #ddd;">Arquetipo</th>
+                                                <th class="text-center" style="border: 1px solid #ddd;">Posición</th>
+                                                <th class="text-center" style="border: 1px solid #ddd;">Nº jugadores</th>
+                                                <th class="text-center" style="border: 1px solid #ddd;">Fecha</th>
+                                                <th class="text-center" style="border: 1px solid #ddd;">Completa</th>
+                                                <th class="text-center" style="border: 1px solid #ddd;">Importe NM</th>
+                                            </tr>
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                        </thead>
+
+                                        <tr *ngFor="let baraja of barajasBuscadas; let i = index;">
+                                            <td class="text-center">
+                                                <h5><a target="_blank" [routerLink]="['/listadoBarajas', formato, baraja.idTorneo ]">{{ baraja.nombre }}</a></h5>
+                                            </td>
+                                            <td class="text-center">
+                                                <h5><a target="_blank" [routerLink]="['/cartasBaraja', formato, baraja.idTorneo, baraja.codigoBaraja ]">{{ baraja.arquetipo }}</a></h5>
+                                            </td>
+                                            <td class="text-center align-middle small">
+                                                <h5 [ngClass]="{ 'text-warning': baraja.posicion>8, 'text-success': baraja.posicion<=8, 'text-danger': baraja.posicion>16 }">{{ baraja.posicion }}</h5>
+                                            </td>
+                                            <td class="text-center align-middle small">
+                                                <h5>{{ baraja.jugadores }}</h5>
+                                            </td>
+                                            <td class="text-center align-middle small">
+                                                <h5>{{ baraja.fecha*1000 | date: 'dd/MM/yyyy' }}</h5>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <h5><span [ngClass]="{'text-success': baraja.cantidadQueFalta===baraja.cantidadBaraja, 'text-warning': baraja.cantidadQueFalta>=baraja.cantidadBaraja-14 && baraja.cantidadQueFalta<baraja.cantidadBaraja, 'text-danger': baraja.cantidadQueFalta<=baraja.cantidadBaraja-15 }">{{ baraja.cantidadQueFalta }}</span>/
+                                                    <span class="text-success">{{ baraja.cantidadBaraja }}</span>
+                                                </h5>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <h5>{{ baraja.costeInversion | number:'1.0-2' }} €</h5>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.col-lg-4 (nested) -->
+                        <div class="col-lg-8">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                        <!-- /.col-lg-8 (nested) -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-8 -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+
+<app-scripts></app-scripts>

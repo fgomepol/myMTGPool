@@ -188,13 +188,13 @@
 
                                         <tr *ngFor="let torneo of torneos | paginate: { itemsPerPage: 30, currentPage: page }; let impar = odd;let par = even;">
                                             <td class="text-left" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h5><a [routerLink]="['/listadoBarajas', formato, torneo.codTorneo ]">{{ torneo.nombre }}</a></h5>
+                                                <h5><a target="_blank" [routerLink]="['/listadoBarajas', formato, torneo.codTorneo ]">{{ torneo.nombre }}</a></h5>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h5><a [routerLink]="['/listadoBarajas', formato, torneo.codTorneo ]">{{ torneo.jugadores }}</a></h5>
+                                                <h5><a target="_blank" [routerLink]="['/listadoBarajas', formato, torneo.codTorneo ]">{{ torneo.jugadores }}</a></h5>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h5><a [routerLink]="['/listadoBarajas', formato, torneo.codTorneo ]">{{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }}</a></h5>
+                                                <h5><a target="_blank" [routerLink]="['/listadoBarajas', formato, torneo.codTorneo ]">{{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }}</a></h5>
                                             </td>
                                         </tr>
                                         <tr>

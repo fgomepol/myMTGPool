@@ -93,25 +93,25 @@ export class TorneosComponent implements OnInit, DoCheck {
 
           // Sacamos los últimos 5 torneos de cada arquetipo
 
-          this.servicio.ultimos5Torneos('Vintage').subscribe( data2 => {
+          this.servicio.ultimosTorneos('Vintage', 5).subscribe( data2 => {
             if (data2['_body'] !== 'no hay datos') {
               this.torneosVintage = data2.json();
             }
           });
 
-          this.servicio.ultimos5Torneos('Legacy').subscribe( data2 => {
+          this.servicio.ultimosTorneos('Legacy', 5).subscribe( data2 => {
             if (data2['_body'] !== 'no hay datos') {
               this.torneosLegacy = data2.json();
             }
           });
 
-          this.servicio.ultimos5Torneos('Modern').subscribe( data2 => {
+          this.servicio.ultimosTorneos('Modern', 5).subscribe( data2 => {
             if (data2['_body'] !== 'no hay datos') {
               this.torneosModern = data2.json();
             }
           });
 
-          this.servicio.ultimos5Torneos('Standard').subscribe( data2 => {
+          this.servicio.ultimosTorneos('Standard', 5).subscribe( data2 => {
             if (data2['_body'] !== 'no hay datos') {
               this.torneosStandard = data2.json();
             }

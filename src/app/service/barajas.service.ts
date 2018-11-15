@@ -30,8 +30,8 @@ export class BarajasService {
     return this.http.get(`${this.baseUrl}?opcion=resultados&jugador=${jugador}&formato=${formato}`);
   }
 
-  topArquetipos(formato: string) {
-    return this.http.get(`${this.baseUrl}?opcion=topArquetipos&formato=${formato}`);
+  topArquetipos(formato: string, limite: number) {
+    return this.http.get(`${this.baseUrl}?opcion=topArquetipos&formato=${formato}&limite=${limite}`);
   }
 
   barajasUltimoMes(formato: string, limite: number) {
@@ -50,8 +50,8 @@ export class BarajasService {
     return this.http.get(`${this.baseUrl}?opcion=datosEstadisticosBaraja&idBaraja=${idBaraja}`);
   }
 
-  ultimos5Torneos(formato: string) {
-    return this.http.get(`${this.baseUrl}?opcion=ultimos5Torneos&formato=${formato}`);
+  ultimosTorneos(formato: string, limite: number) {
+    return this.http.get(`${this.baseUrl}?opcion=ultimosTorneos&formato=${formato}&limite=${limite}`);
   }
 
   comparacionColeccion(idBaraja: number, usuario: number) {

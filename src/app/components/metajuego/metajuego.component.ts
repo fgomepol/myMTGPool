@@ -160,19 +160,19 @@ export class MetajuegoComponent implements OnInit, DoCheck {
 
     if (this.formato === '') {
 
-      this.servicio.topArquetipos('Vintage').subscribe(data => {
+      this.servicio.topArquetipos('Vintage', 5).subscribe(data => {
         this.topVintage = JSON.parse(data['_body']);
       });
 
-      this.servicio.topArquetipos('Legacy').subscribe(data => {
+      this.servicio.topArquetipos('Legacy', 5).subscribe(data => {
         this.topLegacy = JSON.parse(data['_body']);
       });
 
-      this.servicio.topArquetipos('Modern').subscribe(data => {
+      this.servicio.topArquetipos('Modern', 5).subscribe(data => {
         this.topModern = JSON.parse(data['_body']);
       });
 
-      this.servicio.topArquetipos('Standard').subscribe(data => {
+      this.servicio.topArquetipos('Standard', 5).subscribe(data => {
         this.topStandard = JSON.parse(data['_body']);
       });
     }

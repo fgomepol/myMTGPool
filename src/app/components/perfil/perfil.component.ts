@@ -22,6 +22,7 @@ export class PerfilComponent implements OnInit {
   public paises;
   public datosUsuario: any;
   public pantalla = 'perfil';
+  public cargandoPagina = true;
 
   constructor(
     private storageService: StorageService,
@@ -63,6 +64,7 @@ export class PerfilComponent implements OnInit {
           cp : item.cp,
           id: item.id
         });
+        this.cargandoPagina = false;
       }
     });
   }

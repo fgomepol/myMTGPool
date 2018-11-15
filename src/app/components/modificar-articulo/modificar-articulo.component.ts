@@ -24,6 +24,7 @@ export class ModificarArticuloComponent implements OnInit {
   public carta: any = '';
   public idiomasCartas: any[] = [];
   public pantalla = 'coleccion';
+  public cargandoPagina = true;
 
   constructor(
     private storageService: StorageService,
@@ -61,6 +62,7 @@ export class ModificarArticuloComponent implements OnInit {
         });
         this.idiomaDeCarta(data.json()[0].productId);
         this.carta = data.json()[0];
+        this.cargandoPagina = false;
       });
     });
   }

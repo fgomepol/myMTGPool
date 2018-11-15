@@ -38,7 +38,7 @@ export class SugerenciaInversionComponent implements OnInit {
   ) {
     this.forma = new FormGroup({
       'formato': new FormControl('', Validators.required),
-      'minimo': new FormControl('', Validators.min(0)),
+      // 'minimo': new FormControl('', Validators.min(0)),
       'maximo': new FormControl('', Validators.min(1)),
       'arquetipo': new FormControl('')
     });
@@ -50,7 +50,7 @@ export class SugerenciaInversionComponent implements OnInit {
 
     this.forma.setValue({
       formato : 'Vintage',
-      minimo : '0',
+      // minimo : '0',
       maximo: '100',
       arquetipo: ''
     });

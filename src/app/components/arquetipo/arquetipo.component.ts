@@ -51,7 +51,7 @@ export class ArquetipoComponent implements OnInit {
       this.formato = formato;
       this.baraja = tipoBaraja;
 
-      this.servicio.barajasArquetipo(tipoBaraja, formato).subscribe(data => {
+      this.servicio.barajasArquetipo(tipoBaraja, formato, this.user).subscribe(data => {
         this.datosArquetipo = JSON.parse(data['_body']);
         this.loading = false;
       });

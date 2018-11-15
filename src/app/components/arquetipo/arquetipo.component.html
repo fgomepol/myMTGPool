@@ -52,6 +52,7 @@
                                                 <th class="text-center" style="width: 15%; border: 1px solid #ddd;">Nº Jugadores</th>
                                                 <th class="text-center" style="width: 15%; border: 1px solid #ddd;">Jugador</th>
                                                 <th class="text-center" style="width: 10%; border: 1px solid #ddd;">Posición</th>
+                                                <th class="text-center" style="width: 10%; border: 1px solid #ddd;">Completa</th>
                                                 <th class="text-center" style="width: 10%; border: 1px solid #ddd;">Fecha</th>
                                             </tr>
                                             <tr>
@@ -74,6 +75,11 @@
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar, 'text-warning': datos.posicion>8, 'text-success': datos.posicion <= 8, 'text-danger': datos.posicion>16 }" style="font-weight: bold; font-size: 0.8em">
                                                 {{ datos.posicion }}
+                                            </td>
+                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                <h5><span [ngClass]="{'text-success': datos.cantidadQueFalta===datos.cantidadBaraja, 'text-warning': datos.cantidadQueFalta>=datos.cantidadBaraja-14 && datos.cantidadQueFalta<datos.cantidadBaraja, 'text-danger': datos.cantidadQueFalta<=datos.cantidadBaraja-15 }">{{ datos.cantidadQueFalta }}</span>/
+                                                    <span class="text-success">{{ datos.cantidadBaraja }}</span>
+                                                </h5>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h6>{{ datos.fecha*1000 | date: 'dd/MM/yyyy' }}</h6>

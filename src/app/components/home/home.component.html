@@ -41,7 +41,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr *ngIf="formularioRelleno===true">
-                                                            <th class="col-lg-4 text-center">Valor total de tú colección:</th>
+                                                            <th class="col-lg-4 text-center">Valor total de tu colección:</th>
                                                             <td class="col-lg-2 text-left">
                                                                 <h5 class="text-success">{{ importeColeccion | number }} €</h5>
                                                             </td>
@@ -73,11 +73,11 @@
                                                         <li class="list-group">
                                                             <div *ngIf="topVintage.length>0" class="list-group-item">
                                                                 <span *ngFor="let top of topVintage;">
-                                                                        <a [routerLink]="['/arquetipo', 'Vintage', top.arquetipo ]"><h5 style="font-size:0.8em;margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
+                                                                    <a [routerLink]="['/arquetipo', 'Vintage', top.arquetipo ]"><h5 style="margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
                                                                 </span>
                                                             </div>
                                                             <div *ngIf="topVintage.length==0" class="list-group-item">
-                                                                <h5 class="text-danger">No hay datos de Legacy en estos momentos</h5>
+                                                                <h5 class="text-danger">No hay datos de Vintage en estos momentos</h5>
                                                             </div>
                                                         </li>
                                                     </ul>
@@ -90,7 +90,7 @@
                                                         <li class="list-group">
                                                             <div *ngIf="topLegacy.length>0" class="list-group-item">
                                                                 <span *ngFor="let top of topLegacy;">
-                                                                    <a [routerLink]="['/arquetipo', 'Legacy', top.arquetipo ]"><h5 style="font-size:0.8em;margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
+                                                                    <a [routerLink]="['/arquetipo', 'Legacy', top.arquetipo ]"><h5 style="margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
                                                                 </span>
                                                             </div>
                                                             <div *ngIf="topLegacy.length==0" class="list-group-item">
@@ -107,7 +107,7 @@
                                                         <li class="list-group">
                                                             <div *ngIf="topModern.length>0" class="list-group-item">
                                                                 <span *ngFor="let top of topModern;">
-                                                                    <a [routerLink]="['/arquetipo', 'Modern', top.arquetipo ]"><h5 style="font-size:0.8em;margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
+                                                                    <a [routerLink]="['/arquetipo', 'Modern', top.arquetipo ]"><h5 style="margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
                                                                 </span>
                                                             </div>
                                                             <div *ngIf="topModern.length==0" class="list-group-item">
@@ -124,7 +124,7 @@
                                                         <li class="list-group">
                                                             <div *ngIf="topStandard.length>0" class="list-group-item">
                                                                 <span *ngFor="let top of topStandard;">
-                                                                    <a [routerLink]="['/arquetipo', 'Standard', top.arquetipo ]"><h5 style="font-size:0.8em;margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
+                                                                    <a [routerLink]="['/arquetipo', 'Standard', top.arquetipo ]"><h5 style="margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
                                                                 </span>
                                                             </div>
                                                             <div *ngIf="topStandard.length==0" class="list-group-item">

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StorageService } from 'src/app/service/storage.service';
 import { MtgService } from 'src/app/service/mtg.service';
-import { Router } from '@angular/router';
 import { BarajasService } from 'src/app/service/barajas.service';
 
 @Component({
@@ -24,7 +23,7 @@ export class SugerenciaInversionComponent implements OnInit {
   public formularioRelleno = false;
   public loading = true;
   public pantalla = 'sugerencias';
-  public barajasBuscadas: any[];
+  public barajasBuscadas: any[] = [];
   public arquetipos: string[] = [];
   public barajasInvertir: any[];
   public formato = 'Vintage';
@@ -33,8 +32,7 @@ export class SugerenciaInversionComponent implements OnInit {
   constructor(
     private storageService: StorageService,
     private servicio: MtgService,
-    private torneosServicio: BarajasService,
-    private router: Router
+    private torneosServicio: BarajasService
   ) {
     this.forma = new FormGroup({
       'formato': new FormControl('', Validators.required),
@@ -64,8 +62,10 @@ export class SugerenciaInversionComponent implements OnInit {
   guardarCambios() {
     this.vacio = false;
     this.loading = true;
-    this.servicio.buscarBarajasInverir( this.forma.value, this.user ).subscribe( data => {
+    this.barajasBuscadas.splice(0);
 
+    this.servicio.buscarBarajasInverir( this.forma.value, this.user ).subscribe( data => {
+      console.log(data);
       if (data['_body'] !== 'no hay datos') {
         this.barajasBuscadas = data.json();
         this.formularioRelleno = true;
@@ -84,6 +84,9 @@ export class SugerenciaInversionComponent implements OnInit {
 
   listadoBarajas(formato: string) {
     this.loading = true;
+    this.vacio = false;
+    this.formularioRelleno = false;
+    this.barajasBuscadas.splice(0);
 
     this.torneosServicio.barajasSugerencia(formato).subscribe(data => {
       this.formato = formato;

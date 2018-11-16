@@ -23,6 +23,7 @@ export class PerfilComponent implements OnInit {
   public datosUsuario: any;
   public pantalla = 'perfil';
   public cargandoPagina = true;
+  public texto = 'Cargando perfil, por favor espere';
 
   constructor(
     private storageService: StorageService,

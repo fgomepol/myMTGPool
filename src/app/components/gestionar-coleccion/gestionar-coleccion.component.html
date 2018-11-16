@@ -42,7 +42,7 @@
                                     </tr>
                                 </table>
 
-                                <app-loading *ngIf="cargandoPagina"></app-loading>
+                                <app-loading *ngIf="cargandoPagina" [texto]=texto></app-loading>
 
                                 <div *ngIf="formularioRelleno===true && !cargandoPagina">
                                     <table class="col-lg-12">

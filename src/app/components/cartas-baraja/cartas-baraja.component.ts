@@ -35,6 +35,7 @@ export class CartasBarajaComponent implements OnInit {
   public cartasFaltan: any[];
   public importeFaltaBarajaEx = 0;
   public importeFaltaBarajaMn = 0;
+  public texto = 'Cargando baraja, por favor espere';
 
   // grafico para colores de la baraja
   public doughnutChartLabels: string[] = ['Rojas', 'Azules', 'Verdes', 'Negras', 'Blancas', 'Incoloras', 'Tierras'];

@@ -32,6 +32,7 @@ export class GestionarColeccionComponent implements OnInit {
   public tipos;
   public subtipos;
   public edicionesCartas: any[] = [];
+  public texto = 'Cargando colección, por favor espere';
 
   constructor(
     private storageService: StorageService,

@@ -21,6 +21,7 @@ export class DatosColeccionComponent implements OnInit {
   public importeColeccion: number;
   public totalCartas: number;
   public pantalla = 'coleccion';
+  public texto = 'Cargando datos de colección, por favor espere';
 
   public doughnutChartLabels: string[] = ['Rojas', 'Azules', 'Verdes', 'Negras', 'Blancas', 'Incoloras', 'Tierras'];
   public donutColors = [

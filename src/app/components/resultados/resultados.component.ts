@@ -25,6 +25,7 @@ export class ResultadosComponent implements OnInit {
   public jugador: string;
   public loading: boolean;
   public formato: string;
+  public texto = 'Cargando resultados, por favor espere';
 
   constructor(
     private storageService: StorageService,

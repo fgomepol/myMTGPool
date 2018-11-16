@@ -40,6 +40,7 @@ export class ColeccionComponent implements OnInit {
   public edicionesCartas: any[] = [];
   public pantalla = 'coleccion';
   public page = 1;
+  public texto = 'Cargando colección, por favor espere';
 
   constructor(
     private storageService: StorageService,

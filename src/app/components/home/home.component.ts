@@ -33,6 +33,8 @@ export class HomeComponent implements OnInit, DoCheck {
   public topModern = '';
   public topStandard = '';
 
+  public texto = 'Cargando datos, por favor espere';
+
   constructor(
     private storageService: StorageService,
     private servicio: MtgService,
@@ -46,19 +48,19 @@ export class HomeComponent implements OnInit, DoCheck {
 
       this.datosColeccion();
 
-      this.servicioBaraja.topArquetipos('Vintage', 3).subscribe(data => {
+      this.servicioBaraja.topArquetipos('Vintage', 6).subscribe(data => {
         this.topVintage = JSON.parse(data['_body']);
       });
 
-      this.servicioBaraja.topArquetipos('Legacy', 3).subscribe(data => {
+      this.servicioBaraja.topArquetipos('Legacy', 6).subscribe(data => {
         this.topLegacy = JSON.parse(data['_body']);
       });
 
-      this.servicioBaraja.topArquetipos('Modern', 3).subscribe(data => {
+      this.servicioBaraja.topArquetipos('Modern', 6).subscribe(data => {
         this.topModern = JSON.parse(data['_body']);
       });
 
-      this.servicioBaraja.topArquetipos('Standard', 3).subscribe(data => {
+      this.servicioBaraja.topArquetipos('Standard', 6).subscribe(data => {
         this.topStandard = JSON.parse(data['_body']);
       });
 

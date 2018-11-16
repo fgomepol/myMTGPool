@@ -156,7 +156,7 @@
                                     </form>
                                 </div>
 
-                                <app-loading *ngIf="loading"></app-loading>
+                                <app-loading *ngIf="loading" [texto]=texto></app-loading>
 
                                 <div *ngIf="formularioRelleno && !loading">
                                     <table class="col-lg-12">

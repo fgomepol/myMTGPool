@@ -20,7 +20,7 @@
                         <div class="col-lg-12">
                             <div class="table-responsive">
 
-                                <app-loading *ngIf="cargarPagina"></app-loading>
+                                <app-loading *ngIf="cargarPagina" [texto]=texto></app-loading>
 
                                 <div *ngIf="!cargarPagina">
                                     <table style="width:100%">
@@ -54,164 +54,152 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="12 " class="col-lg-12 text-black-50 ">
+                                                <td colspan="2" class="col-lg-12 text-black-50 ">
                                                     <hr>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th colspan="2" class="text-center">TOP 3 Arquertipos del último mes</th>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" class="col-lg-12 text-black-50">
-                                                    &nbsp;
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-3 text-center">Vintage:</th>
-                                                <td class="col-lg-9 text-black-50">
-                                                    <ul class="thumbnails thumbnails-1">
-                                                        <li class="list-group">
-                                                            <div *ngIf="topVintage.length>0" class="list-group-item">
-                                                                <span *ngFor="let top of topVintage;">
-                                                                    <a [routerLink]="['/arquetipo', 'Vintage', top.arquetipo ]"><h5 style="margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
-                                                                </span>
-                                                            </div>
-                                                            <div *ngIf="topVintage.length==0" class="list-group-item">
-                                                                <h5 class="text-danger">No hay datos de Vintage en estos momentos</h5>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-3 text-center">Legacy:</th>
-                                                <td class="col-lg-9 text-black-50">
-                                                    <ul class="thumbnails thumbnails-1">
-                                                        <li class="list-group">
-                                                            <div *ngIf="topLegacy.length>0" class="list-group-item">
-                                                                <span *ngFor="let top of topLegacy;">
-                                                                    <a [routerLink]="['/arquetipo', 'Legacy', top.arquetipo ]"><h5 style="margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
-                                                                </span>
-                                                            </div>
-                                                            <div *ngIf="topLegacy.length==0" class="list-group-item">
-                                                                <h5 class="text-danger">No hay datos de Legacy en estos momentos</h5>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-3 text-center">Modern:</th>
-                                                <td class="col-lg-9 text-black-50">
-                                                    <ul class="thumbnails thumbnails-1">
-                                                        <li class="list-group">
-                                                            <div *ngIf="topModern.length>0" class="list-group-item">
-                                                                <span *ngFor="let top of topModern;">
-                                                                    <a [routerLink]="['/arquetipo', 'Modern', top.arquetipo ]"><h5 style="margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
-                                                                </span>
-                                                            </div>
-                                                            <div *ngIf="topModern.length==0" class="list-group-item">
-                                                                <h5 class="text-danger">No hay datos de Modern en estos momentos</h5>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-3 text-center">Standard:</th>
-                                                <td class="col-lg-9 text-black-50">
-                                                    <ul class="thumbnails thumbnails-1">
-                                                        <li class="list-group">
-                                                            <div *ngIf="topStandard.length>0" class="list-group-item">
-                                                                <span *ngFor="let top of topStandard;">
-                                                                    <a [routerLink]="['/arquetipo', 'Standard', top.arquetipo ]"><h5 style="margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
-                                                                </span>
-                                                            </div>
-                                                            <div *ngIf="topStandard.length==0" class="list-group-item">
-                                                                <h5 class="text-danger">No hay datos de Standard en estos momentos</h5>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2" class="text-center">&Uacute;ltimos Torneos</th>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" class="col-lg-12 text-black-50">
-                                                    &nbsp;
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-3 text-center">Vintage:</th>
-                                                <td class="col-lg-9 text-black-50">
-                                                    <ul class="thumbnails thumbnails-1">
-                                                        <li class="list-group">
-                                                            <div *ngIf="torneosVintage.length>0" class="list-group-item">
-                                                                <span *ngFor="let torneo of torneosVintage; let i = index;">
-                                                                    <h5><a [routerLink]="['/listadoBarajas','Vintage',torneo.codTorneo]">{{ torneo.nombre }}</a></h5>
-                                                                    <h5 style="font-size:0.8em;margin-bottom:0.2em;">({{ torneo.jugadores }} - {{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }})</h5>
-                                                                </span>
-                                                            </div>
-                                                            <div *ngIf="torneosVintage.length==0" class="list-group-item">
-                                                                <h5 class="text-danger">No hay datos torneos de Vintage para este mes</h5>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-3 text-center">Legacy:</th>
-                                                <td class="col-lg-9 text-black-50">
-                                                    <ul class="thumbnails thumbnails-1">
-                                                        <li class="list-group">
-                                                            <div *ngIf="torneosLegacy.length>0" class="list-group-item">
-                                                                <span *ngFor="let torneo of torneosLegacy; let i = index;">
-                                                                    <h5><a [routerLink]="['/listadoBarajas','Legacy',torneo.codTorneo]">{{ torneo.nombre }}</a></h5>
-                                                                    <h5 style="font-size:0.8em;margin-bottom:0.2em;">({{ torneo.jugadores }} - {{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }})</h5>
-                                                                </span>
-                                                            </div>
-                                                            <div *ngIf="torneosLegacy.length==0" class="list-group-item">
-                                                                <h5 class="text-danger">No hay datos torneos de Legacy para este mes</h5>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-3 text-center">Modern:</th>
-                                                <td class="col-lg-9 text-black-50">
-                                                    <ul class="thumbnails thumbnails-1">
-                                                        <li class="list-group">
-                                                            <div *ngIf="torneosModern.length>0" class="list-group-item">
-                                                                <span *ngFor="let torneo of torneosModern; let i = index;">
-                                                                    <h5><a [routerLink]="['/listadoBarajas','Modern',torneo.codTorneo]">{{ torneo.nombre }}</a></h5>
-                                                                    <h5 style="font-size:0.8em;margin-bottom:0.2em;">({{ torneo.jugadores }} - {{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }})</h5>
-                                                                </span>
-                                                            </div>
-                                                            <div *ngIf="torneosModern.length==0" class="list-group-item">
-                                                                <h5 class="text-danger">No hay datos torneos de Modern para este mes</h5>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-3 text-center">Standard:</th>
-                                                <td class="col-lg-9 text-black-50">
-                                                    <ul class="thumbnails thumbnails-1">
-                                                        <li class="list-group">
-                                                            <div *ngIf="torneosStandard.length>0" class="list-group-item">
-                                                                <span *ngFor="let torneo of torneosStandard; let i = index;">
-                                                                    <h5><a [routerLink]="['/listadoBarajas','Standard',torneo.codTorneo]">{{ torneo.nombre }}</a></h5>
-                                                                    <h5 style="font-size:0.8em;margin-bottom:0.2em;">({{ torneo.jugadores }} - {{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }})</h5>
-                                                                </span>
-                                                            </div>
-                                                            <div *ngIf="torneosStandard.length==0" class="list-group-item">
-                                                                <h5 class="text-danger">No hay datos torneos de Standard para este mes</h5>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
+                                                <td colspan="2" class="col-lg-12">
+                                                    <table>
+                                                        <tr>
+                                                            <th class="text-center">&nbsp;</th>
+                                                            <th class="text-center">TOP 6 Arquertipos del último mes</th>
+                                                            <th class="text-center">&Uacute;ltimos Torneos</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="col-lg-12 text-black-50 ">
+                                                                &nbsp;
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Vintage:</th>
+                                                            <td>
+                                                                <ul class="thumbnails thumbnails-1">
+                                                                    <li class="list-group">
+                                                                        <div *ngIf="topVintage.length>0" class="list-group-item">
+                                                                            <span *ngFor="let top of topVintage;">
+                                                                                <a [routerLink]="['/arquetipo', 'Vintage', top.arquetipo ]"><h5 style="margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div *ngIf="topVintage.length==0" class="list-group-item">
+                                                                            <h5 class="text-danger">No hay datos de Vintage en estos momentos</h5>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                            <td>
+                                                                <ul class="thumbnails thumbnails-1">
+                                                                    <li class="list-group">
+                                                                        <div *ngIf="torneosVintage.length>0" class="list-group-item">
+                                                                            <span *ngFor="let torneo of torneosVintage; let i = index;">
+                                                                                <h5><a [routerLink]="['/listadoBarajas','Vintage',torneo.codTorneo]">{{ torneo.nombre }}</a></h5>
+                                                                                <h5 style="font-size:0.8em;margin-bottom:0.2em;">({{ torneo.jugadores }} - {{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }})</h5>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div *ngIf="torneosVintage.length==0" class="list-group-item">
+                                                                            <h5 class="text-danger">No hay datos torneos de Vintage para este mes</h5>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Legacy:</th>
+                                                            <td>
+                                                                <ul class="thumbnails thumbnails-1">
+                                                                    <li class="list-group">
+                                                                        <div *ngIf="topLegacy.length>0" class="list-group-item">
+                                                                            <span *ngFor="let top of topLegacy;">
+                                                                                        <a [routerLink]="['/arquetipo', 'Legacy', top.arquetipo ]"><h5 style="margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
+                                                                                    </span>
+                                                                        </div>
+                                                                        <div *ngIf="topLegacy.length==0" class="list-group-item">
+                                                                            <h5 class="text-danger">No hay datos de Legacy en estos momentos</h5>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                            <td>
+                                                                <ul class="thumbnails thumbnails-1">
+                                                                    <li class="list-group">
+                                                                        <div *ngIf="torneosLegacy.length>0" class="list-group-item">
+                                                                            <span *ngFor="let torneo of torneosLegacy; let i = index;">
+                                                                                        <h5><a [routerLink]="['/listadoBarajas','Legacy',torneo.codTorneo]">{{ torneo.nombre }}</a></h5>
+                                                                                        <h5 style="font-size:0.8em;margin-bottom:0.2em;">({{ torneo.jugadores }} - {{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }})</h5>
+                                                                                    </span>
+                                                                        </div>
+                                                                        <div *ngIf="torneosLegacy.length==0" class="list-group-item">
+                                                                            <h5 class="text-danger">No hay datos torneos de Legacy para este mes</h5>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Modern:</th>
+                                                            <td>
+                                                                <ul class="thumbnails thumbnails-1">
+                                                                    <li class="list-group">
+                                                                        <div *ngIf="topModern.length>0" class="list-group-item">
+                                                                            <span *ngFor="let top of topModern;">
+                                                                                        <a [routerLink]="['/arquetipo', 'Modern', top.arquetipo ]"><h5 style="margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
+                                                                                    </span>
+                                                                        </div>
+                                                                        <div *ngIf="topModern.length==0" class="list-group-item">
+                                                                            <h5 class="text-danger">No hay datos de Modern en estos momentos</h5>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                            <td>
+                                                                <ul class="thumbnails thumbnails-1">
+                                                                    <li class="list-group">
+                                                                        <div *ngIf="torneosModern.length>0" class="list-group-item">
+                                                                            <span *ngFor="let torneo of torneosModern; let i = index;">
+                                                                                        <h5><a [routerLink]="['/listadoBarajas','Modern',torneo.codTorneo]">{{ torneo.nombre }}</a></h5>
+                                                                                        <h5 style="font-size:0.8em;margin-bottom:0.2em;">({{ torneo.jugadores }} - {{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }})</h5>
+                                                                                    </span>
+                                                                        </div>
+                                                                        <div *ngIf="torneosModern.length==0" class="list-group-item">
+                                                                            <h5 class="text-danger">No hay datos torneos de Modern para este mes</h5>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Standard:</th>
+                                                            <td>
+                                                                <ul class="thumbnails thumbnails-1">
+                                                                    <li class="list-group">
+                                                                        <div *ngIf="topStandard.length>0" class="list-group-item">
+                                                                            <span *ngFor="let top of topStandard;">
+                                                                                        <a [routerLink]="['/arquetipo', 'Standard', top.arquetipo ]"><h5 style="margin-bottom:0em;">{{ top.arquetipo }} - {{ top.nTotal }} TOPS</h5></a>
+                                                                                    </span>
+                                                                        </div>
+                                                                        <div *ngIf="topStandard.length==0" class="list-group-item">
+                                                                            <h5 class="text-danger">No hay datos de Standard en estos momentos</h5>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                            <td>
+                                                                <ul class="thumbnails thumbnails-1">
+                                                                    <li class="list-group">
+                                                                        <div *ngIf="torneosStandard.length>0" class="list-group-item">
+                                                                            <span *ngFor="let torneo of torneosStandard; let i = index;">
+                                                                                        <h5><a [routerLink]="['/listadoBarajas','Standard',torneo.codTorneo]">{{ torneo.nombre }}</a></h5>
+                                                                                        <h5 style="font-size:0.8em;margin-bottom:0.2em;">({{ torneo.jugadores }} - {{ torneo.fecha*1000 | date: 'dd/MM/yyyy' }})</h5>
+                                                                                    </span>
+                                                                        </div>
+                                                                        <div *ngIf="torneosStandard.length==0" class="list-group-item">
+                                                                            <h5 class="text-danger">No hay datos torneos de Standard para este mes</h5>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
                                             </tr>
                                         </thead>

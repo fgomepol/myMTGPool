@@ -25,6 +25,7 @@ export class ModificarArticuloComponent implements OnInit {
   public idiomasCartas: any[] = [];
   public pantalla = 'coleccion';
   public cargandoPagina = true;
+  public texto = 'Cargando datos, por favor espere';
 
   constructor(
     private storageService: StorageService,

@@ -24,6 +24,7 @@ export class ArquetipoComponent implements OnInit {
   public formato: string;
   public baraja: string;
   public loading: boolean;
+  public texto = 'Cargando arquetipos, por favor espere';
 
   constructor(
     private storageService: StorageService,

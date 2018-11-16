@@ -35,6 +35,8 @@ export class TorneosComponent implements OnInit, DoCheck {
   public torneosModern: any[] = [];
   public torneosStandard: any[] = [];
 
+  public texto = 'Cargando torneos, por favor espere';
+
   public error = false;
 
   constructor(

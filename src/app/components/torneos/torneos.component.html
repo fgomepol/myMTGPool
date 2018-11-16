@@ -41,7 +41,7 @@
                                     </tr>
                                 </table>
 
-                                <app-loading *ngIf="loadingModern===true"></app-loading>
+                                <app-loading *ngIf="loadingModern===true" [texto]=texto></app-loading>
 
                                 <div *ngIf="!loadingModern && formato==''">
                                     <table class='col-lg-12'>

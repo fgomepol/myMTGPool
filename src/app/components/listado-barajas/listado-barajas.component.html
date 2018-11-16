@@ -32,7 +32,7 @@
                                     </tr>
                                 </table>
 
-                                <app-loading *ngIf="cargandoPagina"></app-loading>
+                                <app-loading *ngIf="cargandoPagina" [texto]=texto></app-loading>
 
                                 <div *ngIf="!cargandoPagina">
                                     <table class="col-lg-12" style="width: 100%">

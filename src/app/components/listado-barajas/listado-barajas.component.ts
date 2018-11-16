@@ -25,6 +25,7 @@ export class ListadoBarajasComponent implements OnInit {
   public pagina = '';
   public barajas: any;
   public cargandoPagina = true;
+  public texto = 'Cargando listado de barajas, por favor espere';
 
   constructor(
     private storageService: StorageService,

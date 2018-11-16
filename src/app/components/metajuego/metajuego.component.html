@@ -51,7 +51,7 @@
                                     </table>
                                 </div>
 
-                                <app-loading *ngIf="loadingModern===true"></app-loading>
+                                <app-loading *ngIf="loadingModern===true" [texto]=texto></app-loading>
 
                                 <div *ngIf="formato=='' && !error">
                                     <table style="width:100%">

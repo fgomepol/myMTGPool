@@ -12,3 +12,8 @@
 .example-margin {
     margin: 0 10px;
 }
+
+.textoCarga {
+    color: #0c96ff;
+    font-weight: bold;
+}

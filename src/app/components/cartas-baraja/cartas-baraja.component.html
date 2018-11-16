@@ -35,7 +35,7 @@
                                     </tr>
                                 </table>
 
-                                <app-loading *ngIf="loading"></app-loading>
+                                <app-loading *ngIf="loading" [texto]=texto></app-loading>
 
                                 <div *ngIf="!loading" [innerHtml]="html">
 
@@ -63,6 +63,11 @@
                                             </tr>
                                             <tr>
                                                 <th colspan="2" class="col-lg-12 text-center">Cartas necesarias para completar esta baraja</th>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="col-lg-12 text-black-50">
+                                                    &nbsp;
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2" class="col-lg-12">
@@ -103,6 +108,7 @@
                                                         </table>
                                                     </div>
                                                     <div *ngIf="importeFaltaBarajaEx==0" class="alert alert-primary text-center" role="alert">
+
                                                         <h5>
                                                             <p style="font-weight: bold">Esta baraja la tienes completa</p>
                                                         </h5>

@@ -31,6 +31,7 @@ export class MetajuegoComponent implements OnInit, DoCheck {
   public topLegacy = '';
   public topModern = '';
   public topStandard = '';
+  public texto = 'Cargando datos del metajuego, por favor espere';
 
   public nFilas: number[] = [];
 

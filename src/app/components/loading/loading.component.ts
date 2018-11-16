@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-loading',
@@ -7,15 +8,18 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['loading.component.css'],
 })
 export class LoadingComponent implements OnInit {
+
+  @Input() texto;
+
   constructor(private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     /** spinner starts on init */
     this.spinner.show();
 
-    setTimeout(() => {
+    clearTimeout(setTimeout(() => {
         /** spinner ends after 300 seconds */
         this.spinner.hide();
-    }, 300000);
+    }, 300000));
   }
 }

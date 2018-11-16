@@ -88,7 +88,7 @@
                                     </form>
                                 </div>
 
-                                <app-loading *ngIf="loading"></app-loading>
+                                <app-loading *ngIf="loading" [texto]=texto></app-loading>
 
                                 <div *ngIf="!loading && vacio" class="alert alert-danger text-center" role="alert">
                                     <p style="font-weight: bold">No existen sugerencias con los criterios indicados.</p>

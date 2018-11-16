@@ -1,19 +1,11 @@
-.example-h2 {
-    margin: 10px;
-}
-
 .example-section {
     display: flex;
     align-content: center;
     align-items: center;
-    height: 60px;
-}
-
-.example-margin {
-    margin: 0 10px;
+    height: 70px;
 }
 
 .textoCarga {
+    margin-bottom: 45px;
     color: #0c96ff;
-    font-weight: bold;
 }

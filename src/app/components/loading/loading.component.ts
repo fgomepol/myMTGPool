@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-loading',

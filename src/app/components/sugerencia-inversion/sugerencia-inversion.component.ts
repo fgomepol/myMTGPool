@@ -28,6 +28,7 @@ export class SugerenciaInversionComponent implements OnInit {
   public barajasInvertir: any[];
   public formato = 'Vintage';
   public vacio: boolean;
+  public texto = 'Cargando datos, por favor espere';
 
   constructor(
     private storageService: StorageService,
@@ -60,12 +61,13 @@ export class SugerenciaInversionComponent implements OnInit {
   }
 
   guardarCambios() {
+    this.texto = 'Cargando sugerencias, puede tomar unos minutos';
     this.vacio = false;
     this.loading = true;
     this.barajasBuscadas.splice(0);
 
     this.servicio.buscarBarajasInverir( this.forma.value, this.user ).subscribe( data => {
-      console.log(data);
+
       if (data['_body'] !== 'no hay datos') {
         this.barajasBuscadas = data.json();
         this.formularioRelleno = true;
@@ -83,6 +85,7 @@ export class SugerenciaInversionComponent implements OnInit {
   }
 
   listadoBarajas(formato: string) {
+    this.texto = 'Cargando datos, por favor espere';
     this.loading = true;
     this.vacio = false;
     this.formularioRelleno = false;

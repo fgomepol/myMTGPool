@@ -3,6 +3,7 @@ import { StorageService } from '../../service/storage.service';
 import { BarajasService } from '../../service/barajas.service';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-cartas-baraja',
@@ -36,6 +37,7 @@ export class CartasBarajaComponent implements OnInit {
   public importeFaltaBarajaEx = 0;
   public importeFaltaBarajaMn = 0;
   public texto = 'Cargando baraja, por favor espere';
+  public datosDecklist: any;
 
   // grafico para colores de la baraja
   public doughnutChartLabels: string[] = ['Rojas', 'Azules', 'Verdes', 'Negras', 'Blancas', 'Incoloras', 'Tierras'];
@@ -170,6 +172,66 @@ export class CartasBarajaComponent implements OnInit {
         this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + parseFloat(item.importeEx);
         this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + parseFloat(item.importeNm);
       }
+    });
+  }
+
+  public descargaPDF() {
+
+    this.servicio.decklist(this.codigoBaraja).subscribe(data => {
+
+      this.datosDecklist = data.json();
+
+      const doc = new jsPDF('p', 'mm', 'a4');
+      const width = doc.internal.pageSize.getWidth();
+      const height = doc.internal.pageSize.getHeight();
+
+      doc.addImage('/src/assets/img/mtg_registration.jpeg', 'JPEG', 0, 0, width, height);
+      doc.setFont('times');
+      doc.setFontSize(9);
+      doc.text(this.datosDecklist.arquetipo, 142, 36);
+
+      let y = 69;
+      let y2 = 157;
+      let contador = 0;
+      let contador2 = 0;
+      let totalBase = 0;
+      let totalSide = 0;
+      for (const item of this.datosDecklist.baraja) {
+        const cantidadBase = item.cantidad - item.side;
+
+        if (cantidadBase > 0) {
+          doc.text(cantidadBase.toString(), 30, y);
+          doc.text(item.name, 45, y);
+
+          if (contador > 2) {
+            y = y + 9;
+            contador = 0;
+          } else {
+            y = y + 6;
+            contador++;
+          }
+          totalBase = totalBase + cantidadBase;
+        }
+
+        if (item.side > 0) {
+          doc.text(item.side.toString(), 123, y2);
+          doc.text(item.name, 138, y2);
+
+          if (contador2 > 2) {
+            y2 = y2 + 9;
+            contador2 = 0;
+          } else {
+            y2 = y2 + 6;
+            contador2++;
+          }
+          totalSide = totalSide + parseFloat(item.side);
+        }
+      }
+
+      doc.text(totalBase.toString(), 95, 280);
+      doc.text(totalSide.toString(), 187, 260);
+
+      doc.save('DeckList ' + this.datosDecklist.arquetipo + '.pdf');
     });
   }
 

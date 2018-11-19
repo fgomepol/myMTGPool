@@ -37,6 +37,21 @@
 
                                 <app-loading *ngIf="loading" [texto]=texto></app-loading>
 
+                                <div *ngIf="!loading">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <td class="text-info" style="font-weight: bold">
+                                                    DCI Decklist:
+                                                </td>
+                                                <td>
+                                                    <a class="navbar-brand" [routerLink]="" (click)="descargaPDF();"><i class="material-icons text-info">picture_as_pdf</i></a>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
                                 <div *ngIf="!loading" [innerHtml]="html">
 
                                 </div>

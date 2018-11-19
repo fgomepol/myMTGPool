@@ -57,4 +57,8 @@ export class BarajasService {
   comparacionColeccion(idBaraja: number, usuario: number) {
     return this.http.get(`${this.baseUrl}?opcion=comparacionColeccion&idBaraja=${idBaraja}&usuario=${usuario}`);
   }
+
+  decklist(codigoBaraja: number) {
+    return this.http.get(`${this.baseUrl}?opcion=decklist&codigoBaraja=${codigoBaraja}`);
+  }
 }

@@ -191,17 +191,21 @@ export class CartasBarajaComponent implements OnInit {
       doc.text(this.datosDecklist.arquetipo, 142, 36);
 
       let y = 69;
+      let x = 30;
+      let x2 = 45;
       let y2 = 157;
       let contador = 0;
       let contador2 = 0;
       let totalBase = 0;
       let totalSide = 0;
+      let nCartas = 0;
+
       for (const item of this.datosDecklist.baraja) {
         const cantidadBase = item.cantidad - item.side;
 
         if (cantidadBase > 0) {
-          doc.text(cantidadBase.toString(), 30, y);
-          doc.text(item.name, 45, y);
+          doc.text(cantidadBase.toString(), x, y);
+          doc.text(item.name, x2, y);
 
           if (contador > 2) {
             y = y + 9;
@@ -211,6 +215,14 @@ export class CartasBarajaComponent implements OnInit {
             contador++;
           }
           totalBase = totalBase + cantidadBase;
+          nCartas++;
+
+          if (nCartas === 31) {
+            x = 123;
+            x2 = 138;
+            y = 69;
+            contador = 0;
+          }
         }
 
         if (item.side > 0) {

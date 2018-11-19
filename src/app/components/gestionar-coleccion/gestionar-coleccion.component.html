@@ -47,9 +47,13 @@
                                 <div *ngIf="formularioRelleno===true && !cargandoPagina">
                                     <table class="col-lg-12">
                                         <tr>
-                                            <th class="col-lg-4 text-center">Valor total de tu colección:</th>
-                                            <td class="col-lg-8 text-left text-danger">
+                                            <th class="col-lg-4 text-right">Valor total de tu colección:</th>
+                                            <td class="col-lg-2 text-left text-danger">
                                                 <h5 style="font-weight: bold">{{ totalamount | number }} €</h5>
+                                            </td>
+                                            <th class="col-lg-4 text-right">Descargar lista:</th>
+                                            <td class="col-lg-2 text-left">
+                                                <a class="navbar-brand" [routerLink]="" (click)="exportAsXLSX();">Excel <i class="fa fa-file-excel-o text-info"></i></a>
                                             </td>
                                         </tr>
                                     </table>

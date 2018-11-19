@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
 import { MtgService } from '../../service/mtg.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ExcelService } from '../../service/excel.service';
 
 @Component({
   selector: 'app-gestionar-coleccion',
@@ -36,7 +37,8 @@ export class GestionarColeccionComponent implements OnInit {
 
   constructor(
     private storageService: StorageService,
-    private servicio: MtgService
+    private servicio: MtgService,
+    private excelService: ExcelService
   ) {
     this.forma = new FormGroup({
       'nombre': new FormControl(''),
@@ -115,4 +117,10 @@ export class GestionarColeccionComponent implements OnInit {
   reseteaBusqueda() {
     this.forma.reset();
   }
+
+  exportAsXLSX(): void {
+    this.servicio.datosColeccionExcel(this.user).subscribe( data => {
+      this.excelService.exportAsExcelFile(data.json(), 'Coleccion');
+    });
+ }
 }

@@ -33,7 +33,7 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { OptionComponent } from './components/shared/option/option.component';
 import { ScriptsComponent } from './components/shared/scripts/scripts.component';
 import { ModalTendenciaComponent } from './components/modal-tendencia/modal-tendencia.component';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { TipoCartaPipe } from './pipes/tipo-carta.pipe';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { ListadoBarajasComponent } from './components/listado-barajas/listado-barajas.component';
@@ -44,6 +44,7 @@ import { ResultadosComponent } from './components/resultados/resultados.componen
 import { MetajuegoComponent } from './components/metajuego/metajuego.component';
 import { ModalCartaComponent } from './components/modal-carta/modal-carta.component';
 import { SugerenciaInversionComponent } from './components/sugerencia-inversion/sugerencia-inversion.component';
+import { ExcelService } from './service/excel.service';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { SugerenciaInversionComponent } from './components/sugerencia-inversion/
   ],
   providers: [
     StorageService,
+    ExcelService,
     AuthorizatedGuardComponent,
     BaseRequestOptions
   ],

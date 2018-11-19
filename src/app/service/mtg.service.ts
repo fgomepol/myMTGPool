@@ -153,4 +153,8 @@ constructor(private http: Http) {}
   buscarBarajasInverir(item: Object, usuario: number) {
     return this.http.post(`${this.baseUrl}?opcion=buscarBarajasInverir`, [item, usuario]);
   }
+
+  datosColeccionExcel(usuario: number) {
+    return this.http.get(`${this.baseUrl}?opcion=datosColeccionExcel&usuario=${usuario}`);
+  }
 }

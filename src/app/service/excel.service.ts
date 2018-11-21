@@ -21,6 +21,9 @@ export class ExcelService {
         worksheet[address].v = worksheet[address].v.toUpperCase();
       }
     }
+
+    // console.log(worksheet);
+
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer, excelFileName);

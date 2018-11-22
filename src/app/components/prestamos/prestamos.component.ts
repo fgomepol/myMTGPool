@@ -51,6 +51,7 @@ export class PrestamosComponent implements OnInit {
     this.servicio.marcarComoDevuelto(cartasSeleccionadas).subscribe(data => {
         this.listadoCartasPrestadas();
         this.cartasDevueltas = true;
+        this.activarBoton = true;
         this.FadeOutLink();
     });
   }

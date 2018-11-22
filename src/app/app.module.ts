@@ -45,6 +45,8 @@ import { MetajuegoComponent } from './components/metajuego/metajuego.component';
 import { ModalCartaComponent } from './components/modal-carta/modal-carta.component';
 import { SugerenciaInversionComponent } from './components/sugerencia-inversion/sugerencia-inversion.component';
 import { ExcelService } from './service/excel.service';
+import { QueTePrestanComponent } from './components/que-te-prestan/que-te-prestan.component';
+import { PrestarCartasComponent } from './components/prestar-cartas/prestar-cartas.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,9 @@ import { ExcelService } from './service/excel.service';
     ResultadosComponent,
     MetajuegoComponent,
     ModalCartaComponent,
-    SugerenciaInversionComponent
+    SugerenciaInversionComponent,
+    QueTePrestanComponent,
+    PrestarCartasComponent
   ],
   imports: [
     BrowserModule,

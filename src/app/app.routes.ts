@@ -23,6 +23,8 @@ import { ContactosComponent } from './components/contactos/contactos.component';
 import { ResultadosComponent } from './components/resultados/resultados.component';
 import { MetajuegoComponent } from './components/metajuego/metajuego.component';
 import { SugerenciaInversionComponent } from './components/sugerencia-inversion/sugerencia-inversion.component';
+import { QueTePrestanComponent } from './components/que-te-prestan/que-te-prestan.component';
+import { PrestarCartasComponent } from './components/prestar-cartas/prestar-cartas.component';
 
 const appRoutes: Routes = [
   { path: 'index', component: IndexComponent },
@@ -48,6 +50,8 @@ const appRoutes: Routes = [
   { path: 'arquetipo/:id/:id2', component: ArquetipoComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'resultados/:id/:id2', component: ResultadosComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'metajuego', component: MetajuegoComponent, canActivate: [ AuthorizatedGuardComponent ] },
+  { path: 'queTePrestan', component: QueTePrestanComponent, canActivate: [ AuthorizatedGuardComponent ] },
+  { path: 'prestarCartas', component: PrestarCartasComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'metajuego/:id', component: MetajuegoComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'contactos', component: ContactosComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: '', redirectTo: '/index', pathMatch: 'full' },

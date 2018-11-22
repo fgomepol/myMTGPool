@@ -1,0 +1,122 @@
+<div id="wrapper">
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
+    <!-- /Navigation -->
+    <!-- /ControlPanel -->
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- ControlPanel -->
+            <app-option [pantalla]="pantalla"></app-option>
+            <!-- /.ControlPanel -->
+        </div>
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Cartas que me prestan
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <app-loading *ngIf="cargandoPagina" [texto]=texto></app-loading>
+
+                                <div *ngIf="!cargandoPagina">
+                                    <table style="width: 100%" class="text-center">
+                                        <tr>
+                                            <td>
+                                                <a class="navbar-brand text-black-50" style="font-weight: bold" [routerLink]="['/prestamos']">Cartas prestadas</a>
+                                            </td>
+                                            <td>
+                                                <a class="navbar-brand text-success" style="font-weight: bold" [routerLink]="['/queTePrestan']">Cartas que te prestan</a>
+                                            </td>
+                                            <td>
+                                                <a class="navbar-brand text-black-50" style="font-weight: bold" [routerLink]="['/prestarCartas']">Prestar cartas</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="cartasQueTePrestan===true && !cargandoPagina">
+                                    <table class="col-lg-12 text-center">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Edición</th>
+                                                <th class="col-lg-3 text-center text-dark" style="border: 1px solid #ddd;">Carta</th>
+                                                <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Estado</th>
+                                                <th class="col-lg-2 text-center text-dark" style="border: 1px solid #ddd;">Idioma</th>
+                                                <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Cant.</th>
+                                                <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Foil</th>
+                                                <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Firmada</th>
+                                                <th class="col-lg-2 text-center text-dark" style="border: 1px solid #ddd;">Propietario</th>
+                                                <th class="col-lg-2 text-center text-dark" style="border: 1px solid #ddd;">Fecha</th>
+                                            </tr>
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                        </thead>
+
+                                        <tr *ngFor="let carta of cartasQueTienes | paginate: { itemsPerPage: 10, currentPage: page }; let impar = odd;let par = even;">
+                                            <td class="text-center align-middle small">
+                                                <i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i>
+                                            </td>
+                                            <td class="text-left text-dark align-middle small">
+                                                <h5><a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a></h5>
+                                            </td>
+                                            <td class="text-center text-dark align-middle small">
+                                                <h5>{{ carta.estado }}</h5>
+                                            </td>
+                                            <td class="text-center text-dark align-middle small">
+                                                <h5>{{ carta.idioma }}</h5>
+                                            </td>
+                                            <td class="text-center text-dark align-middle small">
+                                                <h5>{{ carta.cantidad }}</h5>
+                                            </td>
+                                            <td class="text-center text-dark align-middle small">
+                                                <h5>{{ carta.foil }}</h5>
+                                            </td>
+                                            <td class="text-center text-dark align-middle small">
+                                                <h5>{{ carta.signed }}</h5>
+                                            </td>
+                                            <td class="text-center text-dark align-middle small">
+                                                <h5>{{ carta.userName }}</h5>
+                                            </td>
+                                            <td class="text-center text-danger align-middle small">
+                                                <h5>{{ carta.fechaPrestamo*1000 | date: 'dd/MM/yyyy' }}</h5>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="9" class="text-center">
+                                                <h5>
+                                                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                </h5>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col-lg-4 (nested) -->
+                    <div class="col-lg-8">
+                        <div id="morris-bar-chart"></div>
+                    </div>
+                    <!-- /.col-lg-8 (nested) -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-8 -->
+
+</div>
+<!-- /#page-wrapper -->
+
+<app-scripts></app-scripts>

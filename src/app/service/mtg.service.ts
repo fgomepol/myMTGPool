@@ -157,4 +157,32 @@ constructor(private http: Http) {}
   datosColeccionExcel(usuario: number) {
     return this.http.get(`${this.baseUrl}?opcion=datosColeccionExcel&usuario=${usuario}`);
   }
+
+  guardarPrestadas(item: Object, usuario: number) {
+    return this.http.post(`${this.baseUrl}?opcion=guardarPrestadas`, [item, usuario]);
+  }
+
+  cartasParaPrestar(item: Object, usuario: number) {
+    return this.http.post(`${this.baseUrl}?opcion=cartasParaPrestar`, [item, usuario]);
+  }
+
+  cartasConcretaPrestar(id: number) {
+    return this.http.get(`${this.baseUrl}?opcion=cartasConcretaPrestar&id=${id}`);
+  }
+
+  cartasPrestadas(usuario: number) {
+    return this.http.get(`${this.baseUrl}?opcion=cartasPrestadas&usuario=${usuario}`);
+  }
+
+  cartasQueMePrestan(usuario: number) {
+    return this.http.get(`${this.baseUrl}?opcion=cartasQueMePrestan&usuario=${usuario}`);
+  }
+
+  marcarComoDevuelto(item: Object) {
+    return this.http.post(`${this.baseUrl}?opcion=marcarComoDevuelto`, item);
+  }
+
+  cartasYaDevueltas(usuario: number) {
+    return this.http.get(`${this.baseUrl}?opcion=cartasYaDevueltas&usuario=${usuario}`);
+  }
 }

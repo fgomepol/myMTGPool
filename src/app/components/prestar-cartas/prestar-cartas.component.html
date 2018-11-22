@@ -1,0 +1,265 @@
+<div id="wrapper">
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
+    <!-- /Navigation -->
+    <!-- /ControlPanel -->
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- ControlPanel -->
+            <app-option [pantalla]="pantalla"></app-option>
+            <!-- /.ControlPanel -->
+        </div>
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Prestar cartas
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+
+                                <app-loading *ngIf="cargandoPagina" [texto]=texto></app-loading>
+
+                                <div *ngIf="!cargandoPagina">
+                                    <table style="width: 100%" class="text-center">
+                                        <tr>
+                                            <td>
+                                                <a class="navbar-brand text-black-50" style="font-weight: bold" [routerLink]="['/prestamos']">Cartas prestadas</a>
+                                            </td>
+                                            <td>
+                                                <a class="navbar-brand text-black-50" style="font-weight: bold" [routerLink]="['/queTePrestan']">Cartas que te prestan</a>
+                                            </td>
+                                            <td>
+                                                <a class="navbar-brand text-success" style="font-weight: bold" [routerLink]="['/prestarCartas']">Prestar cartas</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <table class="col-lg-12">
+                                        <tr>
+                                            <th class="col-lg-9 text-center">
+                                                <hr/>
+                                            </th>
+                                            <td class="col-lg-3 text-left">
+                                                <a *ngIf="ocultaFiltros===false" class="small" [routerLink]="" (click)="muestraFiltros(true);">Filtrar cartas <i class="material-icons iconoBusqueda">keyboard_arrow_up</i></a>
+                                                <a *ngIf="ocultaFiltros===true" class="small" [routerLink]="" (click)="muestraFiltros(false);">Filtrar cartas <i class="material-icons iconoBusqueda">keyboard_arrow_down</i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div *ngIf="ocultaFiltros===false">
+                                                    <form [formGroup]="forma" (ngSubmit)="buscarCartas()" novalidate="novalidate">
+
+                                                        <table style="width:100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th colspan="2" class="col-lg-12 text-center">
+                                                                        &nbsp;
+                                                                    </th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-lg-4 text-center">Nombre:</th>
+                                                                    <td class="col-lg-8 text-black-50">
+                                                                        <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre de la carta">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                                        &nbsp;
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-lg-4 text-center">Color:</th>
+                                                                    <td class="col-lg-8 text-black-50">
+                                                                        <select class="form-control" multiple="multiple" size="6" formControlName="colors">
+                                                                                <option value="U">Azul</option>
+                                                                                <option value="W">Blanco</option>
+                                                                                <option value="B">Negro</option>
+                                                                                <option value="R">Rojo</option>
+                                                                                <option value="G">Verde</option>
+                                                                                <option value="">Incoloro</option>
+                                                                            </select>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                                        &nbsp;
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-lg-4 text-center">Edición:</th>
+                                                                    <td class="col-lg-8 text-black-50">
+                                                                        <select class="form-control" formControlName="edicion">
+                                                                                <option *ngFor="let edicion of edicionesCartas[0]" value="{{ edicion.idExpansion }}">
+                                                                                    {{ edicion.en }}
+                                                                                </option>
+                                                                            </select>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                                        &nbsp;
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-lg-4 text-center">Rareza:</th>
+                                                                    <td class="col-lg-8 text-black-50">
+                                                                        <select class="form-control" formControlName="rarity">
+                                                                                <option value="mythic">Mítica</option>
+                                                                                <option value="rare">Rara</option>
+                                                                                <option value="uncommon">Infrecuente</option>
+                                                                                <option value="common">Común</option>
+                                                                            </select>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                                        &nbsp;
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-lg-4 text-center">Tipo:</th>
+                                                                    <td class="col-lg-8 text-black-50">
+                                                                        <select class="form-control" formControlName="tipo">
+                                                                            <option *ngFor="let tipo of tipos" value="{{ tipo.nombre }}">
+                                                                            {{ tipo.nombre }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                                        &nbsp;
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-lg-4 text-center">Subtipo:</th>
+                                                                    <td class="col-lg-8 text-black-50">
+                                                                        <select class="form-control" formControlName="subtipo">
+                                                                            <option *ngFor="let subtipo of subtipos" value="{{ subtipo.nombre }}">
+                                                                            {{ subtipo.nombre }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                                        &nbsp;
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <div class="input-group col-md-12 text-center">
+                                                                            <button type="submit" class="btn btn-outline-primary">
+                                                                                Buscar Cartas
+                                                                            </button>&nbsp;&nbsp;
+                                                                            <button type="button" class="btn btn-outline-danger" (click)="reseteaBusqueda();">Resetear Filtro</button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th colspan="2" class="col-lg-12 text-center">
+                                                                        <hr/>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </form>
+                                                </div>
+
+                                                <div *ngIf="guardadaCarta == true" class="alert alert-success text-center" role="alert">
+                                                    <p style="font-weight: bold">Las cartas se han prestado correctamente.</p>
+                                                </div>
+
+                                                <div *ngIf="noEncontrado && !cargandoPagina" class="alert alert-danger text-center" role="alert">
+                                                    <p style="font-weight: bold">La búsqueda realizada no ha devuelto resultados.</p>
+                                                </div>
+
+                                                <div *ngIf="!noEncontrado && cartasColeccion && cartasColeccion.length>0" class="text-center">
+                                                    <table class="col-lg-12 table-fixed">
+                                                        <thead>
+                                                            <tr class="table">
+                                                                <th class="text-center" style="border: 1px solid #ddd;">Edición</th>
+                                                                <th class="text-center" style="border: 1px solid #ddd;">Carta</th>
+                                                                <th class="text-center" style="border: 1px solid #ddd;">Estado</th>
+                                                                <th class="text-center" style="border: 1px solid #ddd;">Idioma</th>
+                                                                <th class="text-center" style="border: 1px solid #ddd;">Disponibles</th>
+                                                                <th class="text-center" style="border: 1px solid #ddd;">Foil</th>
+                                                                <th class="text-center" style="border: 1px solid #ddd;">Firmada</th>
+                                                                <th class="text-center" style="border: 1px solid #ddd;">Prestar</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>&nbsp;</td>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tr *ngFor="let carta of cartasColeccion | paginate: { itemsPerPage: 20, currentPage: page }; let impar = odd;let par = even;">
+                                                            <td class="text-center align-middle small">
+                                                                <i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i>
+                                                            </td>
+                                                            <td class="text-left align-middle small">
+                                                                <h5><a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a></h5>
+                                                            </td>
+                                                            <td class="text-center align-middle small">
+                                                                <h5>{{ carta.estado }}</h5>
+                                                            </td>
+                                                            <td class="text-center align-middle small">
+                                                                <h5>{{ carta.idioma }}</h5>
+                                                            </td>
+                                                            <td class="text-center align-middle small">
+                                                                <h5>{{ carta.cantidad }}</h5>
+                                                            </td>
+                                                            <td class="text-center align-middle small">
+                                                                <h5>{{ carta.foil }}</h5>
+                                                            </td>
+                                                            <td class="text-center align-middle small">
+                                                                <h5>{{ carta.signed }}</h5>
+                                                            </td>
+                                                            <td class="text-center align-middle">
+                                                                <app-modal-coleccion [id]=carta.codColeccion [cantidad]=carta.cantidad (prestada)="cartaPrestada($event)"></app-modal-coleccion>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="9" class="text-center">
+                                                                <h5>
+                                                                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                                </h5>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <p>
+                                                                    &nbsp;
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-4 (nested) -->
+                        <div class="col-lg-8">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                        <!-- /.col-lg-8 (nested) -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-8 -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+
+<app-scripts></app-scripts>

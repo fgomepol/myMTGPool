@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MtgService } from '../../service/mtg.service';
 import { StorageService } from '../../service/storage.service';
@@ -12,66 +12,71 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     '../../vendor/metisMenu/metisMenu.min.css',
     '../../dist/css/sb-admin-2.css',
     '../../vendor/morrisjs/morris.css',
+    '../../vendor/Keyrune/css/keyrune.css',
     '../../vendor/font-awesome/css/font-awesome.min.css'
 ],
   // add NgbModalConfig and NgbModal to the component providers
   providers: [NgbModalConfig, NgbModal]
 })
 export class ModalColeccionComponent {
-    public user: number;
-    public idiomasCartas: any[] = [];
-    public carta: any = '';
-    public forma: FormGroup;
-    public guardadaCarta = false;
-    public idCarta = 0;
-    @Input() id;
+  public user: number;
+  public idiomasCartas: any[] = [];
+  public ediciones: any[] = [];
+  public carta: any = '';
+  public forma: FormGroup;
+  public idCarta = 0;
+  public maximo = 0;
+  public gente: any = [];
+
+  @Input() id;
+  @Input() cantidad;
+  @Output() prestada = new EventEmitter();
 
   constructor(
     config: NgbModalConfig,
     private modalService: NgbModal,
     private storageService: StorageService,
     private servicio: MtgService
-    ) {
-    // customize default values of modals used by this component tree
+  ) {
     config.backdrop = 'static';
     config.keyboard = false;
     this.forma = new FormGroup({
       'idUsuario': new FormControl(''),
       'idProducto': new FormControl(''),
-      'estado': new FormControl('', Validators.required),
-      'cantidad': new FormControl('', Validators.required),
-      'foil': new FormControl(''),
-      'signed': new FormControl(''),
-      'idioma': new FormControl('')
+      'cant': new FormControl('', Validators.required),
+      'prestado': new FormControl('', Validators.required)
     });
 
     this.user = this.storageService.getCurrentUser();
+    this.maximo = this.cantidad;
   }
 
   open(content) {
     this.modalService.open(content);
-    this.guardadaCarta = false;
 
-    this.servicio.cartaConcreta(this.id).subscribe( data => {
+    this.servicio.cartasConcretaPrestar(this.id).subscribe( data => {
       this.carta = data.json()[0];
-    });
-    this.idiomaDeCarta(this.id);
+      this.maximo = this.cantidad;
 
-    this.forma.setValue({
-      idUsuario : this.user,
-      idProducto : this.id,
-      estado : 'NM',
-      cantidad : '',
-      foil : 'No',
-      signed : 'No',
-      idioma : 'English'
+      this.forma.setValue({
+        idUsuario : this.user,
+        idProducto : this.id,
+        cant : 1,
+        prestado: '',
+      });
+
+      this.listadoContactos();
     });
   }
 
-  guardarCartas() {
-    this.servicio.guardarCartasColeccion(this.forma.value, this.user).subscribe(data => {
+  guardarPrestadas(event) {
+    this.servicio.guardarPrestadas(this.forma.value, this.user).subscribe(data => {
+
       if (data['_body'] !== '') {
-        this.guardadaCarta = true;
+        this.prestada.emit(true);
+        this.modalService.dismissAll('Cross close');
+      } else {
+        this.prestada.emit(false);
       }
     }, error => console.error(error));
   }
@@ -80,13 +85,13 @@ export class ModalColeccionComponent {
     this.modalService.dismissAll('Cross close');
   }
 
-  idiomaDeCarta(id: number) {
-    this.servicio.idiomaDeCarta(id).subscribe(data => {
-      this.idiomasCartas.push(data.json());
-    });
-  }
-
   redireccionExterna(url: string) {
     window.open(url, '_blank');
+  }
+
+  public listadoContactos() {
+    this.servicio.listadoContactos( this.user ).subscribe( data => {
+      this.gente = data.json();
+    });
   }
 }

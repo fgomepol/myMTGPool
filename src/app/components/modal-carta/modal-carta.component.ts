@@ -18,13 +18,13 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class ModalCartaComponent  {
 
   public user: number;
-    public idiomasCartas: any[] = [];
-    public ediciones: any[] = [];
-    public carta: any = '';
-    public forma: FormGroup;
-    public guardadaCarta = false;
-    public idCarta = 0;
-    @Input() id;
+  public idiomasCartas: any[] = [];
+  public ediciones: any[] = [];
+  public carta: any = '';
+  public forma: FormGroup;
+  public guardadaCarta = false;
+  public idCarta = 0;
+  @Input() id;
 
   constructor(
     config: NgbModalConfig,

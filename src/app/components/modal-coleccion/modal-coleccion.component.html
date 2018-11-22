@@ -1,24 +1,23 @@
 <ng-template #content>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Añadir a la colección</h4>
+        <h4 class="modal-title" id="modal-basic-title">Prestar cartas</h4>
         <button type="button" class="close" aria-label="Close" (click)="cerrar()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div *ngIf="guardadaCarta == true" class="alert alert-success text-center" role="alert">
-        <p style="font-weight: bold">Las cartas se han añadido correctamente a tu colección.</p>
+            <span aria-hidden="true">&times;</span>
+          </button>
     </div>
     <div class="modal-body">
-        <form [formGroup]="forma" (ngSubmit)="guardarCartas()" novalidate="novalidate">
+        <form [formGroup]="forma" (ngSubmit)="guardarPrestadas($event)" novalidate="novalidate">
             <table class="col-lg-12 table-fixed">
                 <thead>
                     <tr class="table">
+                        <th class="text-center" style="border: 1px solid #ddd;">Edición</th>
                         <th class="text-center" style="border: 1px solid #ddd;">Carta</th>
                         <th class="text-center" style="border: 1px solid #ddd;">Estado</th>
                         <th class="text-center" style="border: 1px solid #ddd;">Idioma</th>
                         <th class="text-center" style="border: 1px solid #ddd;">Cantidad</th>
                         <th class="text-center" style="border: 1px solid #ddd;">Foil</th>
                         <th class="text-center" style="border: 1px solid #ddd;">Signed</th>
+                        <th class="text-center" style="border: 1px solid #ddd;">Prestado</th>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
@@ -27,46 +26,40 @@
 
                 <tr>
                     <td class="text-center align-middle small">
+                        <i class="ss ss-{{ carta['icon'] }} ss-2x ss-{{ carta['rarity'] }}"></i>
+                    </td>
+                    <td class="text-center align-middle small">
                         <h5><a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta['name'] }}</a></h5>
                     </td>
                     <td class="text-center align-middle small">
-                        <select class="form-control small" formControlName="estado" name="estado">
-                      <option value="MI">Mint</option>
-                      <option value="NM">Near Mint</option>
-                      <option value="EX">Excelent</option>
-                      <option value="PL">Played</option>
-                      <option value="PO">Poor</option>
-                  </select>
+                        {{ carta['estado'] }}
                     </td>
                     <td class="text-center align-middle small">
-                        <select class="form-control small" formControlName="idioma" name="idioma">
-                            <option *ngFor="let idiomas of idiomasCartas[0];" value="{{ idiomas.idioma }}">{{ idiomas.idioma }}</option>
-                        </select>
+                        {{ carta['idioma'] }}
                     </td>
                     <td class="text-center align-middle">
-                        <input type="number" formControlName="cantidad" name="cantidad" step="1" min="0" max="20">
+                        <input type="number" formControlName="cant" name="cant" step="1" min="1" max="{{ maximo }}">
                     </td>
                     <td class="text-center align-middle small">
-                        <select class="form-control small" formControlName="foil" name="foil">
-                      <option value="No">No</option>
-                      <option value="Si">Si</option>
-                  </select>
+                        {{ carta['foil'] }}
                     </td>
                     <td class="text-center align-middle small">
-                        <select class="form-control small" formControlName="signed" name="signed">
-                      <option value="No" selected>No</option>
-                      <option value="Si">Si</option>
-                  </select>
+                        {{ carta['signed'] }}
+                    </td>
+                    <td class="text-center align-middle small">
+                        <select class="form-control small" formControlName="prestado" name="prestado">
+                            <option *ngFor="let persona of gente;" value="{{ persona.Id }}">{{ persona.userName }}</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td colspan="6" class="text-center">
-                        <button type="submit" class="btn btn-outline-primary small">
-                      Añadir a la colección
-                  </button>
+                    <td colspan="8" class="text-center">
+                        <button type="submit" [disabled]="!forma.valid" [ngClass]="{'btn-outline-danger' : !forma.valid, 'btn-outline-primary' : forma.valid}" class="btn btn-outline-primary small">
+                          Prestar Cartas
+                      </button>
                     </td>
                 </tr>
             </table>
@@ -74,4 +67,4 @@
     </div>
 </ng-template>
 
-<a [routerLink]="" (click)="open(content)"><i class="fa fa-plus text-success"></i></a>
+<a [routerLink]="" (click)="open(content)"><i class="fa fa-exchange text-success"></i></a>

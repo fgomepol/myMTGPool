@@ -29,6 +29,7 @@ export class CartasBarajaComponent implements OnInit {
   public codigoBaraja: number;
   public baraja: any;
   public loading = true;
+  public loadingPendientes = false;
   public cartasBaraja: any;
   public totalCartas: number;
   public importeBarajaEx: number;
@@ -159,20 +160,24 @@ export class CartasBarajaComponent implements OnInit {
     // console.log(e);
   }
 
-  public actualizaListado() {
-    this.servicio.comparacionColeccion(this.codigoBaraja, this.user).subscribe(data => {
+  public actualizaListado($event) {
+    if ($event === true) {
+      this.loadingPendientes = true;
+      this.servicio.comparacionColeccion(this.codigoBaraja, this.user).subscribe(data => {
 
-      this.cartasFaltan.splice(0);
-      this.cartasFaltan = data.json();
+        this.cartasFaltan.splice(0);
+        this.cartasFaltan = data.json();
 
-      this.importeFaltaBarajaEx = 0;
-      this.importeFaltaBarajaMn = 0;
+        this.importeFaltaBarajaEx = 0;
+        this.importeFaltaBarajaMn = 0;
 
-      for (const item of this.cartasFaltan) {
-        this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + parseFloat(item.importeEx);
-        this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + parseFloat(item.importeNm);
-      }
-    });
+        for (const item of this.cartasFaltan) {
+          this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + parseFloat(item.importeEx);
+          this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + parseFloat(item.importeNm);
+        }
+        this.loadingPendientes = false;
+      });
+    }
   }
 
   public descargaPDF() {

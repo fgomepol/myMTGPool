@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MtgService } from '../../service/mtg.service';
 import { StorageService } from '../../service/storage.service';
@@ -25,6 +25,7 @@ export class ModalCartaComponent  {
   public guardadaCarta = false;
   public idCarta = 0;
   @Input() id;
+  @Output() prestada = new EventEmitter();
 
   constructor(
     config: NgbModalConfig,
@@ -74,11 +75,14 @@ export class ModalCartaComponent  {
     this.idiomaDeCarta(this.id);
   }
 
-  guardarCartas() {
+  guardarCartas(event) {
     this.servicio.guardarCartasColeccion(this.forma.value, this.user).subscribe(data => {
 
       if (data['_body'] !== '') {
         this.guardadaCarta = true;
+        this.prestada.emit(true);
+      } else {
+        this.prestada.emit(false);
       }
     }, error => console.error(error));
   }

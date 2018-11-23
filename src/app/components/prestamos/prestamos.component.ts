@@ -20,8 +20,8 @@ export class PrestamosComponent implements OnInit {
   public pantalla = 'prestamos';
   public texto = 'Cargando cartas prestadas, por favor espere';
   public cargandoPagina = true;
-  public cartasQuePrestas: any[];
-  public cartasYaDevueltas: any[];
+  public cartasQuePrestas: any[] = [];
+  public cartasYaDevueltas: any[] = [];
   public cartasPrestadas = false;
   public cartasDevueltas = false;
   public verDevueltas = false;
@@ -58,10 +58,13 @@ export class PrestamosComponent implements OnInit {
 
   public listadoCartasDevueltas() {
     this.cargandoPagina = true;
+    this.cartasYaDevueltas.splice(0);
     this.servicio.cartasYaDevueltas(this.user).subscribe(data2 => {
         if (data2['_body'] !== '[]') {
           this.cartasYaDevueltas = data2.json();
           this.cartasPrestadas = true;
+        } else {
+          this.cartasPrestadas = false;
         }
         this.cargandoPagina = false;
       });
@@ -69,10 +72,13 @@ export class PrestamosComponent implements OnInit {
 
   public listadoCartasPrestadas() {
     this.cargandoPagina = true;
+    this.cartasQuePrestas.splice(0);
     this.servicio.cartasPrestadas(this.user).subscribe(data => {
       if (data['_body'] !== '[]') {
         this.cartasQuePrestas = data.json();
         this.cartasPrestadas = true;
+      } else {
+        this.cartasPrestadas = false;
       }
       this.cargandoPagina = false;
     });

@@ -10,17 +10,12 @@ export class StorageService {
 
   public baseUrl = 'http://localhost/mkmApi/coleccion.php';
   private localStorageService;
-  private currentSession: SessionModule = null;
-  private destinatariosSession: SessionModule = null;
 
   constructor(private router: Router, private http: Http) {
     this.localStorageService = localStorage;
-    this.currentSession = this.loadSessionData();
-    this.destinatariosSession = this.loadDestinatario();
   }
 
   setCurrentSession(session: SessionModule): void {
-    this.currentSession = session;
     this.localStorageService.setItem('currentUser', JSON.stringify(session));
   }
   loadSessionData(): SessionModule {
@@ -34,12 +29,11 @@ export class StorageService {
   }
 
   getCurrentSession(): SessionModule {
-    return this.currentSession;
+    return this.loadSessionData();
   }
   removeCurrentSession(): void {
     this.localStorageService.removeItem('currentUser');
     this.localStorageService.removeItem('destinatarios');
-    this.currentSession = null;
   }
   getCurrentUser(): number {
     const session: SessionModule = this.getCurrentSession();

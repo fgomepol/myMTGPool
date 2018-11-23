@@ -111,28 +111,28 @@
                                             </tr>
                                         </thead>
 
-                                        <tr *ngFor="let baraja of barajasBuscadas; let i = index;">
-                                            <td class="text-center">
+                                        <tr *ngFor="let baraja of barajasBuscadas; let i = index; let impar = odd;let par = even;">
+                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5><a target="_blank" [routerLink]="['/listadoBarajas', formato, baraja.idTorneo ]">{{ baraja.nombre }}</a></h5>
                                             </td>
-                                            <td class="text-center">
+                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5><a target="_blank" [routerLink]="['/cartasBaraja', formato, baraja.idTorneo, baraja.codigoBaraja ]">{{ baraja.arquetipo }}</a></h5>
                                             </td>
-                                            <td class="text-center align-middle small">
+                                            <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5 [ngClass]="{ 'text-warning': baraja.posicion>8, 'text-success': baraja.posicion<=8, 'text-danger': baraja.posicion>16 }">{{ baraja.posicion }}</h5>
                                             </td>
-                                            <td class="text-center align-middle small">
+                                            <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5>{{ baraja.jugadores }}</h5>
                                             </td>
-                                            <td class="text-center align-middle small">
+                                            <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5>{{ baraja.fecha*1000 | date: 'dd/MM/yyyy' }}</h5>
                                             </td>
-                                            <td class="text-center align-middle">
+                                            <td class="text-center align-middle" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5><span [ngClass]="{'text-success': baraja.cantidadQueFalta===baraja.cantidadBaraja, 'text-warning': baraja.cantidadQueFalta>=baraja.cantidadBaraja-14 && baraja.cantidadQueFalta<baraja.cantidadBaraja, 'text-danger': baraja.cantidadQueFalta<=baraja.cantidadBaraja-15 }">{{ baraja.cantidadQueFalta }}</span>/
                                                     <span class="text-success">{{ baraja.cantidadBaraja }}</span>
                                                 </h5>
                                             </td>
-                                            <td class="text-center align-middle">
+                                            <td class="text-center align-middle" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5>{{ baraja.costeInversion | number:'1.0-2' }} €</h5>
                                             </td>
                                         </tr>

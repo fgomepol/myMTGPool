@@ -14,7 +14,8 @@ import { BarajasService } from 'src/app/service/barajas.service';
     '../../vendor/morrisjs/morris.css',
     '../../vendor/font-awesome/css/font-awesome.min.css',
     '../../vendor/Keyrune/css/keyrune.css',
-    '../../vendor/manaSet/css/mana.css?v=1.4.0'
+    '../../vendor/manaSet/css/mana.css?v=1.4.0',
+    '../gestionar-coleccion/gestionar-coleccion.component.css'
 ]
 })
 export class SugerenciaInversionComponent implements OnInit {

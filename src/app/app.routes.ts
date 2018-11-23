@@ -25,6 +25,7 @@ import { MetajuegoComponent } from './components/metajuego/metajuego.component';
 import { SugerenciaInversionComponent } from './components/sugerencia-inversion/sugerencia-inversion.component';
 import { QueTePrestanComponent } from './components/que-te-prestan/que-te-prestan.component';
 import { PrestarCartasComponent } from './components/prestar-cartas/prestar-cartas.component';
+import { MazosFavoritosComponent } from './components/mazos-favoritos/mazos-favoritos.component';
 
 const appRoutes: Routes = [
   { path: 'index', component: IndexComponent },
@@ -52,6 +53,7 @@ const appRoutes: Routes = [
   { path: 'metajuego', component: MetajuegoComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'queTePrestan', component: QueTePrestanComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'prestarCartas', component: PrestarCartasComponent, canActivate: [ AuthorizatedGuardComponent ] },
+  { path: 'mazosFavoritos', component: MazosFavoritosComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'metajuego/:id', component: MetajuegoComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'contactos', component: ContactosComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: '', redirectTo: '/index', pathMatch: 'full' },

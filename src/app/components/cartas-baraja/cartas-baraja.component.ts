@@ -30,6 +30,7 @@ export class CartasBarajaComponent implements OnInit {
   public baraja: any;
   public loading = true;
   public loadingPendientes = false;
+  public favorita = false;
   public cartasBaraja: any;
   public totalCartas: number;
   public importeBarajaEx: number;
@@ -112,6 +113,12 @@ export class CartasBarajaComponent implements OnInit {
         this.html = this.sanitizer.bypassSecurityTrustHtml(this.baraja[0].pagina);
 
         this.cartasBaraja = this.baraja[0].cartasBaraja;
+      });
+
+      this.servicio.compruebaFavorita(params['id3'], this.user).subscribe(data => {
+        if (data['_body'] !== '[]') {
+          this.favorita = true;
+        }
       });
 
       this.servicio.datosEstadisticosBaraja(params['id3']).subscribe(data => {
@@ -252,4 +259,13 @@ export class CartasBarajaComponent implements OnInit {
     });
   }
 
+  public marcarFavorita(valor: string) {
+    this.servicio.addFavorita(this.codigoBaraja, this.user, valor).subscribe(data => {
+      if (valor === 'N') {
+        this.favorita = false;
+      } else {
+        this.favorita = true;
+      }
+    });
+  }
 }

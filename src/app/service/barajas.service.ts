@@ -61,4 +61,20 @@ export class BarajasService {
   decklist(codigoBaraja: number) {
     return this.http.get(`${this.baseUrl}?opcion=decklist&codigoBaraja=${codigoBaraja}`);
   }
+
+  decklistMazo(codigoBaraja: number) {
+    return this.http.get(`${this.baseUrl}?opcion=decklistMazo&codigoBaraja=${codigoBaraja}`);
+  }
+
+  compruebaFavorita(idBaraja: number, usuario: number) {
+    return this.http.get(`${this.baseUrl}?opcion=compruebaFavorita&idBaraja=${idBaraja}&usuario=${usuario}`);
+  }
+
+  addFavorita(idBaraja: number, usuario: number, valor: string) {
+    return this.http.get(`${this.baseUrl}?opcion=addFavorita&idBaraja=${idBaraja}&usuario=${usuario}&valor=${valor}`);
+  }
+
+  listaBarajasFavoritas(usuario: number) {
+    return this.http.get(`${this.baseUrl}?opcion=listaBarajasFavoritas&usuario=${usuario}`);
+  }
 }

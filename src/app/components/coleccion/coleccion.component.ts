@@ -16,7 +16,8 @@ import { CartaBusquedaModule } from 'src/app/models/carta-busqueda.module';
     '../../vendor/morrisjs/morris.css',
     '../../vendor/font-awesome/css/font-awesome.min.css',
     '../../vendor/Keyrune/css/keyrune.css',
-    '../../vendor/manaSet/css/mana.css?v=1.4.0'
+    '../../vendor/manaSet/css/mana.css?v=1.4.0',
+    '../gestionar-coleccion/gestionar-coleccion.component.css'
 ]
 })
 export class ColeccionComponent implements OnInit {

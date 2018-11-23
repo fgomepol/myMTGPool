@@ -12,7 +12,8 @@ import { FormGroup, FormControl } from '@angular/forms';
     '../../dist/css/sb-admin-2.css',
     '../../vendor/morrisjs/morris.css',
     '../../vendor/font-awesome/css/font-awesome.min.css',
-    '../../vendor/Keyrune/css/keyrune.css'
+    '../../vendor/Keyrune/css/keyrune.css',
+    '../gestionar-coleccion/gestionar-coleccion.component.css'
 ]
 })
 export class PrestarCartasComponent implements OnInit {

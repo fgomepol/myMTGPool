@@ -185,4 +185,8 @@ constructor(private http: Http) {}
   cartasYaDevueltas(usuario: number) {
     return this.http.get(`${this.baseUrl}?opcion=cartasYaDevueltas&usuario=${usuario}`);
   }
+
+  listadoMazos(usuario: number) {
+    return this.http.get(`${this.baseUrl}?opcion=listadoMazos&usuario=${usuario}`);
+  }
 }

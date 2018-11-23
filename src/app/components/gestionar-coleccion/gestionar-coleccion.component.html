@@ -217,28 +217,28 @@
                                             </thead>
 
                                             <tr *ngFor="let carta of cartasColeccion | paginate: { itemsPerPage: 20, currentPage: page }; let impar = odd;let par = even;">
-                                                <td class="text-center align-middle small">
+                                                <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                     <i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i>
                                                 </td>
-                                                <td class="text-left align-middle small">
+                                                <td class="text-left align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                     <h5><a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a></h5>
                                                 </td>
-                                                <td class="text-center align-middle small">
+                                                <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                     <h5>{{ carta.estado }}</h5>
                                                 </td>
-                                                <td class="text-center align-middle small">
+                                                <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                     <h5>{{ carta.idioma }}</h5>
                                                 </td>
-                                                <td class="text-center align-middle small">
+                                                <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                     <h5>{{ carta.cantidad }}</h5>
                                                 </td>
-                                                <td class="text-center align-middle small">
+                                                <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                     <h5>{{ carta.foil }}</h5>
                                                 </td>
-                                                <td class="text-center align-middle small">
+                                                <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                     <h5>{{ carta.signed }}</h5>
                                                 </td>
-                                                <td class="text-right align-middle small">
+                                                <td class="text-right align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                     <table width="100%">
                                                         <tr>
                                                             <td width="70%">
@@ -250,7 +250,7 @@
                                                         </tr>
                                                     </table>
                                                 </td>
-                                                <td class="text-center align-middle small">
+                                                <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                     <a class="text-info" [routerLink]="['/modificarArticulo',carta.codColeccion]"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
                                                 </td>
                                             </tr>

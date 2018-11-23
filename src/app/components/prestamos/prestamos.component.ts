@@ -11,7 +11,8 @@ import { MtgService } from '../../service/mtg.service';
     '../../dist/css/sb-admin-2.css',
     '../../vendor/morrisjs/morris.css',
     '../../vendor/font-awesome/css/font-awesome.min.css',
-    '../../vendor/Keyrune/css/keyrune.css'
+    '../../vendor/Keyrune/css/keyrune.css',
+    '../gestionar-coleccion/gestionar-coleccion.component.css'
 ]
 })
 export class PrestamosComponent implements OnInit {
@@ -60,14 +61,14 @@ export class PrestamosComponent implements OnInit {
     this.cargandoPagina = true;
     this.cartasYaDevueltas.splice(0);
     this.servicio.cartasYaDevueltas(this.user).subscribe(data2 => {
-        if (data2['_body'] !== '[]') {
-          this.cartasYaDevueltas = data2.json();
-          this.cartasPrestadas = true;
-        } else {
-          this.cartasPrestadas = false;
-        }
-        this.cargandoPagina = false;
-      });
+      if (data2['_body'] !== '[]') {
+        this.cartasYaDevueltas = data2.json();
+        this.cartasDevueltas = true;
+      } else {
+        this.cartasDevueltas = false;
+      }
+    });
+    this.cargandoPagina = false;
   }
 
   public listadoCartasPrestadas() {

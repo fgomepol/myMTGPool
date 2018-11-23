@@ -5,3 +5,13 @@
     line-height: 18px;
     vertical-align: middle;
 }
+
+.nth-child1 {
+    background-color: #F6F6F6;
+    color: #000;
+}
+
+.nth-child2 {
+    background-color: #FFF;
+    color: #000;
+}

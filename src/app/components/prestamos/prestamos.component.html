@@ -12,7 +12,7 @@
         <div class="col-lg-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Mis Cartas Prestadas
+                    Cartas prestadas
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -50,15 +50,20 @@
                                     </table>
                                 </div>
 
-                                <div *ngIf="cartasPrestadas===false && !cargandoPagina" class="alert alert-success text-center" role="alert">
+                                <div *ngIf="cartasPrestadas===false && !cargandoPagina && !verDevueltas" class="alert alert-success text-center" role="alert">
                                     <p style="font-weight: bold">No tiene cartas prestadas en estos momentos.
                                         <BR> <a class="text-info" [routerLink]="['/prestarCartas']">Prestar Cartas</a>
                                     </p>
                                 </div>
+                                <div *ngIf="cartasPrestadas===false && !cargandoPagina && !verDevueltas">
+                                    <h5 class="text-center">
+                                        <button type="button" class="btn btn-outline-info" (click)="verCartasDevueltas(true)">Ver cartas devueltas</button>
+                                    </h5>
+                                </div>
 
-                                <div *ngIf="!cargandoPagina && cartasPrestadas===true">
+                                <div *ngIf="!cargandoPagina && !verDevueltas && cartasPrestadas">
 
-                                    <table *ngIf="!verDevueltas" class="col-lg-12 text-center">
+                                    <table class="col-lg-12 text-center">
                                         <thead>
                                             <tr>
                                                 <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Edición</th>
@@ -77,32 +82,32 @@
                                         </thead>
 
 
-                                        <tr *ngFor="let carta of cartasQuePrestas | paginate: { itemsPerPage: 10, currentPage: page }; let i = index;">
-                                            <td class="text-center align-middle small">
+                                        <tr *ngFor="let carta of cartasQuePrestas | paginate: { itemsPerPage: 10, currentPage: page }; let i = index; let impar = odd;let par = even;">
+                                            <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i>
                                             </td>
-                                            <td class="text-left text-dark align-middle small">
+                                            <td class="text-left text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5><a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a></h5>
                                             </td>
-                                            <td class="text-center text-dark align-middle small">
+                                            <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5>{{ carta.estado }}</h5>
                                             </td>
-                                            <td class="text-center text-dark align-middle small">
+                                            <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5>{{ carta.idioma }}</h5>
                                             </td>
-                                            <td class="text-center text-dark align-middle small">
+                                            <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5>{{ carta.cantidad }}</h5>
                                             </td>
-                                            <td class="text-center text-dark align-middle small">
+                                            <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5>{{ carta.foil }}</h5>
                                             </td>
-                                            <td class="text-center text-dark align-middle small">
+                                            <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5>{{ carta.signed }}</h5>
                                             </td>
-                                            <td class="text-center text-dark align-middle small">
+                                            <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5>{{ carta.userName }}</h5>
                                             </td>
-                                            <td class="text-center text-dark align-middle small">
+                                            <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <input type="checkbox" name="cartaPrestada{{carta.codColeccion}}" (change)="activaBoton()" [(ngModel)]="cartasQuePrestas[i].checked">
                                             </td>
                                         </tr>
@@ -122,70 +127,83 @@
                                             </td>
                                         </tr>
                                     </table>
+                                </div>
 
-                                    <table *ngIf="verDevueltas" class="col-lg-12 text-center">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Edición</th>
-                                                <th class="col-lg-3 text-center text-dark" style="border: 1px solid #ddd;">Carta</th>
-                                                <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Estado</th>
-                                                <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Idioma</th>
-                                                <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Cant.</th>
-                                                <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Foil</th>
-                                                <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Firmada</th>
-                                                <th class="col-lg-2 text-center text-dark" style="border: 1px solid #ddd;">Prestado</th>
-                                                <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Devolución</th>
+                                <div *ngIf="!cargandoPagina && verDevueltas">
+
+                                    <div *ngIf="!cartasDevueltas && !cargandoPagina" class="alert alert-success text-center" role="alert">
+                                        <p style="font-weight: bold">No tiene cartas devueltas en estos momentos.</p>
+                                    </div>
+                                    <div *ngIf="!cartasDevueltas && !cargandoPagina">
+                                        <h5 class="text-center">
+                                            <button type="button" class="btn btn-outline-info" (click)="verCartasDevueltas(false)">Ver cartas prestadas</button>
+                                        </h5>
+                                    </div>
+
+                                    <div *ngIf="cartasDevueltas && !cargandoPagina">
+                                        <table class="col-lg-12 text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Edición</th>
+                                                    <th class="col-lg-3 text-center text-dark" style="border: 1px solid #ddd;">Carta</th>
+                                                    <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Estado</th>
+                                                    <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Idioma</th>
+                                                    <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Cant.</th>
+                                                    <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Foil</th>
+                                                    <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Firmada</th>
+                                                    <th class="col-lg-2 text-center text-dark" style="border: 1px solid #ddd;">Prestado</th>
+                                                    <th class="col-lg-1 text-center text-dark" style="border: 1px solid #ddd;">Devolución</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                            </thead>
+
+                                            <tr *ngFor="let carta of cartasYaDevueltas | paginate: { itemsPerPage: 10, currentPage: page }; let i = index; let impar = odd;let par = even;">
+                                                <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                    <i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i>
+                                                </td>
+                                                <td class="text-left text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                    <h5><a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a></h5>
+                                                </td>
+                                                <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                    <h5>{{ carta.estado }}</h5>
+                                                </td>
+                                                <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                    <h5>{{ carta.idioma }}</h5>
+                                                </td>
+                                                <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                    <h5>{{ carta.cantidad }}</h5>
+                                                </td>
+                                                <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                    <h5>{{ carta.foil }}</h5>
+                                                </td>
+                                                <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                    <h5>{{ carta.signed }}</h5>
+                                                </td>
+                                                <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                    <h5>{{ carta.userName }}</h5>
+                                                </td>
+                                                <td class="text-center text-success align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                    <h5>{{ carta.fechaDevolucion*1000 | date: 'dd/MM/yyyy' }}</h5>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>&nbsp;</td>
+                                                <td colspan="9" class="text-center">
+                                                    <h5>
+                                                        <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                    </h5>
+                                                </td>
                                             </tr>
-                                        </thead>
-
-
-                                        <tr *ngFor="let carta of cartasYaDevueltas | paginate: { itemsPerPage: 10, currentPage: page }; let i = index;">
-                                            <td class="text-center align-middle small">
-                                                <i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i>
-                                            </td>
-                                            <td class="text-left text-dark align-middle small">
-                                                <h5><a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a></h5>
-                                            </td>
-                                            <td class="text-center text-dark align-middle small">
-                                                <h5>{{ carta.estado }}</h5>
-                                            </td>
-                                            <td class="text-center text-dark align-middle small">
-                                                <h5>{{ carta.idioma }}</h5>
-                                            </td>
-                                            <td class="text-center text-dark align-middle small">
-                                                <h5>{{ carta.cantidad }}</h5>
-                                            </td>
-                                            <td class="text-center text-dark align-middle small">
-                                                <h5>{{ carta.foil }}</h5>
-                                            </td>
-                                            <td class="text-center text-dark align-middle small">
-                                                <h5>{{ carta.signed }}</h5>
-                                            </td>
-                                            <td class="text-center text-dark align-middle small">
-                                                <h5>{{ carta.userName }}</h5>
-                                            </td>
-                                            <td class="text-center text-success align-middle small">
-                                                <h5>{{ carta.fechaDevolucion*1000 | date: 'dd/MM/yyyy' }}</h5>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="9" class="text-center">
-                                                <h5>
-                                                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
-                                                </h5>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="9" class="text-center">
-                                                <h5>
-                                                    <button *ngIf="verDevueltas" type="button" class="btn btn-outline-info" (click)="verCartasDevueltas(false)">Ver cartas prestadas</button>
-                                                </h5>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                            <tr>
+                                                <td colspan="9" class="text-center">
+                                                    <h5>
+                                                        <button *ngIf="verDevueltas" type="button" class="btn btn-outline-info" (click)="verCartasDevueltas(false)">Ver cartas prestadas</button>
+                                                    </h5>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

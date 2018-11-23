@@ -55,6 +55,7 @@ export class ModalColeccionComponent {
     this.modalService.open(content);
 
     this.servicio.cartasConcretaPrestar(this.id).subscribe( data => {
+
       this.carta = data.json()[0];
       this.maximo = this.cantidad;
 

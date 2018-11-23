@@ -12,7 +12,7 @@
         <div class="col-lg-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Mis Mazos
+                    Barajas Favoritas
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -22,10 +22,10 @@
                                 <table class="text-center" style="width: 100%">
                                     <tr>
                                         <td>
-                                            <a class="navbar-brand text-success" style="font-weight: bold" [routerLink]="['/mazos']">Mis Mazos</a>
+                                            <a class="navbar-brand text-black-50" style="font-weight: bold" [routerLink]="['/mazos']">Mis Mazos</a>
                                         </td>
                                         <td>
-                                            <a class="navbar-brand text-black-50" style="font-weight: bold" [routerLink]="['/mazosFavoritos']">Barajas Favoritas</a>
+                                            <a class="navbar-brand text-success" style="font-weight: bold" [routerLink]="['/mazosFavoritos']">Barajas Favoritas</a>
                                         </td>
                                         <td>
                                             <a class="navbar-brand text-black-50" style="font-weight: bold" [routerLink]="['/editorMazos']">Editor Mazos</a>
@@ -34,9 +34,7 @@
                                     <tr>
                                         <td colspan="3">
                                             <div *ngIf="!loading && !hayMazos" class="alert alert-warning text-center" role="alert">
-                                                <p style="font-weight: bold">Aún no has creado mazos propios.
-                                                    <BR> <a class="text-info" [routerLink]="['/editorMazos']">Crea tus mazos</a>
-                                                </p>
+                                                <p style="font-weight: bold">Aún no tienes barajas favoritas.</p>
                                             </div>
                                         </td>
                                     </tr>
@@ -48,13 +46,12 @@
                                     <table class="col-lg-12" style="width: 100%">
                                         <thead>
                                             <tr class="table">
-                                                <th class="text-center" style="border: 1px solid #ddd;">Nombre</th>
+                                                <th class="text-center" style="border: 1px solid #ddd;">Torneo</th>
                                                 <th class="text-center" style="border: 1px solid #ddd;">Arquetipo</th>
                                                 <th class="text-center" style="border: 1px solid #ddd;">Formato</th>
-                                                <th class="text-center" style="border: 1px solid #ddd;">Creación</th>
+                                                <th class="text-center" style="border: 1px solid #ddd;">Jugador</th>
+                                                <th class="text-center" style="border: 1px solid #ddd;">Posición</th>
                                                 <th class="text-center" style="border: 1px solid #ddd;">Completa</th>
-                                                <th class="text-center" style="border: 1px solid #ddd;">Decklist</th>
-                                                <th class="text-center" style="border: 1px solid #ddd;">Opc.</th>
                                             </tr>
                                             <tr>
                                                 <td colspan="3" class="text-center">&nbsp;</td>
@@ -63,27 +60,24 @@
 
                                         <tr *ngFor="let baraja of barajas; let impar = odd;let par = even;">
                                             <td class="text-left" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h5><a target="_blank" [routerLink]="['/cartasMazo', baraja.codMazo ]">{{ baraja.nombre }}</a></h5>
+                                                <h5><a target="_blank" [routerLink]="['/listadoBarajas', baraja.formato, baraja.idTorneo ]">{{ baraja.nombre }}</a></h5>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h5><a target="_blank" [routerLink]="['/cartasMazo', baraja.codMazo ]">{{ baraja.arquetipo }}</a></h5>
+                                                <h5><a target="_blank" [routerLink]="['/cartasBaraja', baraja.formato, baraja.idTorneo, baraja.codigoBaraja ]">{{ baraja.arquetipo }}</a></h5>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h5><a target="_blank" [routerLink]="['/cartasMazo', baraja.codMazo ]">{{ baraja.formato }}</a></h5>
+                                                <h5><a target="_blank" [routerLink]="['/cartasBaraja', baraja.formato, baraja.idTorneo, baraja.codigoBaraja ]">{{ baraja.formato }}</a></h5>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h5><a target="_blank" [routerLink]="['/cartasMazo', baraja.codMazo ]">{{ baraja.fecha*1000 | date: 'dd/MM/yyyy' }}</a></h5>
+                                                <h5><a target="_blank" [routerLink]="['/resultados', baraja.formato, baraja.jugador ]">{{ baraja.jugador }}</a></h5>
+                                            </td>
+                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                <h5><a [ngClass]="{ 'text-warning': baraja.posicion>8, 'text-success': baraja.posicion<=8, 'text-danger': baraja.posicion>16 }" [routerLink]="['/cartasBaraja', baraja.formato, baraja.idTorneo, baraja.codigoBaraja ]">{{ baraja.posicion }}</a></h5>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5><span [ngClass]="{'text-success': baraja.cantidadQueFalta===baraja.cantidadBaraja, 'text-warning': baraja.cantidadQueFalta>=baraja.cantidadBaraja-14 && baraja.cantidadQueFalta<baraja.cantidadBaraja, 'text-danger': baraja.cantidadQueFalta<=baraja.cantidadBaraja-15 }">{{ baraja.cantidadQueFalta }}</span>/
                                                     <span class="text-success">{{ baraja.cantidadBaraja }}</span>
                                                 </h5>
-                                            </td>
-                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h5><a class="navbar-brand" [routerLink]="" (click)="descargaPDF(baraja.codMazo);"><i class="material-icons text-info">picture_as_pdf</i></a></h5>
-                                            </td>
-                                            <td class="text-center align-middle small">
-                                                <a class="text-info" [routerLink]=""><i class="fa fa-edit"></i></a>
                                             </td>
                                         </tr>
                                     </table>

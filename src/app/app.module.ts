@@ -47,6 +47,7 @@ import { SugerenciaInversionComponent } from './components/sugerencia-inversion/
 import { ExcelService } from './service/excel.service';
 import { QueTePrestanComponent } from './components/que-te-prestan/que-te-prestan.component';
 import { PrestarCartasComponent } from './components/prestar-cartas/prestar-cartas.component';
+import { MazosFavoritosComponent } from './components/mazos-favoritos/mazos-favoritos.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { PrestarCartasComponent } from './components/prestar-cartas/prestar-cart
     ModalCartaComponent,
     SugerenciaInversionComponent,
     QueTePrestanComponent,
-    PrestarCartasComponent
+    PrestarCartasComponent,
+    MazosFavoritosComponent
   ],
   imports: [
     BrowserModule,

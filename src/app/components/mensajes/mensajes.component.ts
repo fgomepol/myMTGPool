@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
-import { AuthenticationService } from '../../service/authentication.service';
-import { Router } from '@angular/router';
 import { MtgService } from '../../service/mtg.service';
 import { MensajeModule } from '../../models/mensaje.module';
 

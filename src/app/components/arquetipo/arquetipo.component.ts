@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
     '../../dist/css/sb-admin-2.css',
     '../../vendor/morrisjs/morris.css',
     '../../vendor/font-awesome/css/font-awesome.min.css',
-    './arqurtipo.component.css'
+    './arquetipo.component.css'
 ]
 })
 export class ArquetipoComponent implements OnInit {

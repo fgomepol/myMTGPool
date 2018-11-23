@@ -42,6 +42,13 @@
                                         <thead>
                                             <tr>
                                                 <td class="text-info" style="font-weight: bold">
+                                                    Favorita:
+                                                </td>
+                                                <td>
+                                                    <a *ngIf="favorita" class="navbar-brand" [routerLink]="" (click)="marcarFavorita('N');"><i class="material-icons text-danger">favorite</i></a>
+                                                    <a *ngIf="!favorita" class="navbar-brand" [routerLink]="" (click)="marcarFavorita('S');"><i class="material-icons text-danger">favorite_border</i></a>
+                                                </td>
+                                                <td class="text-info" style="font-weight: bold">
                                                     DCI Decklist:
                                                 </td>
                                                 <td>

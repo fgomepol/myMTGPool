@@ -174,7 +174,7 @@
                                     <table class="col-lg-12 table-fixed">
                                         <thead>
                                             <tr class="table">
-                                                <!--<th class="text-center" style="border: 1px solid #ddd;">Edición</th>-->
+                                                <th class="text-center" style="border: 1px solid #ddd;">Edición</th>
                                                 <th class="text-center" style="border: 1px solid #ddd;">Carta</th>
                                                 <th class="text-center" style="border: 1px solid #ddd;">Nombre</th>
                                                 <th class="text-center" style="border: 1px solid #ddd;">Tipo</th>
@@ -187,25 +187,25 @@
                                             </tr>
                                         </thead>
 
-                                        <tr *ngFor="let carta of cartasColeccion | paginate: { itemsPerPage: 25, currentPage: page }; let i = index;">
-                                            <!--<td class="text-center align-middle small"><i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i></td>-->
-                                            <td class="text-center">
-                                                <!--<img src="{{ carta.imagen }}">-->
+                                        <tr *ngFor="let carta of cartasColeccion | paginate: { itemsPerPage: 25, currentPage: page }; let i = index;  let impar = odd;let par = even;">
+                                            <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }"><i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i></td>-->
+                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                <img src="{{ carta.imagen }}">
                                             </td>
-                                            <td class="text-center align-middle small">
+                                            <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5><a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a></h5>
                                             </td>
-                                            <td class="text-center align-middle small">
+                                            <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5>{{ carta.type | tipoCarta }}</h5>
                                             </td>
-                                            <td class="text-center align-middle small">
+                                            <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <span *ngIf="isNumber(carta.manaCostWeb)"><i class="ms ms-{{ carta.manaCostWeb }} ms-cost ms-shadow"></i></span>
                                                 <span *ngIf="!isNumber(carta.manaCostWeb) && carta.manaCostWeb!=''"><i *ngFor="let coste of carta.manaCostWeb.split(' ');" class="ms ms-{{ coste.replace('/','') }} ms-cost ms-shadow"></i></span>
                                             </td>
-                                            <!--<td class="text-center align-middle small">
+                                            <!--<td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <app-modal-tendencia [id]=carta.productId></app-modal-tendencia>
                                             </td>-->
-                                            <td class="text-center align-middle">
+                                            <td class="text-center align-middle" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <!-- <app-modal-coleccion [id]=carta.productId></app-modal-coleccion> -->
                                                 <app-modal-carta [id]=carta.productId></app-modal-carta>
                                             </td>

@@ -9,9 +9,6 @@ import { BarajasService } from 'src/app/service/barajas.service';
   templateUrl: './sugerencia-inversion.component.html',
   styleUrls: [
     '../../vendor/bootstrap/css/bootstrap.min.css',
-    '../../vendor/metisMenu/metisMenu.min.css',
-    '../../dist/css/sb-admin-2.css',
-    '../../vendor/morrisjs/morris.css',
     '../../vendor/font-awesome/css/font-awesome.min.css',
     '../../vendor/Keyrune/css/keyrune.css',
     '../../vendor/manaSet/css/mana.css?v=1.4.0',

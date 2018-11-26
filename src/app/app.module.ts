@@ -36,6 +36,7 @@ import { ModalTendenciaComponent } from './components/modal-tendencia/modal-tend
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TipoCartaPipe } from './pipes/tipo-carta.pipe';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { NoimagePipe } from './pipes/noimage.pipe';
 import { ListadoBarajasComponent } from './components/listado-barajas/listado-barajas.component';
 import { CartasBarajaComponent } from './components/cartas-baraja/cartas-baraja.component';
 import { ArquetipoComponent } from './components/arquetipo/arquetipo.component';
@@ -77,6 +78,7 @@ import { MazosFavoritosComponent } from './components/mazos-favoritos/mazos-favo
     ModalTendenciaComponent,
     TipoCartaPipe,
     SafeHtmlPipe,
+    NoimagePipe,
     ListadoBarajasComponent,
     CartasBarajaComponent,
     ArquetipoComponent,

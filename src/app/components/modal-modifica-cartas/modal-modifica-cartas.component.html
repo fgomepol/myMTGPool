@@ -1,0 +1,92 @@
+<ng-template #content>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Modificar carta</h4>
+        <button type="button" class="close" aria-label="Close" (click)="cerrar()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div *ngIf="modificacionesRealizadas === true" class="alert alert-success text-center" role="alert">
+        <p style="font-weight: bold">Las cartas se han modificado correctamente.</p>
+    </div>
+    <div *ngIf="eliminada === true" class="alert alert-danger text-center" role="alert">
+        <p style="font-weight: bold">Las cartas se han eliminado correctamente.</p>
+    </div>
+
+    <div class="modal-body" *ngIf="!eliminada">
+        <form [formGroup]="forma" (ngSubmit)="guardarCambios($event)" novalidate="novalidate">
+            <table class="col-lg-12 table-fixed">
+                <thead>
+                    <tr class="table">
+                        <th class="text-center" style="border: 1px solid #ddd;">Edición</th>
+                        <th class="text-center" style="border: 1px solid #ddd;">Carta</th>
+                        <th class="text-center" style="border: 1px solid #ddd;">Estado</th>
+                        <th class="text-center" style="border: 1px solid #ddd;">Idioma</th>
+                        <th class="text-center" style="border: 1px solid #ddd;">Cantidad</th>
+                        <th class="text-center" style="border: 1px solid #ddd;">Foil</th>
+                        <th class="text-center" style="border: 1px solid #ddd;">Signed</th>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                </thead>
+
+                <tr>
+                    <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                        <i class="ss ss-{{ carta['icon'] }} ss-2x ss-{{ carta['rarity'] }}"></i>
+                    </td>
+                    <td class="text-center align-middle small">
+                        {{ carta['name'] }}
+                    </td>
+                    <td class="text-center align-middle" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                        <select class="form-control small" formControlName="estado" name="estado">
+                    <option value="MI">Mint</option>
+                    <option value="NM">Near Mint</option>
+                    <option value="EX">Excelent</option>
+                    <option value="PL">Played</option>
+                    <option value="PO">Poor</option>
+                </select>
+                    </td>
+                    <td class="text-center align-middle" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                        <select class="form-control small" formControlName="idioma" name="idioma">
+                    <option value="English">English</option>
+                    <option *ngFor="let idiomas of idiomasCartas[0];" value="{{ idiomas.idioma }}">{{ idiomas.idioma }}</option>
+                </select>
+                    </td>
+                    <td class="text-center align-middle" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                        <input type="number" formControlName="cantidad" name="cantidad" step="1" min="0" max="20">
+                    </td>
+                    <td class="text-center align-middle" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                        <select class="form-control small" formControlName="foil" name="foil">
+                    <option value="No">No</option>
+                    <option value="Si">Si</option>
+                </select>
+                    </td>
+                    <td class="text-center align-middle" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                        <select class="form-control small" formControlName="signed" name="signed">
+                    <option value="No">No</option>
+                    <option value="Si">Si</option>
+                </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="7" class="text-center">
+                        <button type="button" class="btn btn-outline-danger" (click)="eliminar(carta['codColeccion'])">
+                    Eliminar cartas
+                </button> &nbsp;&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-outline-primary">
+            Guardar cambios
+        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</ng-template>
+
+<a [routerLink]="" (click)="open(content)"><i class="fa fa-edit"></i></a>

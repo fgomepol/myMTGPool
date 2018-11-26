@@ -251,7 +251,8 @@
                                                     </table>
                                                 </td>
                                                 <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                    <a class="text-info" [routerLink]="['/modificarArticulo',carta.codColeccion]"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+                                                    <!--<a class="text-info" [routerLink]="['/modificarArticulo',carta.codColeccion]"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;-->
+                                                    <app-modal-modifica-cartas [id]=carta.codColeccion (modificada)="actualizaListado($event)"></app-modal-modifica-cartas>
                                                 </td>
                                             </tr>
                                             <tr>

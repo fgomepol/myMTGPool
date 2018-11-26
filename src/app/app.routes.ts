@@ -15,7 +15,6 @@ import { EnviadosComponent } from './components/enviados/enviados.component';
 import { CorreosEnviadosComponent } from './components/correos-enviados/correos-enviados.component';
 import { DatosColeccionComponent } from './components/datos-coleccion/datos-coleccion.component';
 import { GestionarColeccionComponent } from './components/gestionar-coleccion/gestionar-coleccion.component';
-import { ModificarArticuloComponent } from './components/modificar-articulo/modificar-articulo.component';
 import { ListadoBarajasComponent } from './components/listado-barajas/listado-barajas.component';
 import { CartasBarajaComponent } from './components/cartas-baraja/cartas-baraja.component';
 import { ArquetipoComponent } from './components/arquetipo/arquetipo.component';
@@ -39,7 +38,6 @@ const appRoutes: Routes = [
   { path: 'datosColeccion', component: DatosColeccionComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'gestionarColeccion', component: GestionarColeccionComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'correosEnviados/:id', component: CorreosEnviadosComponent, canActivate: [ AuthorizatedGuardComponent ] },
-  { path: 'modificarArticulo/:id', component: ModificarArticuloComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'recibidos/:id', component: RecibidosComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'coleccion', component: ColeccionComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'prestamos', component: PrestamosComponent, canActivate: [ AuthorizatedGuardComponent ] },

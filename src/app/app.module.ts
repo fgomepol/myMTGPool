@@ -24,7 +24,6 @@ import { CorreosEnviadosComponent } from './components/correos-enviados/correos-
 import { DatosColeccionComponent } from './components/datos-coleccion/datos-coleccion.component';
 import { ChartsModule } from 'ng2-charts';
 import { GestionarColeccionComponent } from './components/gestionar-coleccion/gestionar-coleccion.component';
-import { ModificarArticuloComponent } from './components/modificar-articulo/modificar-articulo.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ModalColeccionComponent } from './components/modal-coleccion/modal-coleccion.component';
@@ -49,6 +48,7 @@ import { ExcelService } from './service/excel.service';
 import { QueTePrestanComponent } from './components/que-te-prestan/que-te-prestan.component';
 import { PrestarCartasComponent } from './components/prestar-cartas/prestar-cartas.component';
 import { MazosFavoritosComponent } from './components/mazos-favoritos/mazos-favoritos.component';
+import { ModalModificaCartasComponent } from './components/modal-modifica-cartas/modal-modifica-cartas.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +69,6 @@ import { MazosFavoritosComponent } from './components/mazos-favoritos/mazos-favo
     CorreosEnviadosComponent,
     DatosColeccionComponent,
     GestionarColeccionComponent,
-    ModificarArticuloComponent,
     LoadingComponent,
     ModalColeccionComponent,
     NavbarComponent,
@@ -89,7 +88,8 @@ import { MazosFavoritosComponent } from './components/mazos-favoritos/mazos-favo
     SugerenciaInversionComponent,
     QueTePrestanComponent,
     PrestarCartasComponent,
-    MazosFavoritosComponent
+    MazosFavoritosComponent,
+    ModalModificaCartasComponent
   ],
   imports: [
     BrowserModule,

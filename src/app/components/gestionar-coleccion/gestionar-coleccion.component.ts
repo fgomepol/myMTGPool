@@ -34,6 +34,7 @@ export class GestionarColeccionComponent implements OnInit {
   public subtipos;
   public edicionesCartas: any[] = [];
   public texto = 'Cargando colección, por favor espere';
+  public mensajeEliminado = false;
 
   constructor(
     private storageService: StorageService,
@@ -65,22 +66,7 @@ export class GestionarColeccionComponent implements OnInit {
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
 
-    this.servicio.datosColeccion(this.user).subscribe( data => {
-      this.importeColeccion = data.json()[0].totalColeccion;
-      if ( this.importeColeccion > 0) {
-        this.formularioRelleno = true;
-        this.servicio.datosColeccionGestion(this.user).subscribe( data2 => {
-          this.cartasColeccion = data2.json();
-          for (const carta of this.cartasColeccion) {
-              this.totalamount += carta.precio;
-          }
-          this.cargandoPagina = false;
-        });
-      } else {
-        this.formularioRelleno = false;
-        this.cargandoPagina = false;
-      }
-    });
+    this.obtenerDatosColeccion();
 
     this.forma.setValue({
       nombre : '',
@@ -123,4 +109,29 @@ export class GestionarColeccionComponent implements OnInit {
       this.excelService.exportAsExcelFile(data.json(), 'Coleccion');
     });
  }
+
+  public actualizaListado($event) {
+    if ($event === true) {
+      this.obtenerDatosColeccion();
+    }
+  }
+
+  public obtenerDatosColeccion() {
+    this.servicio.datosColeccion(this.user).subscribe( data => {
+      this.importeColeccion = data.json()[0].totalColeccion;
+      if ( this.importeColeccion > 0) {
+        this.formularioRelleno = true;
+        this.servicio.datosColeccionGestion(this.user).subscribe( data2 => {
+          this.cartasColeccion = data2.json();
+          for (const carta of this.cartasColeccion) {
+              this.totalamount += carta.precio;
+          }
+          this.cargandoPagina = false;
+        });
+      } else {
+        this.formularioRelleno = false;
+        this.cargandoPagina = false;
+      }
+    });
+  }
 }

@@ -27,7 +27,7 @@ constructor(private http: Http) {}
   }
 
   existeUsuario( control: string ) {
-    return this.http.get(`${this.baseUrl}?opcion=compruebaUsuario&nombre=${control}`);
+    return this.http.get(`${this.baseUrl}?opcion=existeUsuario&nombre=${control}`);
   }
 
   listaPaises() {
@@ -39,11 +39,11 @@ constructor(private http: Http) {}
   }
 
   envioEmail(item: Object) {
-    return this.http.post(`${this.baseUrl}?opcion=envioCorreo`, item);
+    return this.http.post(`${this.baseUrl}?opcion=envioEmail`, item);
   }
 
   listadoMensajes(usuario: string) {
-    return this.http.get(`${this.baseUrl}?opcion=listadoCorreos&usuario=${usuario}`);
+    return this.http.get(`${this.baseUrl}?opcion=listadoMensajes&usuario=${usuario}`);
   }
 
   correosNoLeidos(usuario: string) {
@@ -59,7 +59,7 @@ constructor(private http: Http) {}
   }
 
   listadoMensajesEnviados(usuario: string) {
-    return this.http.get(`${this.baseUrl}?opcion=listadoCorreosEnviados&usuario=${usuario}`);
+    return this.http.get(`${this.baseUrl}?opcion=listadoMensajesEnviados&usuario=${usuario}`);
   }
 
   obtenerMensajeEnviado(id: number, remitente: string) {
@@ -184,9 +184,5 @@ constructor(private http: Http) {}
 
   cartasYaDevueltas(usuario: number) {
     return this.http.get(`${this.baseUrl}?opcion=cartasYaDevueltas&usuario=${usuario}`);
-  }
-
-  listadoMazos(usuario: number) {
-    return this.http.get(`${this.baseUrl}?opcion=listadoMazos&usuario=${usuario}`);
   }
 }

@@ -54,7 +54,8 @@
                                                 <th class="text-center" style="border: 1px solid #ddd;">Creación</th>
                                                 <th class="text-center" style="border: 1px solid #ddd;">Completa</th>
                                                 <th class="text-center" style="border: 1px solid #ddd;">Decklist</th>
-                                                <th class="text-center" style="border: 1px solid #ddd;">Opc.</th>
+                                                <th class="text-center" style="border: 1px solid #ddd;">Modifiar</th>
+                                                <th class="text-center" style="border: 1px solid #ddd;">Eliminar</th>
                                             </tr>
                                             <tr>
                                                 <td colspan="3" class="text-center">&nbsp;</td>
@@ -75,15 +76,18 @@
                                                 <h5><a target="_blank" [routerLink]="['/cartasMazo', baraja.codMazo ]">{{ baraja.fecha*1000 | date: 'dd/MM/yyyy' }}</a></h5>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h5><span [ngClass]="{'text-success': baraja.cantidadQueFalta===baraja.cantidadBaraja, 'text-warning': baraja.cantidadQueFalta>=baraja.cantidadBaraja-14 && baraja.cantidadQueFalta<baraja.cantidadBaraja, 'text-danger': baraja.cantidadQueFalta<=baraja.cantidadBaraja-15 }">{{ baraja.cantidadQueFalta }}</span>/
+                                                <h5><span [ngClass]="{'text-success': baraja.cantidadQueFalta == baraja.cantidadBaraja, 'text-warning': baraja.cantidadQueFalta>=baraja.cantidadBaraja-14 && baraja.cantidadQueFalta<baraja.cantidadBaraja, 'text-danger': baraja.cantidadQueFalta<=baraja.cantidadBaraja-15 }">{{ baraja.cantidadQueFalta }}</span>/
                                                     <span class="text-success">{{ baraja.cantidadBaraja }}</span>
                                                 </h5>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h5><a class="navbar-brand" [routerLink]="" (click)="descargaPDF(baraja.codMazo);"><i class="material-icons text-info">picture_as_pdf</i></a></h5>
+                                                <h5><a [routerLink]="" (click)="descargaPDF(baraja.codMazo);"><i class="material-icons text-info">picture_as_pdf</i></a></h5>
                                             </td>
-                                            <td class="text-center align-middle small">
-                                                <a class="text-info" [routerLink]=""><i class="fa fa-edit"></i></a>
+                                            <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                <a class="text-info" [routerLink]="['/editorMazos', baraja.codMazo, 'misBarajas']"><i class="material-icons text-info">create</i></a>
+                                            </td>
+                                            <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                <a class="text-info" [routerLink]="" (click)="eliminaDeck(baraja.codMazo)"><i class="material-icons text-danger">delete</i></a>
                                             </td>
                                         </tr>
                                     </table>

@@ -1,0 +1,485 @@
+<div id="wrapper">
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
+    <!-- /Navigation -->
+    <!-- /ControlPanel -->
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- ControlPanel -->
+            <app-option [pantalla]="pantalla"></app-option>
+            <!-- /.ControlPanel -->
+        </div>
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Mis Mazos
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table width="100%">
+                                    <tr>
+                                        <td width="33%">
+                                            <a class="navbar-brand text-center text-black-50" style="font-weight: bold" [routerLink]="['/mazos']">Mis Mazos</a>
+                                        </td>
+                                        <td width="33%">
+                                            <a class="navbar-brand text-center text-black-50" style="font-weight: bold" [routerLink]="['/mazosFavoritos']">Barajas Favoritas</a>
+                                        </td>
+                                        <td width="33%">
+                                            <a class="navbar-brand text-center text-success" style="font-weight: bold" [routerLink]="['/editorMazos']">Editor Mazos</a>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <app-loading *ngIf="loading===true" [texto]=texto></app-loading>
+
+                                <div *ngIf="!loading">
+                                    <form [formGroup]="forma" (ngSubmit)="guardarCambios()" novalidate="novalidate">
+                                        <input type="hidden" class="form-control" formControlName="codBaraja" value="0">
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <th colspan="3">
+                                                        &nbsp;
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-right">Formato:</th>
+                                                    <td class="col-lg-4" class="text-black-50 text-left">
+                                                        <select class="form-control" (change)="cambiaFormato($event.target.value)" formControlName="formato">
+                                                            <option value="Standard">Standard</option>
+                                                            <option value="Modern">Modern</option>
+                                                            <option value="Legacy">Legacy</option>
+                                                            <option value="Vintage">Vintage</option>
+                                                        </select>
+                                                    </td>
+                                                    <th class="col-lg-4 text-center">&nbsp;</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-right">Arquetipo:</th>
+                                                    <td class="col-lg-4" class="text-black-50 text-left">
+                                                        <select class="form-control" formControlName="arquetipo">
+                                                            <option *ngFor="let arquetipo of arquetipos[0]" value="{{ arquetipo['arquetipo'] }}">{{ arquetipo['arquetipo'] }}</option>
+                                                        </select>
+                                                    </td>
+                                                    <th class="col-lg-4 text-center">&nbsp;</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-right">Nombre baraja:</th>
+                                                    <td class="col-lg-4" class="text-black-50 text-left">
+                                                        <input type="text" class="form-control" formControlName="nombreBaraja" placeholder="Nombre de la baraja">
+                                                    </td>
+                                                    <th class="col-lg-4 text-center">&nbsp;</th>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <table class="col-lg-12">
+                                                            <tr>
+                                                                <th class="col-lg-9 text-center">
+                                                                    <hr/>
+                                                                </th>
+                                                                <td class="col-lg-3 text-center">
+                                                                    <a *ngIf="ocultaFiltros===false" class="small" [routerLink]="" (click)="muestraFiltros(true);" [class.disabled]="cartasFormato.length==0 ? true : null">Filtros de busqueda <i class="material-icons iconoBusqueda">keyboard_arrow_up</i></a>
+                                                                    <a *ngIf="ocultaFiltros===true" class="small" [routerLink]="" (click)="muestraFiltros(false);" [class.disabled]="cartasFormato.length==0 ? true : null">Filtros de busqueda <i class="material-icons iconoBusqueda">keyboard_arrow_down</i></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3">
+                                                                    <div *ngIf="ocultaFiltros===false">
+                                                                        <form [formGroup]="forma2" (ngSubmit)="buscarCartas()" novalidate="novalidate">
+                                                                            <table style="width:100%">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th colspan="2" class="col-lg-12 text-center">
+                                                                                            &nbsp;
+                                                                                        </th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-lg-4 text-center">Nombre:</th>
+                                                                                        <td class="col-lg-8 text-black-50">
+                                                                                            <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre de la carta">
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="2" class="col-lg-12 text-black-50">
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-lg-4 text-center">Color:</th>
+                                                                                        <td class="col-lg-8 text-black-50">
+                                                                                            <select class="form-control" multiple="multiple" size="6" formControlName="colors">
+                                                                                                <option value="U">Azul</option>
+                                                                                                <option value="W">Blanco</option>
+                                                                                                <option value="B">Negro</option>
+                                                                                                <option value="R">Rojo</option>
+                                                                                                <option value="G">Verde</option>
+                                                                                                <option value="">Incoloro</option>
+                                                                                            </select>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="2" class="col-lg-12 text-black-50">
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-lg-4 text-center">Edición:</th>
+                                                                                        <td class="col-lg-8 text-black-50">
+                                                                                            <select class="form-control" formControlName="edicion">
+                                                                                                <option *ngFor="let edicion of edicionesCartas[0]" value="{{ edicion.idExpansion }}">
+                                                                                                    {{ edicion.en }}
+                                                                                                </option>
+                                                                                            </select>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="2" class="col-lg-12 text-black-50">
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-lg-4 text-center">Rareza:</th>
+                                                                                        <td class="col-lg-8 text-black-50">
+                                                                                            <select class="form-control" formControlName="rarity">
+                                                                                                <option value="mythic">Mítica</option>
+                                                                                                <option value="rare">Rara</option>
+                                                                                                <option value="uncommon">Infrecuente</option>
+                                                                                                <option value="common">Común</option>
+                                                                                            </select>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="2" class="col-lg-12 text-black-50">
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-lg-4 text-center">Tipo:</th>
+                                                                                        <td class="col-lg-8 text-black-50">
+                                                                                            <select class="form-control" formControlName="tipo">
+                                                                                                    <option *ngFor="let tipo of tipos" value="{{ tipo.nombre }}">
+                                                                                                    {{ tipo.nombre }}
+                                                                                                    </option>
+                                                                                                </select>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="2" class="col-lg-12 text-black-50">
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-lg-4 text-center">Subtipo:</th>
+                                                                                        <td class="col-lg-8 text-black-50">
+                                                                                            <select class="form-control" formControlName="subtipo">
+                                                                                                    <option *ngFor="let subtipo of subtipos" value="{{ subtipo.nombre }}">
+                                                                                                    {{ subtipo.nombre }}
+                                                                                                    </option>
+                                                                                                </select>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="2" class="col-lg-12 text-black-50">
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="2">
+                                                                                            <div class="input-group col-md-12 text-center">
+                                                                                                <button type="submit" class="btn btn-outline-primary">
+                                                                                                        Buscar Cartas
+                                                                                                    </button>&nbsp;&nbsp;
+                                                                                                <button type="button" class="btn btn-outline-danger" (click)="reseteaBusqueda();">Resetear Filtro</button>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th colspan="2" class="col-lg-12 text-center">
+                                                                                            <hr/>
+                                                                                        </th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                            </table>
+                                                                        </form>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <div *ngIf="error!='' && !loading" class="alert alert-danger text-center" role="alert">
+                                                            <p style="font-weight: bold">{{ error }}</p>
+                                                        </div>
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td rowspan="5" class="col-lg-5 text-center">
+                                                                    <select class="form-control" formControlName="cartasEdicion" (change)="cambiaImagen($event.target.value, 'baraja')" size="40">
+                                                                        <option *ngFor="let cartas of cartasFormato[0]; let i = index" value="{{ cartas['UID'] }}">{{ cartas['name'] }}</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td class="col-lg-2">
+                                                                    &nbsp;
+                                                                </td>
+                                                                <td valign="top" class="col-lg-5 text-center">
+                                                                    <!--<img src="{{ imagen }}" width="140" height="200">-->
+                                                                    <img src="/src/assets/img/noimage.png" width="140" height="200">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <hr/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <table width="100%">
+                                                                        <tr>
+                                                                            <th class="text-center">Mazo Principal</th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-center"><a class="text-success" [routerLink]="" (click)="addMain(valorMainAdd);" [class.disabled]="cartasFormato.length==0 || loadingPendientes ? true : null"><i class="material-icons">fast_forward</i></a></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-center"><a class="text-danger" [routerLink]="" (click)="delete(valorMainDel, 'main');" [class.disabled]="valorMainDel=='0' || loadingPendientes ? true : null"><i class="material-icons">fast_rewind</i></a></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td valign="top" class="text-center">
+                                                                    <select class="form-control" formControlName="main" (change)="cambiaImagen($event.target.value, 'main')" size="10">
+                                                                        <option *ngFor="let carta of cartasMain" value="{{ carta['UID'] }}">{{ carta['cantidad'] }} x {{ carta['name'] }}</option>
+                                                                    </select>
+                                                                    <p *ngIf="cartasMain.length > 0" style="font-weight: bold"><span class="text-dark">Total:</span>&nbsp;<span class="text-info">{{ totalMain }}</span></p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <hr/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <table width="100%">
+                                                                        <tr>
+                                                                            <th class="text-center">Baquillo</th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-center text-success"><a class="text-success" [routerLink]="" (click)="addSide(valorSideAdd);" [class.disabled]="cartasFormato.length==0 || loadingPendientes ? true : null"><i class="material-icons">fast_forward</i></a></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-center text-danger"><a class="text-danger" [routerLink]="" (click)="delete(valorSideDel, 'side');" [class.disabled]="valorSideDel=='0' || loadingPendientes ? true : null"><i class="material-icons">fast_rewind</i></a></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td valign="top" class="text-center">
+                                                                    <select class="form-control" formControlName="side" (change)="cambiaImagen($event.target.value, 'side')" size="10">
+                                                                        <option *ngFor="let carta of cartasSide" value="{{ carta['UID'] }}">{{ carta['side'] }} x {{ carta['name'] }}</option>
+                                                                    </select>
+                                                                    <p *ngIf="cartasSide.length > 0" style="font-weight: bold"><span class="text-dark">Total:</span>&nbsp;&nbsp;<span class="text-info">{{ totalSide }}</span></p>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <BR>
+                                        <div class="form-group row">
+                                            <div class="input-group col-md-12 text-center">
+                                                <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid || cartasBaraja.length===0">
+                                                    Guardar Baraja
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <div *ngIf="cartasBaraja.length>0">
+                                        <table style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="2" class="col-lg-12 text-center">Cartas necesarias para completar esta baraja</th>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12">
+                                                        <div *ngIf="importeFaltaBarajaEx>0">
+                                                            <table width="100%" *ngIf="cartasFaltan.length>0">
+                                                                <thead>
+                                                                    <tr class="table">
+                                                                        <th class="text-center" style="border: 1px solid #ddd;">Cantidad</th>
+                                                                        <th class="text-center" style="border: 1px solid #ddd;">Carta</th>
+                                                                        <th class="text-center" style="border: 1px solid #ddd;">Edición</th>
+                                                                        <th class="text-center" style="border: 1px solid #ddd;">Importe (EX-NM)</th>
+                                                                        <th class="text-center" style="border: 1px solid #ddd;">Tendencia</th>
+                                                                        <th class="text-center" style="border: 1px solid #ddd;">Añadir</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tr *ngFor="let cartas of cartasFaltan;">
+                                                                    <td width="15%" class="text-center">
+                                                                        <h5><a [routerLink]="">{{ cartas.cantidad }}</a></h5>
+                                                                    </td>
+                                                                    <td width="40%">
+                                                                        <h5><a [routerLink]="" (click)="redireccionExterna(cartas.carta)">{{ cartas.carta }}</a></h5>
+                                                                    </td>
+                                                                    <td class="text-center align-middle small"><i class="ss ss-{{ cartas.icon }} ss-2x ss-{{ cartas.rarity }}"></i></td>
+                                                                    <td class="text-center text-black-50">
+                                                                        <h5>{{ cartas.importeEx * cartas.cantidad | number:'1.0-2' }} - {{ cartas.importeNm * cartas.cantidad | number:'1.0-2' }} €</h5>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <app-modal-tendencia [id]=cartas.idCarta></app-modal-tendencia>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <app-modal-carta [id]=cartas.idCarta (prestada)="actualizaListado($event)"></app-modal-carta>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div *ngIf="importeFaltaBarajaEx==0" class="alert alert-primary text-center" role="alert">
+
+                                                            <h5>
+                                                                <p style="font-weight: bold">Esta baraja la tienes completa</p>
+                                                            </h5>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="importeFaltaBarajaEx>0">
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="importeFaltaBarajaEx>0">
+                                                    <td colspan="2" class="text-center">
+                                                        <p class="text-dark" style="font-weight: bold">Coste de inversión estimado:&nbsp;&nbsp;
+                                                            <span class="text-success" *ngIf="importeFaltaBarajaMn>importeFaltaBarajaEx">{{ importeFaltaBarajaEx | number:'1.0-2' }} - {{ importeFaltaBarajaMn | number:'1.0-2' }} €</span>
+                                                            <span class="text-success" *ngIf="importeFaltaBarajaEx>importeFaltaBarajaMn">{{ importeFaltaBarajaMn | number:'1.0-2' }} - {{ importeFaltaBarajaEx | number:'1.0-2' }} €</span>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-center">Curva de mana:</th>
+                                                    <td class="col-lg-8 text-black-50">
+                                                        <canvas baseChart [data]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-center">La baraja por colores:</th>
+                                                    <td class="col-lg-8 text-black-50">
+                                                        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                                                        <br />
+                                                        <p class="text-center"><span class="text-info" style="font-weight: bold">Total de cartas de la baraja:</span> {{ sumaTotal }}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-center">Datos por porcentaje:</th>
+                                                    <td class="col-lg-8 text-black-50">
+                                                        <table class="col-lg-12">
+                                                            <tr class="text-right">
+                                                                <td style="color: rgb(209, 0, 3); font-weight: bold">Rojas: </td>
+                                                                <td>{{ doughnutPercentage[0] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color: rgb(91, 154, 255); font-weight: bold">Azules: </td>
+                                                                <td>{{ doughnutPercentage[1] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color: rgb(22, 196, 45); font-weight: bold">Verdes: </td>
+                                                                <td>{{ doughnutPercentage[2] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color: rgb(0, 0, 0); font-weight: bold">Negras: </td>
+                                                                <td>{{ doughnutPercentage[3] }}</td>
+                                                                <td> %</td>
+                                                            </tr>
+                                                            <tr class="text-right">
+                                                                <td style="color: rgba(212, 198, 0, 0.637); font-weight: bold">Blancas: </td>
+                                                                <td>{{ doughnutPercentage[4] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color: rgb(182, 182, 182); font-weight: bold">Incoloras: </td>
+                                                                <td>{{ doughnutPercentage[5] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color: rgb(113, 81, 69); font-weight: bold">Tierras: </td>
+                                                                <td>{{ doughnutPercentage[6] }}</td>
+                                                                <td> %</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="12" class="col-lg-12 text-black-50">
+                                                                    <hr>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="text-right">
+                                                                <td style="color: blueviolet; font-weight: bold">Míticas: </td>
+                                                                <td>{{ rarityPercentage[0] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color:rgb(233, 229, 14); font-weight: bold">Raras: </td>
+                                                                <td>{{ rarityPercentage[1] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color:darkgray; font-weight: bold">Infrecuentes: </td>
+                                                                <td>{{ rarityPercentage[2] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color:black; font-weight: bold">Comunes: </td>
+                                                                <td>{{ rarityPercentage[3] }}</td>
+                                                                <td> %</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="12" class="col-lg-12 text-black-50">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-4 (nested) -->
+                        <div class="col-lg-8">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                        <!-- /.col-lg-8 (nested) -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-8 -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+
+<app-scripts></app-scripts>

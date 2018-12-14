@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
-import { BarajasService } from 'src/app/service/barajas.service';
-import { MtgService } from '../../service/mtg.service';
 import * as jsPDF from 'jspdf';
+import { DeckEditorService } from 'src/app/service/deck-editor.service';
 
 @Component({
   selector: 'app-mazos',
@@ -24,23 +23,28 @@ export class MazosComponent implements OnInit {
 
   constructor(
     private storageService: StorageService,
-    private servicioBarajas: BarajasService,
-    private servicioMtg: MtgService
+    private servicioEditor: DeckEditorService
   ) {
    }
 
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
 
-    this.servicioMtg.listadoMazos(this.user).subscribe(data => {
-      // this.barajas = data.json();
-      this.loading = false;
+    this.servicioEditor.listadoMazos(this.user).subscribe(data => {
+      if (data['_body'] === 'no hay datos') {
+        this.loading = false;
+        this.hayMazos = false;
+      } else {
+        this.barajas = data.json();
+        this.loading = false;
+        this.hayMazos = true;
+      }
     });
   }
 
   public descargaPDF(codigoBaraja: number) {
 
-    this.servicioBarajas.decklistMazo(codigoBaraja).subscribe(data => {
+    this.servicioEditor.decklistMazo(codigoBaraja).subscribe(data => {
 
       this.datosDecklist = data.json();
 
@@ -107,6 +111,24 @@ export class MazosComponent implements OnInit {
       doc.text(totalSide.toString(), 187, 260);
 
       doc.save('DeckList ' + this.datosDecklist.nombre + '.pdf');
+    });
+  }
+
+  public eliminaDeck (mazo) {
+    this.loading = true;
+    this.hayMazos = false;
+
+    this.servicioEditor.eliminaBarajaPersonalizada(mazo, this.user).subscribe(data => {
+      this.servicioEditor.listadoMazos(this.user).subscribe(data2 => {
+        if (data2['_body'] === 'no hay datos') {
+          this.loading = false;
+          this.hayMazos = false;
+        } else {
+          this.barajas = data2.json();
+          this.loading = false;
+          this.hayMazos = true;
+        }
+      });
     });
   }
 }

@@ -18,6 +18,8 @@ export class EnviadosComponent implements OnInit {
   public datosUsuario: any;
   public mensajes: MensajeModule[];
   public pantalla = 'mensajes';
+  public loading = true;
+  public texto = 'Cargando mensajes, por favor espere';
 
   constructor(
     private storageService: StorageService,
@@ -36,6 +38,7 @@ export class EnviadosComponent implements OnInit {
       for (const item of this.datosUsuario) {
         this.servicio.listadoMensajesEnviados(item.userName).subscribe( data2 => {
           this.mensajes = data2.json();
+          this.loading = false;
         });
       }
     });

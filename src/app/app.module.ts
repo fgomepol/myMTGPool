@@ -49,6 +49,8 @@ import { QueTePrestanComponent } from './components/que-te-prestan/que-te-presta
 import { PrestarCartasComponent } from './components/prestar-cartas/prestar-cartas.component';
 import { MazosFavoritosComponent } from './components/mazos-favoritos/mazos-favoritos.component';
 import { ModalModificaCartasComponent } from './components/modal-modifica-cartas/modal-modifica-cartas.component';
+import { EditorMazosComponent } from './components/editor-mazos/editor-mazos.component';
+import { CartasMazoComponent } from './components/cartas-mazo/cartas-mazo.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +91,9 @@ import { ModalModificaCartasComponent } from './components/modal-modifica-cartas
     QueTePrestanComponent,
     PrestarCartasComponent,
     MazosFavoritosComponent,
-    ModalModificaCartasComponent
+    ModalModificaCartasComponent,
+    EditorMazosComponent,
+    CartasMazoComponent
   ],
   imports: [
     BrowserModule,

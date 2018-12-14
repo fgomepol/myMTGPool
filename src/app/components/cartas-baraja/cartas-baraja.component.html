@@ -22,10 +22,10 @@
                                 <table class="col-lg-12">
                                     <tr>
                                         <td class="col-lg-4">
-                                            <a class="navbar-brand text-danger" [routerLink]="['/listadoBarajas', formato, torneo]"><i class="material-icons text-danger">reply</i>Volver al torneo</a>
+                                            <a class="navbar-brand text-warning" [routerLink]="['/listadoBarajas', formato, torneo]"><i class="material-icons text-warning">reply</i>Volver al torneo</a>
                                         </td>
                                         <td class="col-lg-4">
-                                            <a class="navbar-brand text-danger" [routerLink]="['/torneos', formato]"><i class="material-icons text-danger">reply_all</i>Volver al formato</a>
+                                            <a class="navbar-brand text-warning" [routerLink]="['/torneos', formato]"><i class="material-icons text-warning">reply_all</i>Volver al formato</a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -33,11 +33,18 @@
                                             &nbsp;
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div *ngIf="baraja === '' && !loading" class="alert alert-danger text-center" role="alert">
+                                                <p style="font-weight: bold">No existen datos de la baraja seleccionada</p>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </table>
 
                                 <app-loading *ngIf="loading" [texto]=texto></app-loading>
 
-                                <div *ngIf="!loading">
+                                <div *ngIf="!loading && baraja != ''">
                                     <table>
                                         <thead>
                                             <tr>
@@ -52,18 +59,23 @@
                                                     DCI Decklist:
                                                 </td>
                                                 <td>
-                                                    <a class="navbar-brand" [routerLink]="" (click)="descargaPDF();"><i class="material-icons text-info">picture_as_pdf</i></a>
+                                                    <a class="navbar-brand" [routerLink]="" (click)="descargaPDF();"><i class="material-icons text-danger">picture_as_pdf</i></a>
+                                                </td>
+                                                <td class="text-info" style="font-weight: bold">
+                                                    Personalizar Baraja:
+                                                </td>
+                                                <td>
+                                                    <a class="navbar-brand" [routerLink]="['/editorMazos', codigoBaraja, 'barajasTorneo']"><i class="material-icons text-danger">create</i></a>
                                                 </td>
                                             </tr>
                                         </thead>
                                     </table>
                                 </div>
 
-                                <div *ngIf="!loading" [innerHtml]="html">
-
+                                <div *ngIf="!loading && baraja != ''" [innerHtml]="html">
                                 </div>
 
-                                <div *ngIf="!loading">
+                                <div *ngIf="!loading && baraja != ''">
                                     <table style="width:100%">
                                         <thead>
                                             <tr>
@@ -121,7 +133,7 @@
                                                                     <h5><a [routerLink]="">{{ cartas.cantidad }}</a></h5>
                                                                 </td>
                                                                 <td width="40%">
-                                                                    <h5><a [routerLink]="" (click)="redireccionExterna(cartas.scryfallUri)">{{ cartas.carta }}</a></h5>
+                                                                    <h5><a [routerLink]="" (click)="redireccionExterna(cartas.carta)">{{ cartas.carta }}</a></h5>
                                                                 </td>
                                                                 <td class="text-center align-middle small"><i class="ss ss-{{ cartas.icon }} ss-2x ss-{{ cartas.rarity }}"></i></td>
                                                                 <td class="text-center text-black-50">

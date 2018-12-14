@@ -101,15 +101,17 @@ export class CartasBarajaComponent implements OnInit {
     this.routerActivated.params.subscribe( params => {
       this.servicio.cartasBaraja(params['id2'], params['id3']).subscribe(data => {
 
-        this.baraja = JSON.parse(data['_body']);
-
         this.formato = params['id'];
         this.torneo = params['id2'];
         this.codigoBaraja = params['id3'];
 
-        this.html = this.sanitizer.bypassSecurityTrustHtml(this.baraja[0].pagina);
-
-        this.cartasBaraja = this.baraja[0].cartasBaraja;
+        if (data['_body'] !== '[]') {
+          this.baraja = JSON.parse(data['_body']);
+          this.html = this.sanitizer.bypassSecurityTrustHtml(this.baraja[0].pagina);
+          this.cartasBaraja = this.baraja[0].cartasBaraja;
+        } else {
+          this.baraja = '';
+        }
       });
 
       this.servicio.compruebaFavorita(params['id3'], this.user).subscribe(data => {
@@ -152,7 +154,7 @@ export class CartasBarajaComponent implements OnInit {
   }
 
   public redireccionExterna(url: string) {
-    window.open(url, '_blank');
+    window.open('https://www.cardmarket.com/en/Magic/Cards/' + url, '_blank');
   }
 
   // events

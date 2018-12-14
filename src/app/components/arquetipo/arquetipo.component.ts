@@ -22,6 +22,7 @@ export class ArquetipoComponent implements OnInit {
   public baraja: string;
   public loading: boolean;
   public texto = 'Cargando arquetipos, por favor espere';
+  public hayBarajas = false;
 
   constructor(
     private storageService: StorageService,
@@ -52,7 +53,10 @@ export class ArquetipoComponent implements OnInit {
       this.texto = 'Cargando datos de ' + tipoBaraja + ', por favor espere';
 
       this.servicio.barajasArquetipo(tipoBaraja, formato, this.user).subscribe(data => {
-        this.datosArquetipo = JSON.parse(data['_body']);
+        if (data['_body'] === 'no hay datos') {
+          this.datosArquetipo = JSON.parse(data['_body']);
+          this.hayBarajas = true;
+        }
         this.loading = false;
       });
     });

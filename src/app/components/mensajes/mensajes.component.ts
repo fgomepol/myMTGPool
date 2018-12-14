@@ -19,6 +19,8 @@ export class MensajesComponent implements OnInit {
   public mensajes: MensajeModule[];
   public remitente: string;
   public pantalla = 'mensajes';
+  public loading = true;
+  public texto = 'Cargando mensajes, por favor espere';
 
   constructor(
     private storageService: StorageService,
@@ -28,7 +30,6 @@ export class MensajesComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
-
     this.servicio.datosUsuario(this.user).subscribe( data => {
 
       this.datosUsuario = data.json();
@@ -36,6 +37,7 @@ export class MensajesComponent implements OnInit {
       for (const item of this.datosUsuario) {
         this.servicio.listadoMensajes(item.userName).subscribe( data2 => {
           this.mensajes = data2.json();
+          this.loading = false;
         });
       }
     });

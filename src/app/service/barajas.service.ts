@@ -10,8 +10,8 @@ export class BarajasService {
 
   constructor(private http: Http) { }
 
-  listaBarajasTorneo(idTorneo: string, usuario: number) {
-    return this.http.get(`${this.baseUrl}?opcion=listaBarajasTorneo&idTorneo=${idTorneo}&usuario=${usuario}`);
+  listaBarajasTorneo(idTorneo: string, formato: string, usuario: number) {
+    return this.http.get(`${this.baseUrl}?opcion=listaBarajasTorneo&idTorneo=${idTorneo}&formato=${formato}&usuario=${usuario}`);
   }
 
   listadoTorneos(formato: string) {
@@ -60,10 +60,6 @@ export class BarajasService {
 
   decklist(codigoBaraja: number) {
     return this.http.get(`${this.baseUrl}?opcion=decklist&codigoBaraja=${codigoBaraja}`);
-  }
-
-  decklistMazo(codigoBaraja: number) {
-    return this.http.get(`${this.baseUrl}?opcion=decklistMazo&codigoBaraja=${codigoBaraja}`);
   }
 
   compruebaFavorita(idBaraja: number, usuario: number) {

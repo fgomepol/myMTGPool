@@ -25,6 +25,8 @@ import { SugerenciaInversionComponent } from './components/sugerencia-inversion/
 import { QueTePrestanComponent } from './components/que-te-prestan/que-te-prestan.component';
 import { PrestarCartasComponent } from './components/prestar-cartas/prestar-cartas.component';
 import { MazosFavoritosComponent } from './components/mazos-favoritos/mazos-favoritos.component';
+import { EditorMazosComponent } from './components/editor-mazos/editor-mazos.component';
+import { CartasMazoComponent } from './components/cartas-mazo/cartas-mazo.component';
 
 const appRoutes: Routes = [
   { path: 'index', component: IndexComponent },
@@ -46,11 +48,14 @@ const appRoutes: Routes = [
   { path: 'sugerencias', component: SugerenciaInversionComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'listadoBarajas/:id/:id2', component: ListadoBarajasComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'cartasBaraja/:id/:id2/:id3', component: CartasBarajaComponent, canActivate: [ AuthorizatedGuardComponent ] },
+  { path: 'cartasMazo/:id', component: CartasMazoComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'arquetipo/:id/:id2', component: ArquetipoComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'resultados/:id/:id2', component: ResultadosComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'metajuego', component: MetajuegoComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'queTePrestan', component: QueTePrestanComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'prestarCartas', component: PrestarCartasComponent, canActivate: [ AuthorizatedGuardComponent ] },
+  { path: 'editorMazos', component: EditorMazosComponent, canActivate: [ AuthorizatedGuardComponent ] },
+  { path: 'editorMazos/:id/:id2', component: EditorMazosComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'mazosFavoritos', component: MazosFavoritosComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'metajuego/:id', component: MetajuegoComponent, canActivate: [ AuthorizatedGuardComponent ] },
   { path: 'contactos', component: ContactosComponent, canActivate: [ AuthorizatedGuardComponent ] },

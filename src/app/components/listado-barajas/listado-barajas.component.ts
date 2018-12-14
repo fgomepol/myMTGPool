@@ -35,9 +35,13 @@ export class ListadoBarajasComponent implements OnInit {
     this.user = this.storageService.getCurrentUser();
 
     this.routerActivated.params.subscribe( params => {
-      this.servicio.listaBarajasTorneo(params['id2'], this.user).subscribe(data => {
+      this.servicio.listaBarajasTorneo(params['id2'], params['id'], this.user).subscribe(data => {
         this.formato = params['id'];
-        this.barajas = data.json();
+        if (data['_body'] !== 'no hay datos') {
+          this.barajas = data.json();
+        } else {
+          this.barajas = '';
+        }
         this.cargandoPagina = false;
       });
     });

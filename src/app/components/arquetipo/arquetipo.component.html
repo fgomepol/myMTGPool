@@ -89,7 +89,7 @@
                                                 </h5>
                                             </td>
                                             <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <h6>{{ datos.fecha*1000 | date: 'dd/MM/yyyy' }}</h6>
+                                                <h6><a [routerLink]="['/cartasBaraja', formato, datos.idTorneo, datos.codigoBaraja]">{{ datos.fecha*1000 | date: 'dd/MM/yyyy' }}</a></h6>
                                             </td>
                                         </tr>
                                         <tr>

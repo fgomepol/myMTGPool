@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
 import { BarajasService } from '../../service/barajas.service';
 import { ActivatedRoute } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
 import * as jsPDF from 'jspdf';
 import { DeckModule } from 'src/app/models/deck.module';
 import { DeckEditorService } from 'src/app/service/deck-editor.service';
@@ -40,6 +39,8 @@ export class CartasBarajaComponent implements OnInit {
   public datosDecklist: any;
   public nombreBaraja = '';
   public arquetipo = '';
+  public jugador = '';
+  public posicion = '';
   public error = '';
 
   // Variables de datos de la baraja
@@ -134,7 +135,6 @@ export class CartasBarajaComponent implements OnInit {
     private storageService: StorageService,
     private servicio: BarajasService,
     private routerActivated: ActivatedRoute,
-    private sanitizer: DomSanitizer,
     private servicioEditor: DeckEditorService
   ) {
    }
@@ -155,6 +155,8 @@ export class CartasBarajaComponent implements OnInit {
           this.cartasFormato.splice(0);
           this.nombreBaraja = data.json()['nombre'];
           this.arquetipo = data.json()['arquetipo'];
+          this.jugador = data.json()['jugador'];
+          this.posicion = data.json()['posicion'];
 
           this.servicioEditor.listaCartasFormato('', this.formato, params['id3'], 'barajasTorneo').subscribe( data2 => {
 

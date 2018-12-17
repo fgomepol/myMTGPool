@@ -53,7 +53,8 @@ export class ArquetipoComponent implements OnInit {
       this.texto = 'Cargando datos de ' + tipoBaraja + ', por favor espere';
 
       this.servicio.barajasArquetipo(tipoBaraja, formato, this.user).subscribe(data => {
-        if (data['_body'] === 'no hay datos') {
+
+        if (data['_body'] !== 'no hay datos') {
           this.datosArquetipo = JSON.parse(data['_body']);
           this.hayBarajas = true;
         }

@@ -303,7 +303,7 @@ export class EditorMazosComponent implements OnInit {
   }
 
   reseteaBusqueda() {
-    this.forma.reset();
+    this.forma2.reset();
   }
 
   cambiaFormato(formato: string) {

@@ -44,292 +44,355 @@
 
                                 <app-loading *ngIf="loading" [texto]=texto></app-loading>
 
-                                <div *ngIf="!loading && cartasBaraja.length>0">
-                                    <table class="col-lg-12 table-fixed">
-                                        <tr>
-                                            <th class="text-left" colspan="3" style="border: 0px solid #ddd;">
-                                                <table>
-                                                    <tr>
-                                                        <th class="text-dark">
-                                                            Favorita:
-                                                        </th>
-                                                        <td>
-                                                            <a *ngIf="favorita" class="navbar-brand" [routerLink]="" (click)="marcarFavorita('N');"><i class="material-icons text-danger">favorite</i></a>
-                                                            <a *ngIf="!favorita" class="navbar-brand" [routerLink]="" (click)="marcarFavorita('S');"><i class="material-icons text-danger">favorite_border</i></a>
-                                                        </td>
-                                                        <th class="text-dark">
-                                                            DCI Decklist:
-                                                        </th>
-                                                        <td>
-                                                            <a class="navbar-brand" [routerLink]="" (click)="descargaPDF();"><i class="material-icons text-danger">picture_as_pdf</i></a>
-                                                        </td>
-                                                        <th class="text-dark" style="font-weight: bold">
-                                                            Personalizar Baraja:
-                                                        </th>
-                                                        <td>
-                                                            <a class="navbar-brand" [routerLink]="['/editorMazos', codigoBaraja, 'barajasTorneo']"><i class="material-icons text-danger">create</i></a>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-left" colspan="2" style="border: 1px solid #ddd; width:66%;">
-                                                Jugador: <a target="_blank" class="text-info" [routerLink]="['/resultados', formato, jugador ]">{{ jugador }}</a>
-                                            </th>
-                                            <th class="text-left" style="border: 1px solid #ddd;" scope="hide">
-                                                Posición: <span class="text-info">{{ posicion }}</span>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-left" colspan="2" style="border: 1px solid #ddd; width:66%;">
-                                                Nombre Baraja: <span class="text-info">{{ nombreBaraja }}</span>
-                                            </th>
-                                            <th class="text-left" style="border: 1px solid #ddd;" scope="hide">
-                                                Formato: <span class="text-info">{{ formato }}</span>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-left" colspan="3" style="border: 1px solid #ddd; width:66%;">
-                                                Arquetipo: <a target="_blank" class="text-info" [routerLink]="['/arquetipo', formato, arquetipo ]">{{ arquetipo }}</a>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <!-- Creatures, etc -->
-                                            <td valign="top" style="padding:10px;">
-                                                <h5 *ngIf="criaturas>0" style="font-weight: bold">Criaturas [{{ criaturas }}]</h5>
-                                                <p *ngFor="let criatura of cartasCriaturas">
-                                                    {{ criatura.cantidad - criatura.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(criatura.name)" name="{{ criatura.name }}">{{ criatura.name }}</a><br />
-                                                </p>
-
-                                                <h5 *ngIf="instantaneos>0" style="font-weight: bold">Instantáneos [{{ instantaneos }}]</h5>
-                                                <p *ngFor="let instant of cartasInstantaneos">
-                                                    {{ instant.cantidad - instant.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(instant.name)" name="{{ instant.name }}">{{ instant.name }}</a><br />
-                                                </p>
-
-                                                <h5 *ngIf="conjuros>0" style="font-weight: bold">Conjuros [{{ conjuros }}]</h5>
-                                                <p *ngFor="let sorceries of cartasConjuros">
-                                                    {{ sorceries.cantidad - sorceries.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(sorceries.name)" name="{{ sorceries.name }}">{{ sorceries.name }}</a><br />
-                                                </p>
-
-                                                <h5 *ngIf="planeswalkers>0" style="font-weight: bold">Planeswalkers [{{ planeswalkers }}]</h5>
-                                                <p *ngFor="let planeswalker of cartasPlaneswalkers">
-                                                    {{ planeswalker.cantidad - planeswalker.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(planeswalker.name)" name="{{ planeswalker.name }}">{{ planeswalker.name }}</a><br />
-                                                </p>
-
-                                            </td>
-                                            <!-- Lands -->
-                                            <td valign="top" style="padding:10px;">
-                                                <h5 *ngIf="encantamientos>0" style="font-weight: bold">Encantamientos [{{ encantamientos }}]</h5>
-                                                <p *ngFor="let encantamiento of cartasEncantamientos">
-                                                    {{ encantamiento.cantidad - encantamiento.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(encantamiento.name)" name="{{ encantamiento.name }}">{{ encantamiento.name }}</a><br
-                                                    />
-                                                </p>
-
-                                                <h5 *ngIf="artefactos>0" style="font-weight: bold">Artefactos [{{ artefactos }}]</h5>
-                                                <p *ngFor="let artefacto of cartasArtefactos">
-                                                    {{ artefacto.cantidad - artefacto.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(artefacto.name)" name="{{ artefacto.name }}">{{ artefacto.name }}</a><br />
-                                                </p>
-
-                                                <h5 *ngIf="otros>0" style="font-weight: bold">Otros [{{ otros }}]</h5>
-                                                <p *ngFor="let otros of cartasOtros">
-                                                    {{ otros.cantidad - otros.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(otros.name)" name="{{ otros.name }}">{{ otros.name }}</a><br />
-                                                </p>
-
-                                                <h5 *ngIf="tierras>0" style="font-weight: bold">Tierras [{{ tierras }}]</h5>
-                                                <p *ngFor="let tierra of cartasTierras">
-                                                    {{ tierra.cantidad - tierra.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(tierra.name)" name="{{ tierra.name }}">{{ tierra.name }}</a><br />
-                                                </p>
-                                            </td>
-                                            <!-- Sideboard -->
-                                            <td id="sideboard" scope="hide" valign="top" style="padding:10px;background:white;">
-                                                <h5 style="font-weight: bold">Banquillo [{{ sideboard }}]</h5>
-                                                <p *ngFor="let side of cartasSideboard">
-                                                    {{ side.side }} <a class="text-danger" [routerLink]="" (click)="redireccionExterna(side.name)" name="{{ side.name }}">{{ side.name }}</a><br />
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <div *ngIf="!loading && baraja != ''">
-                                    <table style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <td colspan="2" class="col-lg-12 text-black-50">
-                                                    <hr>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-4 text-center">Valor medio de la baraja:</th>
-                                                <td class="col-lg-8 text-success" style="font-weight: bold">
-                                                    <span *ngIf="importeBarajaNm>importeBarajaEx">{{ importeBarajaEx | number:'1.0-2' }} - {{ importeBarajaNm | number:'1.0-2' }} €</span>
-                                                    <span *ngIf="importeBarajaEx>importeBarajaNm">{{ importeBarajaNm | number:'1.0-2' }} - {{ importeBarajaEx | number:'1.0-2' }} €</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" class="col-lg-12 text-black-50">
-                                                    <hr>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2" class="col-lg-12 text-center">Cartas necesarias para completar esta baraja</th>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" class="col-lg-12 text-black-50">
-                                                    &nbsp;
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" class="col-lg-12">
-                                                    <div *ngIf="importeFaltaBarajaEx>0">
-                                                        <table width="100%" *ngIf="loadingPendientes">
+                                <div *ngIf="!loading">
+                                    <div *ngIf="cartasBaraja.length>0">
+                                        <table style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12">
+                                                        <table class="col-lg-12 table-fixed">
                                                             <tr>
-                                                                <td class="text-center">
-                                                                    <p class="text-info">Actualizando, por favor espere</p>
+                                                                <th class="text-left" colspan="3" style="border: 0px solid #ddd;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <th class="text-dark">
+                                                                                Favorita:
+                                                                            </th>
+                                                                            <td>
+                                                                                <a *ngIf="favorita" class="navbar-brand" [routerLink]="" (click)="marcarFavorita('N');"><i class="material-icons text-danger">favorite</i></a>
+                                                                                <a *ngIf="!favorita" class="navbar-brand" [routerLink]="" (click)="marcarFavorita('S');"><i class="material-icons text-danger">favorite_border</i></a>
+                                                                            </td>
+                                                                            <th class="text-dark">
+                                                                                DCI Decklist:
+                                                                            </th>
+                                                                            <td>
+                                                                                <a class="navbar-brand" [routerLink]="" (click)="descargaPDF();"><i class="material-icons text-danger">picture_as_pdf</i></a>
+                                                                            </td>
+                                                                            <th class="text-dark" style="font-weight: bold">
+                                                                                Personalizar Baraja:
+                                                                            </th>
+                                                                            <td>
+                                                                                <a class="navbar-brand" [routerLink]="['/editorMazos', codigoBaraja, 'barajasTorneo']"><i class="material-icons text-danger">create</i></a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="text-left" colspan="2" style="border: 1px solid #ddd; width:66%;">
+                                                                    Jugador: <a target="_blank" class="text-info" [routerLink]="['/resultados', formato, jugador ]">{{ jugador }}</a>
+                                                                </th>
+                                                                <th class="text-left" style="border: 1px solid #ddd;" scope="hide">
+                                                                    Posición: <span class="text-info">{{ posicion }}</span>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="text-left" colspan="2" style="border: 1px solid #ddd; width:66%;">
+                                                                    Nombre Baraja: <span class="text-info">{{ nombreBaraja }}</span>
+                                                                </th>
+                                                                <th class="text-left" style="border: 1px solid #ddd;" scope="hide">
+                                                                    Formato: <span class="text-info">{{ formato }}</span>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="text-left" colspan="3" style="border: 1px solid #ddd; width:66%;">
+                                                                    Arquetipo: <a target="_blank" class="text-info" [routerLink]="['/arquetipo', formato, arquetipo ]">{{ arquetipo }}</a>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <!-- Creatures, etc -->
+                                                                <td valign="top" style="padding:10px;">
+                                                                    <h5 *ngIf="criaturas>0" style="font-weight: bold">Criaturas [{{ criaturas }}]</h5>
+                                                                    <p *ngFor="let criatura of cartasCriaturas">
+                                                                        {{ criatura.cantidad - criatura.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(criatura.name)" name="{{ criatura.name }}">{{ criatura.name }}</a><br />
+                                                                    </p>
+
+                                                                    <h5 *ngIf="instantaneos>0" style="font-weight: bold">Instantáneos [{{ instantaneos }}]</h5>
+                                                                    <p *ngFor="let instant of cartasInstantaneos">
+                                                                        {{ instant.cantidad - instant.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(instant.name)" name="{{ instant.name }}">{{ instant.name }}</a><br />
+                                                                    </p>
+
+                                                                    <h5 *ngIf="conjuros>0" style="font-weight: bold">Conjuros [{{ conjuros }}]</h5>
+                                                                    <p *ngFor="let sorceries of cartasConjuros">
+                                                                        {{ sorceries.cantidad - sorceries.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(sorceries.name)" name="{{ sorceries.name }}">{{ sorceries.name }}</a><br
+                                                                        />
+                                                                    </p>
+
+                                                                    <h5 *ngIf="planeswalkers>0" style="font-weight: bold">Planeswalkers [{{ planeswalkers }}]</h5>
+                                                                    <p *ngFor="let planeswalker of cartasPlaneswalkers">
+                                                                        {{ planeswalker.cantidad - planeswalker.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(planeswalker.name)" name="{{ planeswalker.name }}">{{ planeswalker.name }}</a><br
+                                                                        />
+                                                                    </p>
+
+                                                                </td>
+                                                                <!-- Lands -->
+                                                                <td valign="top" style="padding:10px;">
+                                                                    <h5 *ngIf="encantamientos>0" style="font-weight: bold">Encantamientos [{{ encantamientos }}]</h5>
+                                                                    <p *ngFor="let encantamiento of cartasEncantamientos">
+                                                                        {{ encantamiento.cantidad - encantamiento.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(encantamiento.name)" name="{{ encantamiento.name }}">{{ encantamiento.name }}</a><br
+                                                                        />
+                                                                    </p>
+
+                                                                    <h5 *ngIf="artefactos>0" style="font-weight: bold">Artefactos [{{ artefactos }}]</h5>
+                                                                    <p *ngFor="let artefacto of cartasArtefactos">
+                                                                        {{ artefacto.cantidad - artefacto.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(artefacto.name)" name="{{ artefacto.name }}">{{ artefacto.name }}</a><br
+                                                                        />
+                                                                    </p>
+
+                                                                    <h5 *ngIf="otros>0" style="font-weight: bold">Otros [{{ otros }}]</h5>
+                                                                    <p *ngFor="let otros of cartasOtros">
+                                                                        {{ otros.cantidad - otros.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(otros.name)" name="{{ otros.name }}">{{ otros.name }}</a><br />
+                                                                    </p>
+
+                                                                    <h5 *ngIf="tierras>0" style="font-weight: bold">Tierras [{{ tierras }}]</h5>
+                                                                    <p *ngFor="let tierra of cartasTierras">
+                                                                        {{ tierra.cantidad - tierra.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(tierra.name)" name="{{ tierra.name }}">{{ tierra.name }}</a><br />
+                                                                    </p>
+                                                                </td>
+                                                                <!-- Sideboard -->
+                                                                <td id="sideboard" scope="hide" valign="top" style="padding:10px;background:white;">
+                                                                    <h5 style="font-weight: bold">Banquillo [{{ sideboard }}]</h5>
+                                                                    <p *ngFor="let side of cartasSideboard">
+                                                                        {{ side.side }} <a class="text-danger" [routerLink]="" (click)="redireccionExterna(side.name)" name="{{ side.name }}">{{ side.name }}</a><br />
+                                                                    </p>
                                                                 </td>
                                                             </tr>
                                                         </table>
-                                                        <table width="100%" *ngIf="!loadingPendientes">
-                                                            <thead>
-                                                                <tr class="table">
-                                                                    <th class="text-center" style="border: 1px solid #ddd;">Cantidad</th>
-                                                                    <th class="text-center" style="border: 1px solid #ddd;">Carta</th>
-                                                                    <th class="text-center" style="border: 1px solid #ddd;">Edición</th>
-                                                                    <th class="text-center" style="border: 1px solid #ddd;">Importe (EX-NM)</th>
-                                                                    <th class="text-center" style="border: 1px solid #ddd;">Tendencia</th>
-                                                                    <th class="text-center" style="border: 1px solid #ddd;">Añadir</th>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-center">Valor medio de la baraja:</th>
+                                                    <td class="col-lg-8 text-success" style="font-weight: bold">
+                                                        <span *ngIf="importeBarajaNm>importeBarajaEx">{{ importeBarajaEx | number:'1.0-2' }} - {{ importeBarajaNm | number:'1.0-2' }} €</span>
+                                                        <span *ngIf="importeBarajaEx>importeBarajaNm">{{ importeBarajaNm | number:'1.0-2' }} - {{ importeBarajaEx | number:'1.0-2' }} €</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="2" class="col-lg-12 text-center">Cartas necesarias para completar esta baraja</th>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12">
+                                                        <div *ngIf="importeFaltaBarajaEx>0">
+                                                            <table width="100%" *ngIf="cartasFaltan.length>0">
+                                                                <thead>
+                                                                    <tr class="table">
+                                                                        <th class="text-center" style="border: 1px solid #ddd;">Cantidad</th>
+                                                                        <th class="text-center" style="border: 1px solid #ddd;">Carta</th>
+                                                                        <th class="text-center" style="border: 1px solid #ddd;">Edición</th>
+                                                                        <th class="text-center" style="border: 1px solid #ddd;">Importe (EX-NM)</th>
+                                                                        <th class="text-center" style="border: 1px solid #ddd;">Tendencia</th>
+                                                                        <th class="text-center" style="border: 1px solid #ddd;">Añadir</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tr *ngFor="let cartas of cartasFaltan;">
+                                                                    <td width="15%" class="text-center">
+                                                                        <h5><a [routerLink]="">{{ cartas.cantidad }}</a></h5>
+                                                                    </td>
+                                                                    <td width="40%">
+                                                                        <h5><a [routerLink]="" (click)="redireccionExterna(cartas.carta)">{{ cartas.carta }}</a></h5>
+                                                                    </td>
+                                                                    <td class="text-center align-middle small"><i class="ss ss-{{ cartas.icon }} ss-2x ss-{{ cartas.rarity }}"></i></td>
+                                                                    <td class="text-center text-black-50">
+                                                                        <h5>{{ cartas.importeEx * cartas.cantidad | number:'1.0-2' }} - {{ cartas.importeNm * cartas.cantidad | number:'1.0-2' }} €</h5>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <app-modal-tendencia [id]=cartas.idCarta></app-modal-tendencia>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <app-modal-carta [id]=cartas.idCarta (prestada)="actualizaListado($event)"></app-modal-carta>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div *ngIf="importeFaltaBarajaEx==0" class="alert alert-primary text-center" role="alert">
+
+                                                            <h5>
+                                                                <p style="font-weight: bold">Esta baraja la tienes completa</p>
+                                                            </h5>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="importeFaltaBarajaEx>0">
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="importeFaltaBarajaEx>0">
+                                                    <td colspan="2" class="text-center">
+                                                        <p class="text-dark" style="font-weight: bold">Coste de inversión estimado:&nbsp;&nbsp;
+                                                            <span class="text-success" *ngIf="importeFaltaBarajaMn>importeFaltaBarajaEx">{{ importeFaltaBarajaEx | number:'1.0-2' }} - {{ importeFaltaBarajaMn | number:'1.0-2' }} €</span>
+                                                            <span class="text-success" *ngIf="importeFaltaBarajaEx>importeFaltaBarajaMn">{{ importeFaltaBarajaMn | number:'1.0-2' }} - {{ importeFaltaBarajaEx | number:'1.0-2' }} €</span>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12">
+                                                        <div *ngIf="cartasPrestadas.length>0">
+                                                            <table width="100%">
+                                                                <tr>
+                                                                    <th colspan="2" class="col-lg-12 text-center">Cartas de esta baraja que tienes prestadas</th>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>&nbsp;</td>
+                                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                                        &nbsp;
+                                                                    </td>
                                                                 </tr>
-                                                            </thead>
+                                                            </table>
+                                                            <table class="col-lg-12 text-center">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-center text-dark" style="border: 1px solid #ddd;">Edición</th>
+                                                                        <th class="text-center text-dark" style="border: 1px solid #ddd;">Carta</th>
+                                                                        <th class="text-center text-dark" style="border: 1px solid #ddd;">Cantidad</th>
+                                                                        <th class="text-center text-dark" style="border: 1px solid #ddd;">Prestado a</th>
+                                                                        <th class="text-center text-dark" style="border: 1px solid #ddd;">Fecha</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                </thead>
 
-                                                            <tr *ngFor="let cartas of cartasFaltan;">
-                                                                <td width="15%" class="text-center">
-                                                                    <h5><a [routerLink]="">{{ cartas.cantidad }}</a></h5>
-                                                                </td>
-                                                                <td width="40%">
-                                                                    <h5><a [routerLink]="" (click)="redireccionExterna(cartas.carta)">{{ cartas.carta }}</a></h5>
-                                                                </td>
-                                                                <td class="text-center align-middle small"><i class="ss ss-{{ cartas.icon }} ss-2x ss-{{ cartas.rarity }}"></i></td>
-                                                                <td class="text-center text-black-50">
-                                                                    <h5>{{ cartas.importeEx * cartas.cantidad | number:'1.0-2' }} - {{ cartas.importeNm * cartas.cantidad | number:'1.0-2' }} €</h5>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <app-modal-tendencia [id]=cartas.idCarta></app-modal-tendencia>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <app-modal-carta [id]=cartas.idCarta (prestada)="actualizaListado($event)"></app-modal-carta>
+
+                                                                <tr *ngFor="let carta of cartasPrestadas[0] | paginate: { itemsPerPage: 10, currentPage: page }; let i = index; let impar = odd;let par = even;">
+                                                                    <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                                        <i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i>
+                                                                    </td>
+                                                                    <td class="text-left text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                                        <h5><a [routerLink]="" (click)="redireccionExterna(carta.name)">{{ carta.name }}</a></h5>
+                                                                    </td>
+                                                                    <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                                        <h5>{{ carta.cantidad }}</h5>
+                                                                    </td>
+                                                                    <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                                        <h5>{{ carta.userName }}</h5>
+                                                                    </td>
+                                                                    <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                                        <h5>{{ carta.fechaPrestamo*1000 | date: 'dd/MM/yyyy' }}</h5>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="5" class="text-center">
+                                                                        <h5>
+                                                                            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                                        </h5>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="5" class="col-lg-12 text-black-50">
+                                                                        <hr>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-center">Curva de mana:</th>
+                                                    <td class="col-lg-8 text-black-50">
+                                                        <canvas baseChart [data]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-center">La baraja por colores:</th>
+                                                    <td class="col-lg-8 text-black-50">
+                                                        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                                                        <br />
+                                                        <p class="text-center"><span class="text-info" style="font-weight: bold">Total de cartas de la baraja:</span> {{ sumaTotal }}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-center">Datos por porcentaje:</th>
+                                                    <td class="col-lg-8 text-black-50">
+                                                        <table class="col-lg-12">
+                                                            <tr class="text-right">
+                                                                <td style="color: rgb(209, 0, 3); font-weight: bold">Rojas: </td>
+                                                                <td>{{ doughnutPercentage[0] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color: rgb(91, 154, 255); font-weight: bold">Azules: </td>
+                                                                <td>{{ doughnutPercentage[1] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color: rgb(22, 196, 45); font-weight: bold">Verdes: </td>
+                                                                <td>{{ doughnutPercentage[2] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color: rgb(0, 0, 0); font-weight: bold">Negras: </td>
+                                                                <td>{{ doughnutPercentage[3] }}</td>
+                                                                <td> %</td>
+                                                            </tr>
+                                                            <tr class="text-right">
+                                                                <td style="color: rgba(212, 198, 0, 0.637); font-weight: bold">Blancas: </td>
+                                                                <td>{{ doughnutPercentage[4] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color: rgb(182, 182, 182); font-weight: bold">Incoloras: </td>
+                                                                <td>{{ doughnutPercentage[5] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color: rgb(113, 81, 69); font-weight: bold">Tierras: </td>
+                                                                <td>{{ doughnutPercentage[6] }}</td>
+                                                                <td> %</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="12" class="col-lg-12 text-black-50">
+                                                                    <hr>
                                                                 </td>
                                                             </tr>
+                                                            <tr class="text-right">
+                                                                <td style="color: blueviolet; font-weight: bold">Míticas: </td>
+                                                                <td>{{ rarityPercentage[0] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color:rgb(233, 229, 14); font-weight: bold">Raras: </td>
+                                                                <td>{{ rarityPercentage[1] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color:darkgray; font-weight: bold">Infrecuentes: </td>
+                                                                <td>{{ rarityPercentage[2] }}</td>
+                                                                <td> %</td>
+                                                                <td style="color:black; font-weight: bold">Comunes: </td>
+                                                                <td>{{ rarityPercentage[3] }}</td>
+                                                                <td> %</td>
+                                                            </tr>
                                                         </table>
-                                                    </div>
-                                                    <div *ngIf="importeFaltaBarajaEx==0" class="alert alert-primary text-center" role="alert">
-
-                                                        <h5>
-                                                            <p style="font-weight: bold">Esta baraja la tienes completa</p>
-                                                        </h5>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr *ngIf="importeFaltaBarajaEx>0">
-                                                <td colspan="2" class="col-lg-12 text-black-50">
-                                                    &nbsp;
-                                                </td>
-                                            </tr>
-                                            <tr *ngIf="importeFaltaBarajaEx>0">
-                                                <th class="col-lg-4 text-center">Coste de inversión estimado:</th>
-                                                <td class="col-lg-8 text-success" style="font-weight: bold">
-                                                    <span *ngIf="importeFaltaBarajaMn>importeFaltaBarajaEx">{{ importeFaltaBarajaEx | number:'1.0-2' }} - {{ importeFaltaBarajaMn | number:'1.0-2' }} €</span>
-                                                    <span *ngIf="importeFaltaBarajaEx>importeFaltaBarajaMn">{{ importeFaltaBarajaMn | number:'1.0-2' }} - {{ importeFaltaBarajaEx | number:'1.0-2' }} €</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" class="col-lg-12 text-black-50">
-                                                    <hr>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-4 text-center">Curva de mana:</th>
-                                                <td class="col-lg-8 text-black-50">
-                                                    <canvas baseChart [data]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" class="col-lg-12 text-black-50">
-                                                    <hr>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-4 text-center">La baraja por colores:</th>
-                                                <td class="col-lg-8 text-black-50">
-                                                    <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" class="col-lg-12 text-black-50">
-                                                    <hr>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-4 text-center">Datos por porcentaje:</th>
-                                                <td class="col-lg-8 text-black-50">
-                                                    <table class="col-lg-12">
-                                                        <tr class="text-right">
-                                                            <td style="color: rgb(209, 0, 3); font-weight: bold">Rojas: </td>
-                                                            <td>{{ doughnutPercentage[0] }}</td>
-                                                            <td> %</td>
-                                                            <td style="color: rgb(91, 154, 255); font-weight: bold">Azules: </td>
-                                                            <td>{{ doughnutPercentage[1] }}</td>
-                                                            <td> %</td>
-                                                            <td style="color: rgb(22, 196, 45); font-weight: bold">Verdes: </td>
-                                                            <td>{{ doughnutPercentage[2] }}</td>
-                                                            <td> %</td>
-                                                            <td style="color: rgb(0, 0, 0); font-weight: bold">Negras: </td>
-                                                            <td>{{ doughnutPercentage[3] }}</td>
-                                                            <td> %</td>
-                                                        </tr>
-                                                        <tr class="text-right">
-                                                            <td style="color: rgba(212, 198, 0, 0.637); font-weight: bold">Blancas: </td>
-                                                            <td>{{ doughnutPercentage[4] }}</td>
-                                                            <td> %</td>
-                                                            <td style="color: rgb(182, 182, 182); font-weight: bold">Incoloras: </td>
-                                                            <td>{{ doughnutPercentage[5] }}</td>
-                                                            <td> %</td>
-                                                            <td style="color: rgb(113, 81, 69); font-weight: bold">Tierras: </td>
-                                                            <td>{{ doughnutPercentage[6] }}</td>
-                                                            <td> %</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="12" class="col-lg-12 text-black-50">
-                                                                <hr>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="text-right">
-                                                            <td style="color: blueviolet; font-weight: bold">Míticas: </td>
-                                                            <td>{{ rarityPercentage[0] }}</td>
-                                                            <td> %</td>
-                                                            <td style="color:rgb(233, 229, 14); font-weight: bold">Raras: </td>
-                                                            <td>{{ rarityPercentage[1] }}</td>
-                                                            <td> %</td>
-                                                            <td style="color:darkgray; font-weight: bold">Infrecuentes: </td>
-                                                            <td>{{ rarityPercentage[2] }}</td>
-                                                            <td> %</td>
-                                                            <td style="color:black; font-weight: bold">Comunes: </td>
-                                                            <td>{{ rarityPercentage[3] }}</td>
-                                                            <td> %</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="12" class="col-lg-12 text-black-50">
-                                                    <hr>
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="12" class="col-lg-12 text-black-50">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <!-- /.table-responsive -->

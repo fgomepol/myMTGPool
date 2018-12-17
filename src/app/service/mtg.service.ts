@@ -185,4 +185,8 @@ constructor(private http: Http) {}
   cartasYaDevueltas(usuario: number) {
     return this.http.get(`${this.baseUrl}?opcion=cartasYaDevueltas&usuario=${usuario}`);
   }
+
+  comparacionPrestadas(usuario: number, codBaraja: number, sitio: string) {
+    return this.http.post(`${this.baseUrl}?opcion=comparacionPrestadas`, [usuario, codBaraja, sitio]);
+  }
 }

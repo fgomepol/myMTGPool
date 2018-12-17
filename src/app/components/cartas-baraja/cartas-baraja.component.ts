@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as jsPDF from 'jspdf';
 import { DeckModule } from 'src/app/models/deck.module';
 import { DeckEditorService } from 'src/app/service/deck-editor.service';
+import { MtgService } from '../../service/mtg.service';
 
 @Component({
   selector: 'app-cartas-baraja',
@@ -33,6 +34,7 @@ export class CartasBarajaComponent implements OnInit {
   public importeBarajaEx: number;
   public importeBarajaNm: number;
   public cartasFaltan: any[] = [];
+  public cartasPrestadas: any[] = [];
   public importeFaltaBarajaEx = 0;
   public importeFaltaBarajaMn = 0;
   public texto = 'Cargando baraja, por favor espere';
@@ -134,6 +136,7 @@ export class CartasBarajaComponent implements OnInit {
   constructor(
     private storageService: StorageService,
     private servicio: BarajasService,
+    private mtgService: MtgService,
     private routerActivated: ActivatedRoute,
     private servicioEditor: DeckEditorService
   ) {
@@ -234,6 +237,17 @@ export class CartasBarajaComponent implements OnInit {
         this.loading = false;
       });
     }
+  }
+
+  public listaCartasPrestadas() {
+    this.mtgService.comparacionPrestadas(this.user, this.codigoBaraja, 'barajasTorneo').subscribe(data => {
+
+      this.cartasPrestadas.splice(0);
+
+      if (data['_body'] !== '[]') {
+        this.cartasPrestadas.push(data.json());
+      }
+    });
   }
 
   public descargaPDF() {
@@ -471,6 +485,8 @@ export class CartasBarajaComponent implements OnInit {
     if (this.cartasFaltan.length > 0) {
       this.cartasFaltan.splice(0);
     }
+
+    this.listaCartasPrestadas();
 
     this.actualizaListado(true);
   }

@@ -41,110 +41,117 @@
                                             <thead>
                                                 <tr>
                                                     <td colspan="2" class="col-lg-12">
-                                                        <div *ngIf="cartasBaraja.length>0">
-                                                            <table class="col-lg-12 table-fixed">
-                                                                <tr>
-                                                                    <th class="text-left" colspan="3" style="border: 0px solid #ddd;">
-                                                                        <table>
-                                                                            <tr>
-                                                                                <th class="text-dark">
-                                                                                    DCI Decklist:
-                                                                                </th>
-                                                                                <td>
-                                                                                    <a class="navbar-brand" [routerLink]="" (click)="descargaPDF();"><i class="material-icons text-info">picture_as_pdf</i></a>
-                                                                                </td>
-                                                                                <th class="text-dark">
-                                                                                    Editar Mazo:
-                                                                                </th>
-                                                                                <td>
-                                                                                    <a class="navbar-brand" [routerLink]="['/editorMazos', codigoBaraja, 'misBarajas']"><i class="material-icons text-info">create</i></a>
-                                                                                </td>
-                                                                                <th class="text-dark">
-                                                                                    Ultimos resultados del arquetipo:
-                                                                                </th>
-                                                                                <td>
-                                                                                    <a class="navbar-brand" [routerLink]="['/arquetipo', formato, arquetipo]" target="_blank"><i class="material-icons text-info">search</i></a>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-left" colspan="2" style="border: 1px solid #ddd; width:66%;">
-                                                                        Nombre Baraja: <span class="text-info">{{ nombreBaraja }}</span>
-                                                                    </th>
-                                                                    <th class="text-left" style="border: 1px solid #ddd;" scope="hide">
-                                                                        Formato: <span class="text-info">{{ formato }}</span>
-                                                                    </th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-left" colspan="2" style="border: 1px solid #ddd; width:66%;">
-                                                                        Arquetipo: <span class="text-info">{{ arquetipo }}</span>
-                                                                    </th>
-                                                                    <th class="text-left" style="border: 1px solid #ddd;" scope="hide">
-                                                                        Banquillo: <span class="text-info">{{ sideboard }} Cartas</span>
-                                                                    </th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <!-- Creatures, etc -->
-                                                                    <td valign="top" style="padding:10px;">
-                                                                        <h5 *ngIf="criaturas>0">Criaturas [{{ criaturas }}]</h5>
-                                                                        <p *ngFor="let criatura of cartasCriaturas">
-                                                                            {{ criatura.cantidad - criatura.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(criatura.name)" name="{{ criatura.name }}">{{ criatura.name }}</a><br
-                                                                            />
-                                                                        </p>
+                                                        <table class="col-lg-12 table-fixed">
+                                                            <tr>
+                                                                <th class="text-left" colspan="3" style="border: 0px solid #ddd;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <th class="text-dark">
+                                                                                DCI Decklist:
+                                                                            </th>
+                                                                            <td>
+                                                                                <a class="navbar-brand" [routerLink]="" (click)="descargaPDF();"><i class="material-icons text-danger">picture_as_pdf</i></a>
+                                                                            </td>
+                                                                            <th class="text-dark">
+                                                                                Editar Mazo:
+                                                                            </th>
+                                                                            <td>
+                                                                                <a class="navbar-brand" [routerLink]="['/editorMazos', codigoBaraja, 'misBarajas']"><i class="material-icons text-danger">create</i></a>
+                                                                            </td>
+                                                                            <th class="text-dark">
+                                                                                Ultimos resultados del arquetipo:
+                                                                            </th>
+                                                                            <td>
+                                                                                <a class="navbar-brand" [routerLink]="['/arquetipo', formato, arquetipo]" target="_blank"><i class="material-icons text-danger">search</i></a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="text-left" colspan="2" style="border: 1px solid #ddd; width:66%;">
+                                                                    Nombre Baraja: <span class="text-info">{{ nombreBaraja }}</span>
+                                                                </th>
+                                                                <th class="text-left" style="border: 1px solid #ddd;" scope="hide">
+                                                                    Formato: <span class="text-info">{{ formato }}</span>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="text-left" colspan="3" style="border: 1px solid #ddd; width:66%;">
+                                                                    Arquetipo: <span class="text-info">{{ arquetipo }}</span>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <!-- Creatures, etc -->
+                                                                <td valign="top" style="padding:10px;">
+                                                                    <h5 *ngIf="criaturas>0" style="font-weight: bold">Criaturas [{{ criaturas }}]</h5>
+                                                                    <p *ngFor="let criatura of cartasCriaturas">
+                                                                        {{ criatura.cantidad - criatura.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(criatura.name)" name="{{ criatura.name }}">{{ criatura.name }}</a><br />
+                                                                    </p>
 
-                                                                        <h5 *ngIf="instantaneos>0">Instantáneos [{{ instantaneos }}]</h5>
-                                                                        <p *ngFor="let instant of cartasInstantaneos">
-                                                                            {{ instant.cantidad - instant.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(instant.name)" name="{{ instant.name }}">{{ instant.name }}</a><br />
-                                                                        </p>
+                                                                    <h5 *ngIf="instantaneos>0" style="font-weight: bold">Instantáneos [{{ instantaneos }}]</h5>
+                                                                    <p *ngFor="let instant of cartasInstantaneos">
+                                                                        {{ instant.cantidad - instant.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(instant.name)" name="{{ instant.name }}">{{ instant.name }}</a><br />
+                                                                    </p>
 
-                                                                        <h5 *ngIf="conjuros>0">Conjuros [{{ conjuros }}]</h5>
-                                                                        <p *ngFor="let sorceries of cartasConjuros">
-                                                                            {{ sorceries.cantidad - sorceries.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(sorceries.name)" name="{{ sorceries.name }}">{{ sorceries.name }}</a><br
-                                                                            />
-                                                                        </p>
+                                                                    <h5 *ngIf="conjuros>0" style="font-weight: bold">Conjuros [{{ conjuros }}]</h5>
+                                                                    <p *ngFor="let sorceries of cartasConjuros">
+                                                                        {{ sorceries.cantidad - sorceries.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(sorceries.name)" name="{{ sorceries.name }}">{{ sorceries.name }}</a><br
+                                                                        />
+                                                                    </p>
 
-                                                                        <h5 *ngIf="planeswalkers>0">Planeswalkers [{{ planeswalkers }}]</h5>
-                                                                        <p *ngFor="let planeswalker of cartasPlaneswalkers">
-                                                                            {{ planeswalker.cantidad - planeswalker.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(planeswalker.name)" name="{{ planeswalker.name }}">{{ planeswalker.name }}</a><br
-                                                                            />
-                                                                        </p>
+                                                                    <h5 *ngIf="planeswalkers>0" style="font-weight: bold">Planeswalkers [{{ planeswalkers }}]</h5>
+                                                                    <p *ngFor="let planeswalker of cartasPlaneswalkers">
+                                                                        {{ planeswalker.cantidad - planeswalker.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(planeswalker.name)" name="{{ planeswalker.name }}">{{ planeswalker.name }}</a><br
+                                                                        />
+                                                                    </p>
 
-                                                                    </td>
-                                                                    <!-- Lands -->
-                                                                    <td valign="top" style="padding:10px;">
-                                                                        <h5 *ngIf="encantamientos>0">Encantamientos [{{ encantamientos }}]</h5>
-                                                                        <p *ngFor="let encantamiento of cartasEncantamientos">
-                                                                            {{ encantamiento.cantidad - encantamiento.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(encantamiento.name)" name="{{ encantamiento.name }}">{{ encantamiento.name }}</a><br
-                                                                            />
-                                                                        </p>
+                                                                </td>
+                                                                <!-- Lands -->
+                                                                <td valign="top" style="padding:10px;">
+                                                                    <h5 *ngIf="encantamientos>0" style="font-weight: bold">Encantamientos [{{ encantamientos }}]</h5>
+                                                                    <p *ngFor="let encantamiento of cartasEncantamientos">
+                                                                        {{ encantamiento.cantidad - encantamiento.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(encantamiento.name)" name="{{ encantamiento.name }}">{{ encantamiento.name }}</a><br
+                                                                        />
+                                                                    </p>
 
-                                                                        <h5 *ngIf="artefactos>0">Artefactos [{{ artefactos }}]</h5>
-                                                                        <p *ngFor="let artefacto of cartasArtefactos">
-                                                                            {{ artefacto.cantidad - artefacto.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(artefacto.name)" name="{{ artefacto.name }}">{{ artefacto.name }}</a><br
-                                                                            />
-                                                                        </p>
+                                                                    <h5 *ngIf="artefactos>0" style="font-weight: bold">Artefactos [{{ artefactos }}]</h5>
+                                                                    <p *ngFor="let artefacto of cartasArtefactos">
+                                                                        {{ artefacto.cantidad - artefacto.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(artefacto.name)" name="{{ artefacto.name }}">{{ artefacto.name }}</a><br
+                                                                        />
+                                                                    </p>
 
-                                                                        <h5 *ngIf="otros>0">Otros [{{ otros }}]</h5>
-                                                                        <p *ngFor="let otros of cartasOtros">
-                                                                            {{ otros.cantidad - otros.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(otros.name)" name="{{ otros.name }}">{{ otros.name }}</a><br />
-                                                                        </p>
+                                                                    <h5 *ngIf="otros>0" style="font-weight: bold">Otros [{{ otros }}]</h5>
+                                                                    <p *ngFor="let otros of cartasOtros">
+                                                                        {{ otros.cantidad - otros.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(otros.name)" name="{{ otros.name }}">{{ otros.name }}</a><br />
+                                                                    </p>
 
-                                                                        <h5 *ngIf="tierras>0">Tierras [{{ tierras }}]</h5>
-                                                                        <p *ngFor="let tierra of cartasTierras">
-                                                                            {{ tierra.cantidad - tierra.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(tierra.name)" name="{{ tierra.name }}">{{ tierra.name }}</a><br />
-                                                                        </p>
-                                                                    </td>
-                                                                    <!-- Sideboard -->
-                                                                    <td id="sideboard" scope="hide" valign="top" style="padding:10px;background:white;">
-                                                                        <p *ngFor="let side of cartasSideboard">
-                                                                            {{ side.side }} <a class="text-danger" [routerLink]="" (click)="redireccionExterna(side.name)" name="{{ side.name }}">{{ side.name }}</a><br />
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
+                                                                    <h5 *ngIf="tierras>0" style="font-weight: bold">Tierras [{{ tierras }}]</h5>
+                                                                    <p *ngFor="let tierra of cartasTierras">
+                                                                        {{ tierra.cantidad - tierra.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(tierra.name)" name="{{ tierra.name }}">{{ tierra.name }}</a><br />
+                                                                    </p>
+                                                                </td>
+                                                                <!-- Sideboard -->
+                                                                <td id="sideboard" scope="hide" valign="top" style="padding:10px;background:white;">
+                                                                    <h5 style="font-weight: bold">Banquillo [{{ sideboard }}]</h5>
+                                                                    <p *ngFor="let side of cartasSideboard">
+                                                                        {{ side.side }} <a class="text-danger" [routerLink]="" (click)="redireccionExterna(side.name)" name="{{ side.name }}">{{ side.name }}</a><br />
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-lg-4 text-center">Valor medio de la baraja:</th>
+                                                    <td class="col-lg-8 text-success" style="font-weight: bold">
+                                                        <span *ngIf="importeBarajaNm>importeBarajaEx">{{ importeBarajaEx | number:'1.0-2' }} - {{ importeBarajaNm | number:'1.0-2' }} €</span>
+                                                        <span *ngIf="importeBarajaEx>importeBarajaNm">{{ importeBarajaNm | number:'1.0-2' }} - {{ importeBarajaEx | number:'1.0-2' }} €</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -222,6 +229,67 @@
                                                 <tr>
                                                     <td colspan="2" class="col-lg-12 text-black-50">
                                                         <hr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="col-lg-12">
+                                                        <div *ngIf="cartasPrestadas.length>0">
+                                                            <table width="100%">
+                                                                <tr>
+                                                                    <th colspan="2" class="col-lg-12 text-center">Cartas de esta baraja que tienes prestadas</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2" class="col-lg-12 text-black-50">
+                                                                        &nbsp;
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <table class="col-lg-12 text-center">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-center text-dark" style="border: 1px solid #ddd;">Edición</th>
+                                                                        <th class="text-center text-dark" style="border: 1px solid #ddd;">Carta</th>
+                                                                        <th class="text-center text-dark" style="border: 1px solid #ddd;">Cantidad</th>
+                                                                        <th class="text-center text-dark" style="border: 1px solid #ddd;">Prestado a</th>
+                                                                        <th class="text-center text-dark" style="border: 1px solid #ddd;">Fecha</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                </thead>
+
+
+                                                                <tr *ngFor="let carta of cartasPrestadas[0] | paginate: { itemsPerPage: 10, currentPage: page }; let i = index; let impar = odd;let par = even;">
+                                                                    <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                                        <i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i>
+                                                                    </td>
+                                                                    <td class="text-left text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                                        <h5><a [routerLink]="" (click)="redireccionExterna(carta.name)">{{ carta.name }}</a></h5>
+                                                                    </td>
+                                                                    <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                                        <h5>{{ carta.cantidad }}</h5>
+                                                                    </td>
+                                                                    <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                                        <h5>{{ carta.userName }}</h5>
+                                                                    </td>
+                                                                    <td class="text-center text-dark align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                                        <h5>{{ carta.fechaPrestamo*1000 | date: 'dd/MM/yyyy' }}</h5>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="5" class="text-center">
+                                                                        <h5>
+                                                                            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                                                        </h5>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="5" class="col-lg-12 text-black-50">
+                                                                        <hr>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>

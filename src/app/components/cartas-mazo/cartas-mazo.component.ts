@@ -4,6 +4,7 @@ import { DeckEditorService } from 'src/app/service/deck-editor.service';
 import { DeckModule } from 'src/app/models/deck.module';
 import { ActivatedRoute } from '@angular/router';
 import * as jsPDF from 'jspdf';
+import { MtgService } from 'src/app/service/mtg.service';
 
 @Component({
   selector: 'app-cartas-mazo',
@@ -118,6 +119,7 @@ export class CartasMazoComponent implements OnInit {
   public importeBarajaEx: number;
   public importeBarajaNm: number;
   public cartasFaltan: any[] = [];
+  public cartasPrestadas: any[] = [];
   public importeFaltaBarajaEx = 0;
   public importeFaltaBarajaMn = 0;
 
@@ -128,6 +130,7 @@ export class CartasMazoComponent implements OnInit {
   constructor(
     private storageService: StorageService,
     private routerActivated: ActivatedRoute,
+    private mtgService: MtgService,
     private servicioEditor: DeckEditorService
   ) { }
 
@@ -136,6 +139,7 @@ export class CartasMazoComponent implements OnInit {
 
     this.routerActivated.params.subscribe( params => {
       this.servicioEditor.datosBaraja(params['id'], this.user, 'misBarajas').subscribe(data => {
+
         if (data['_body'] !== 'no hay datos') {
 
           this.cartasFormato.splice(0);
@@ -206,6 +210,9 @@ export class CartasMazoComponent implements OnInit {
   }
 
   compruebaBaraja() {
+
+    this.importeBarajaEx = 0;
+    this.importeBarajaNm = 0;
 
     this.tierras = 0;
     this.criaturas = 0;
@@ -331,6 +338,9 @@ export class CartasMazoComponent implements OnInit {
       }
 
       this.sumaTotal = this.sumaTotal + this.cartasBaraja[i].cantidad;
+
+      this.importeBarajaEx = this.importeBarajaEx + (this.cartasBaraja[i].importeEx * this.cartasBaraja[i].cantidad);
+      this.importeBarajaNm = this.importeBarajaNm + (this.cartasBaraja[i].importeNm  * this.cartasBaraja[i].cantidad);
     }
 
     this.doughnutChartData = [this.rojas, this.azules, this.verdes, this.negras, this.blancas, this.incoloras, this.tierras];
@@ -354,7 +364,19 @@ export class CartasMazoComponent implements OnInit {
       this.cartasFaltan.splice(0);
     }
 
+    this.listaCartasPrestadas();
     this.actualizaListado(true);
+  }
+
+  public listaCartasPrestadas() {
+    this.mtgService.comparacionPrestadas(this.user, this.codigoBaraja, 'misBarajas').subscribe(data => {
+
+      this.cartasPrestadas.splice(0);
+
+      if (data['_body'] !== '[]') {
+        this.cartasPrestadas.push(data.json());
+      }
+    });
   }
 
   public descargaPDF() {

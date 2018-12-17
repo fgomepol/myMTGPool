@@ -4,6 +4,8 @@ import { BarajasService } from '../../service/barajas.service';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as jsPDF from 'jspdf';
+import { DeckModule } from 'src/app/models/deck.module';
+import { DeckEditorService } from 'src/app/service/deck-editor.service';
 
 @Component({
   selector: 'app-cartas-baraja',
@@ -28,15 +30,56 @@ export class CartasBarajaComponent implements OnInit {
   public loading = true;
   public loadingPendientes = false;
   public favorita = false;
-  public cartasBaraja: any;
   public totalCartas: number;
   public importeBarajaEx: number;
   public importeBarajaNm: number;
-  public cartasFaltan: any[];
+  public cartasFaltan: any[] = [];
   public importeFaltaBarajaEx = 0;
   public importeFaltaBarajaMn = 0;
   public texto = 'Cargando baraja, por favor espere';
   public datosDecklist: any;
+  public nombreBaraja = '';
+  public arquetipo = '';
+  public error = '';
+
+  // Variables de datos de la baraja
+  public tierras = 0;
+  public criaturas = 0;
+  public instantaneos = 0;
+  public conjuros = 0;
+  public encantamientos = 0;
+  public planeswalkers = 0;
+  public artefactos = 0;
+  public otros = 0;
+  public sideboard = 0;
+
+  public cartasBaraja: DeckModule[] = [];
+  public cartasTierras: DeckModule[] = [];
+  public cartasCriaturas: DeckModule[] = [];
+  public cartasInstantaneos: DeckModule[] = [];
+  public cartasConjuros: DeckModule[] = [];
+  public cartasEncantamientos: DeckModule[] = [];
+  public cartasPlaneswalkers: DeckModule[] = [];
+  public cartasArtefactos: DeckModule[] = [];
+  public cartasOtros: DeckModule[] = [];
+  public cartasSideboard: DeckModule[] = [];
+  public cartasFormato: any[] = [];
+
+  public comunes = 0;
+  public infrecuentes = 0;
+  public raras = 0;
+  public miticas = 0;
+
+  public rojas = 0;
+  public negras = 0;
+  public blancas = 0;
+  public verdes = 0;
+  public azules = 0;
+  public incoloras = 0;
+
+  public sumaTotal = 0;
+  public totalMain = 0;
+  public totalSide = 0;
 
   // grafico para colores de la baraja
   public doughnutChartLabels: string[] = ['Rojas', 'Azules', 'Verdes', 'Negras', 'Blancas', 'Incoloras', 'Tierras'];
@@ -91,7 +134,8 @@ export class CartasBarajaComponent implements OnInit {
     private storageService: StorageService,
     private servicio: BarajasService,
     private routerActivated: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private servicioEditor: DeckEditorService
   ) {
    }
 
@@ -99,18 +143,52 @@ export class CartasBarajaComponent implements OnInit {
     this.user = this.storageService.getCurrentUser();
 
     this.routerActivated.params.subscribe( params => {
-      this.servicio.cartasBaraja(params['id2'], params['id3']).subscribe(data => {
+
+      this.servicioEditor.datosBaraja(params['id3'], this.user, 'barajasTorneo').subscribe(data => {
 
         this.formato = params['id'];
         this.torneo = params['id2'];
         this.codigoBaraja = params['id3'];
 
-        if (data['_body'] !== '[]') {
-          this.baraja = JSON.parse(data['_body']);
-          this.html = this.sanitizer.bypassSecurityTrustHtml(this.baraja[0].pagina);
-          this.cartasBaraja = this.baraja[0].cartasBaraja;
+        if (data['_body'] !== 'no hay datos') {
+
+          this.cartasFormato.splice(0);
+          this.nombreBaraja = data.json()['nombre'];
+          this.arquetipo = data.json()['arquetipo'];
+
+          this.servicioEditor.listaCartasFormato('', this.formato, params['id3'], 'barajasTorneo').subscribe( data2 => {
+
+            this.cartasFormato.push(data2.json());
+
+            const cartasDeck: any[] = [];
+            cartasDeck.push(data.json()['baraja']);
+
+            for (const cartaDeck of cartasDeck[0]) {
+              const obj = this.cartasFormato[0].find(obj => obj.UID == cartaDeck.UID);
+
+              const carta = {
+                UID: cartaDeck.UID,
+                name: obj.name,
+                cantidad: parseFloat(cartaDeck.cantidad),
+                side: parseFloat(cartaDeck.side),
+                tipo: obj.type,
+                color: obj.colors,
+                rareza: obj.rarity,
+                cmc: obj.cmc,
+                importeEx: obj.importeEx,
+                importeNm: obj.importeNm
+              };
+
+              this.cartasBaraja.push(carta);
+            }
+
+            this.compruebaBaraja();
+          });
+
         } else {
-          this.baraja = '';
+          this.error = 'Los tados introducidos no pertenecen a nunguna baraja';
+          this.FadeOutLink();
+          this.loading = false;
         }
       });
 
@@ -118,37 +196,6 @@ export class CartasBarajaComponent implements OnInit {
         if (data['_body'] !== '[]') {
           this.favorita = true;
         }
-      });
-
-      this.servicio.datosEstadisticosBaraja(params['id3']).subscribe(data => {
-
-        this.doughnutChartData = [data.json()['R'], data.json()['U'], data.json()['G'], data.json()['B'], data.json()['W'], data.json()['I'], data.json()['L']];
-        this.doughnutPercentage = [ Math.round((data.json()['R'] / data.json()['total']) * 100), Math.round((data.json()['U'] / data.json()['total']) * 100), Math.round((data.json()['G'] / data.json()['total']) * 100), Math.round((data.json()['B'] / data.json()['total']) * 100), Math.round((data.json()['W'] / data.json()['total']) * 100), Math.round((data.json()['I'] / data.json()['total']) * 100), Math.round((data.json()['L'] / data.json()['total']) * 100)];
-        this.rarityPercentage = [ Math.round((data.json()['mythic'] / data.json()['total']) * 100), Math.round((data.json()['rare'] / data.json()['total']) * 100), Math.round((data.json()['uncommon'] / data.json()['total']) * 100), Math.round((data.json()['common'] / data.json()['total']) * 100) ];
-        this.importeBarajaEx = data.json()['importeEx'];
-        this.importeBarajaNm = data.json()['importeNm'];
-
-        const datosChart: string[] = [];
-
-        for (let i = 0; i <= 16; i++) {
-          if (data.json()[i] > 0) {
-            datosChart.push(data.json()[i]);
-            this.lineChartLabels.push('Coste ' + i);
-          }
-        }
-
-        // this.lineChartData.push( { data: datosChart, label: 'Costes'});
-        this.lineChartData = datosChart;
-      });
-
-      this.servicio.comparacionColeccion(params['id3'], this.user).subscribe(data => {
-        this.cartasFaltan = data.json();
-
-        for (const item of this.cartasFaltan) {
-          this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + (parseFloat(item.importeEx) * parseFloat(item.cantidad));
-          this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + (parseFloat(item.importeNm) * parseFloat(item.cantidad));
-        }
-        this.loading = false;
       });
     });
   }
@@ -178,10 +225,11 @@ export class CartasBarajaComponent implements OnInit {
         this.importeFaltaBarajaMn = 0;
 
         for (const item of this.cartasFaltan) {
-          this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + parseFloat(item.importeEx);
-          this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + parseFloat(item.importeNm);
+          this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + (parseFloat(item.importeEx) * item.cantidad);
+          this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + (parseFloat(item.importeNm) * item.cantidad);
         }
         this.loadingPendientes = false;
+        this.loading = false;
       });
     }
   }
@@ -266,5 +314,168 @@ export class CartasBarajaComponent implements OnInit {
         this.favorita = true;
       }
     });
+  }
+
+  compruebaBaraja() {
+
+    this.importeBarajaEx = 0;
+    this.importeBarajaNm = 0;
+
+    this.tierras = 0;
+    this.criaturas = 0;
+    this.instantaneos = 0;
+    this.conjuros = 0;
+    this.encantamientos = 0;
+    this.planeswalkers = 0;
+    this.artefactos = 0;
+    this.otros = 0;
+    this.sideboard = 0;
+
+    this.cartasTierras.splice(0);
+    this.cartasCriaturas.splice(0);
+    this.cartasInstantaneos.splice(0);
+    this.cartasConjuros.splice(0);
+    this.cartasEncantamientos.splice(0);
+    this.cartasPlaneswalkers.splice(0);
+    this.cartasArtefactos.splice(0);
+    this.cartasOtros.splice(0);
+    this.cartasSideboard.splice(0);
+
+    this.comunes = 0;
+    this.infrecuentes = 0;
+    this.raras = 0;
+    this.miticas = 0;
+
+    this.rojas = 0;
+    this.negras = 0;
+    this.blancas = 0;
+    this.verdes = 0;
+    this.azules = 0;
+    this.incoloras = 0;
+
+    this.sumaTotal = 0;
+
+    const coste = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    for (let i = 0; i < this.cartasBaraja.length; i++) {
+      switch (this.cartasBaraja[i].rareza) {
+        case 'common':
+          this.comunes = this.comunes + this.cartasBaraja[i].cantidad;
+          break;
+        case 'uncommon':
+          this.infrecuentes = this.infrecuentes + this.cartasBaraja[i].cantidad;
+          break;
+        case 'rare':
+          this.raras = this.raras + this.cartasBaraja[i].cantidad;
+          break;
+        case 'mythic':
+          this.miticas = this.miticas + this.cartasBaraja[i].cantidad;
+          break;
+      }
+
+      if (this.cartasBaraja[i].tipo.includes('Land')) {
+        if (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side > 0) {
+          this.tierras = this.tierras + (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side);
+          this.cartasTierras.push(this.cartasBaraja[i]);
+        }
+      } else if (this.cartasBaraja[i].tipo.includes('Creature')) {
+        if (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side > 0) {
+          this.criaturas = this.criaturas + (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side);
+          this.cartasCriaturas.push(this.cartasBaraja[i]);
+        }
+      } else if (this.cartasBaraja[i].tipo.includes('Instant')) {
+        if (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side > 0) {
+          this.instantaneos = this.instantaneos + (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side);
+          this.cartasInstantaneos.push(this.cartasBaraja[i]);
+        }
+      } else if (this.cartasBaraja[i].tipo.includes('Sorcery')) {
+        if (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side > 0) {
+          this.conjuros = this.conjuros + (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side);
+          this.cartasConjuros.push(this.cartasBaraja[i]);
+        }
+      } else if (this.cartasBaraja[i].tipo.includes('Enchantment')) {
+        if (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side > 0) {
+          this.encantamientos = this.encantamientos + (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side);
+          this.cartasEncantamientos.push(this.cartasBaraja[i]);
+        }
+      } else if (this.cartasBaraja[i].tipo.includes('Planeswalker')) {
+        if (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side > 0) {
+          this.planeswalkers = this.planeswalkers + (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side);
+          this.cartasPlaneswalkers.push(this.cartasBaraja[i]);
+        }
+      } else if (this.cartasBaraja[i].tipo.includes('Artifact')) {
+        if (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side > 0) {
+          this.artefactos = this.artefactos + (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side);
+          this.cartasArtefactos.push(this.cartasBaraja[i]);
+        }
+      } else {
+        if (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side > 0) {
+          this.otros = this.otros + (this.cartasBaraja[i].cantidad - this.cartasBaraja[i].side);
+          this.cartasOtros.push(this.cartasBaraja[i]);
+        }
+      }
+
+      if (this.cartasBaraja[i].side > 0) {
+        this.sideboard = this.sideboard + this.cartasBaraja[i].side;
+        this.cartasSideboard.push(this.cartasBaraja[i]);
+      }
+
+      if (this.cartasBaraja[i].color.includes('R')) {
+        this.rojas = this.rojas + this.cartasBaraja[i].cantidad;
+      }
+      if (this.cartasBaraja[i].color.includes('G')) {
+        this.verdes = this.verdes + this.cartasBaraja[i].cantidad;
+      }
+      if (this.cartasBaraja[i].color.includes('U')) {
+        this.azules = this.azules + this.cartasBaraja[i].cantidad;
+      }
+      if (this.cartasBaraja[i].color.includes('B')) {
+        this.negras = this.negras + this.cartasBaraja[i].cantidad;
+      }
+      if (this.cartasBaraja[i].color.includes('W')) {
+        this.blancas = this.blancas + this.cartasBaraja[i].cantidad;
+      }
+
+      if (this.cartasBaraja[i].color === '' && !this.cartasBaraja[i].tipo.includes('Land')) {
+        this.incoloras = this.incoloras + this.cartasBaraja[i].cantidad;
+      }
+
+      if (this.cartasBaraja[i].cmc !== '') {
+        coste[this.cartasBaraja[i].cmc] = coste[this.cartasBaraja[i].cmc] + this.cartasBaraja[i].cantidad;
+      }
+
+      this.sumaTotal = this.sumaTotal + this.cartasBaraja[i].cantidad;
+      this.importeBarajaEx = this.importeBarajaEx + (this.cartasBaraja[i].importeEx * this.cartasBaraja[i].cantidad);
+      this.importeBarajaNm = this.importeBarajaNm + (this.cartasBaraja[i].importeNm  * this.cartasBaraja[i].cantidad);
+    }
+
+    this.doughnutChartData = [this.rojas, this.azules, this.verdes, this.negras, this.blancas, this.incoloras, this.tierras];
+    this.doughnutPercentage = [ Math.round((this.rojas / this.sumaTotal) * 100), Math.round((this.azules / this.sumaTotal) * 100), Math.round((this.verdes / this.sumaTotal) * 100), Math.round((this.negras / this.sumaTotal) * 100), Math.round((this.blancas / this.sumaTotal) * 100), Math.round((this.incoloras / this.sumaTotal) * 100), Math.round((this.tierras / this.sumaTotal) * 100)];
+    this.rarityPercentage = [ Math.round((this.miticas / this.sumaTotal) * 100), Math.round((this.raras / this.sumaTotal) * 100), Math.round((this.infrecuentes / this.sumaTotal) * 100), Math.round((this.comunes / this.sumaTotal) * 100) ];
+
+    const datosChart: string[] = [];
+
+    this.lineChartLabels.splice(0);
+
+    for (let i = 0; i <= 16; i++) {
+      if (coste[i] > 0) {
+        datosChart.push(coste[i].toString());
+        this.lineChartLabels.push('Coste ' + i);
+      }
+    }
+
+    this.lineChartData = datosChart;
+
+    if (this.cartasFaltan.length > 0) {
+      this.cartasFaltan.splice(0);
+    }
+
+    this.actualizaListado(true);
+  }
+
+  FadeOutLink() {
+    setTimeout( () => {
+      this.error = '';
+    }, 3000);
   }
 }

@@ -192,7 +192,7 @@ export class EditorMazosComponent implements OnInit {
                 this.arquetipos.push(data3.json());
               });
 
-              this.servicioEditor.listaCartasFormato( this.forma2.value, data.json()['formato'], 0).subscribe( data2 => {
+              this.servicioEditor.listaCartasFormato( this.forma2.value, data.json()['formato'], 0, '').subscribe( data2 => {
 
                 this.cartasFormato.push(data2.json());
 
@@ -234,7 +234,9 @@ export class EditorMazosComponent implements OnInit {
                       tipo: obj.type,
                       color: obj.colors,
                       rareza: obj.rarity,
-                      cmc: obj.cmc
+                      cmc: obj.cmc,
+                      importeEx: obj.importeEx,
+                      importeNm: obj.importeNm
                     };
                     this.cartasBaraja.push(carta);
                   }
@@ -287,7 +289,7 @@ export class EditorMazosComponent implements OnInit {
     this.loading = true;
     this.cartasFormato.splice(0);
 
-    this.servicioEditor.listaCartasFormato( this.forma2.value, this.formato, 0).subscribe( data => {
+    this.servicioEditor.listaCartasFormato( this.forma2.value, this.formato, 0, '').subscribe( data => {
 
       this.cartasFormato.push(data.json());
 
@@ -317,7 +319,7 @@ export class EditorMazosComponent implements OnInit {
       this.arquetipos.push(data.json());
     });
 
-    this.servicioEditor.listaCartasFormato(this.forma2.value, formato, 0).subscribe(data => {
+    this.servicioEditor.listaCartasFormato(this.forma2.value, formato, 0, '').subscribe(data => {
       this.cartasFormato.push(data.json());
       this.forma.setValue({
         formato : formato,
@@ -345,6 +347,9 @@ export class EditorMazosComponent implements OnInit {
     } else if (lista === 'side') {
       this.valorMainDel = '0';
       this.valorSideDel = valor;
+    } else if (lista === 'baraja') {
+      this.valorMainDel = '0';
+      this.valorSideDel = '0';
     }
 
     let encontrado = false;
@@ -389,7 +394,9 @@ export class EditorMazosComponent implements OnInit {
         tipo: obj.type,
         color: obj.colors,
         rareza: obj.rarity,
-        cmc: obj.cmc
+        cmc: obj.cmc,
+        importeEx: obj.importeEx,
+        importeNm: obj.importeNm
       };
 
       this.cartasBaraja.push(carta);
@@ -414,7 +421,9 @@ export class EditorMazosComponent implements OnInit {
           tipo: element.tipo,
           color: element.color,
           rareza: element.rareza,
-          cmc: element.cmc
+          cmc: element.cmc,
+          importeEx: element.importeEx,
+          importeNm: element.importeNm
         };
 
         this.cartasMain.push(carta);
@@ -442,7 +451,9 @@ export class EditorMazosComponent implements OnInit {
           tipo: element.tipo,
           color: element.color,
           rareza: element.rareza,
-          cmc: element.cmc
+          cmc: element.cmc,
+          importeEx: element.importeEx,
+          importeNm: element.importeNm
         };
 
         this.cartasSide.push(carta);
@@ -487,7 +498,9 @@ export class EditorMazosComponent implements OnInit {
           tipo: obj.type,
           color: obj.colors,
           rareza: obj.rarity,
-          cmc: obj.cmc
+          cmc: obj.cmc,
+          importeEx: obj.importeEx,
+          importeNm: obj.importeNm
         };
         this.cartasBaraja.push(carta);
         this.valorSideDel = carta.UID.toString();
@@ -652,8 +665,8 @@ export class EditorMazosComponent implements OnInit {
 
         if (this.cartasFaltan.length > 0) {
           for (const item of this.cartasFaltan) {
-            this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + parseFloat(item.importeEx);
-            this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + parseFloat(item.importeNm);
+            this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + (parseFloat(item.importeEx) * item.cantidad);
+            this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + (parseFloat(item.importeNm) * item.cantidad);
           }
         }
         this.loadingPendientes = false;
@@ -666,7 +679,7 @@ export class EditorMazosComponent implements OnInit {
       let valida = true;
       const cartasFormato: any[] = [];
 
-      this.servicioEditor.listaCartasFormato('', this.formato, 0).subscribe(data => {
+      this.servicioEditor.listaCartasFormato('', this.formato, 0, '').subscribe(data => {
         cartasFormato.push(data.json());
 
         for (const carta of this.cartasBaraja) {

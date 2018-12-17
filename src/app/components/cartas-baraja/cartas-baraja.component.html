@@ -35,7 +35,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <div *ngIf="baraja === '' && !loading" class="alert alert-danger text-center" role="alert">
+                                            <div *ngIf="cartasBaraja.length === 0 && !loading" class="alert alert-danger text-center" role="alert">
                                                 <p style="font-weight: bold">No existen datos de la baraja seleccionada</p>
                                             </div>
                                         </td>
@@ -44,35 +44,106 @@
 
                                 <app-loading *ngIf="loading" [texto]=texto></app-loading>
 
-                                <div *ngIf="!loading && baraja != ''">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <td class="text-info" style="font-weight: bold">
-                                                    Favorita:
-                                                </td>
-                                                <td>
-                                                    <a *ngIf="favorita" class="navbar-brand" [routerLink]="" (click)="marcarFavorita('N');"><i class="material-icons text-danger">favorite</i></a>
-                                                    <a *ngIf="!favorita" class="navbar-brand" [routerLink]="" (click)="marcarFavorita('S');"><i class="material-icons text-danger">favorite_border</i></a>
-                                                </td>
-                                                <td class="text-info" style="font-weight: bold">
-                                                    DCI Decklist:
-                                                </td>
-                                                <td>
-                                                    <a class="navbar-brand" [routerLink]="" (click)="descargaPDF();"><i class="material-icons text-danger">picture_as_pdf</i></a>
-                                                </td>
-                                                <td class="text-info" style="font-weight: bold">
-                                                    Personalizar Baraja:
-                                                </td>
-                                                <td>
-                                                    <a class="navbar-brand" [routerLink]="['/editorMazos', codigoBaraja, 'barajasTorneo']"><i class="material-icons text-danger">create</i></a>
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
+                                <div *ngIf="!loading && cartasBaraja.length>0">
+                                    <table class="col-lg-12 table-fixed">
+                                        <tr>
+                                            <th class="text-left" colspan="3" style="border: 0px solid #ddd;">
+                                                <table>
+                                                    <tr>
+                                                        <th class="text-dark">
+                                                            Favorita:
+                                                        </th>
+                                                        <td>
+                                                            <a *ngIf="favorita" class="navbar-brand" [routerLink]="" (click)="marcarFavorita('N');"><i class="material-icons text-danger">favorite</i></a>
+                                                            <a *ngIf="!favorita" class="navbar-brand" [routerLink]="" (click)="marcarFavorita('S');"><i class="material-icons text-danger">favorite_border</i></a>
+                                                        </td>
+                                                        <th class="text-dark">
+                                                            DCI Decklist:
+                                                        </th>
+                                                        <td>
+                                                            <a class="navbar-brand" [routerLink]="" (click)="descargaPDF();"><i class="material-icons text-info">picture_as_pdf</i></a>
+                                                        </td>
+                                                        <th class="text-dark" style="font-weight: bold">
+                                                            Personalizar Baraja:
+                                                        </th>
+                                                        <td>
+                                                            <a class="navbar-brand" [routerLink]="['/editorMazos', codigoBaraja, 'barajasTorneo']"><i class="material-icons text-danger">create</i></a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-left" colspan="2" style="border: 1px solid #ddd; width:66%;">
+                                                Nombre Baraja: <span class="text-info">{{ nombreBaraja }}</span>
+                                            </th>
+                                            <th class="text-left" style="border: 1px solid #ddd;" scope="hide">
+                                                Formato: <span class="text-info">{{ formato }}</span>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-left" colspan="2" style="border: 1px solid #ddd; width:66%;">
+                                                Arquetipo: <span class="text-info">{{ arquetipo }}</span>
+                                            </th>
+                                            <th class="text-left" style="border: 1px solid #ddd;" scope="hide">
+                                                Banquillo: <span class="text-info">{{ sideboard }} Cartas</span>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <!-- Creatures, etc -->
+                                            <td valign="top" style="padding:10px;">
+                                                <h5 *ngIf="criaturas>0">Criaturas [{{ criaturas }}]</h5>
+                                                <p *ngFor="let criatura of cartasCriaturas">
+                                                    {{ criatura.cantidad - criatura.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(criatura.name)" name="{{ criatura.name }}">{{ criatura.name }}</a><br />
+                                                </p>
 
-                                <div *ngIf="!loading && baraja != ''" [innerHtml]="html">
+                                                <h5 *ngIf="instantaneos>0">Instantáneos [{{ instantaneos }}]</h5>
+                                                <p *ngFor="let instant of cartasInstantaneos">
+                                                    {{ instant.cantidad - instant.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(instant.name)" name="{{ instant.name }}">{{ instant.name }}</a><br />
+                                                </p>
+
+                                                <h5 *ngIf="conjuros>0">Conjuros [{{ conjuros }}]</h5>
+                                                <p *ngFor="let sorceries of cartasConjuros">
+                                                    {{ sorceries.cantidad - sorceries.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(sorceries.name)" name="{{ sorceries.name }}">{{ sorceries.name }}</a><br />
+                                                </p>
+
+                                                <h5 *ngIf="planeswalkers>0">Planeswalkers [{{ planeswalkers }}]</h5>
+                                                <p *ngFor="let planeswalker of cartasPlaneswalkers">
+                                                    {{ planeswalker.cantidad - planeswalker.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(planeswalker.name)" name="{{ planeswalker.name }}">{{ planeswalker.name }}</a><br />
+                                                </p>
+
+                                            </td>
+                                            <!-- Lands -->
+                                            <td valign="top" style="padding:10px;">
+                                                <h5 *ngIf="encantamientos>0">Encantamientos [{{ encantamientos }}]</h5>
+                                                <p *ngFor="let encantamiento of cartasEncantamientos">
+                                                    {{ encantamiento.cantidad - encantamiento.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(encantamiento.name)" name="{{ encantamiento.name }}">{{ encantamiento.name }}</a><br
+                                                    />
+                                                </p>
+
+                                                <h5 *ngIf="artefactos>0">Artefactos [{{ artefactos }}]</h5>
+                                                <p *ngFor="let artefacto of cartasArtefactos">
+                                                    {{ artefacto.cantidad - artefacto.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(artefacto.name)" name="{{ artefacto.name }}">{{ artefacto.name }}</a><br />
+                                                </p>
+
+                                                <h5 *ngIf="otros>0">Otros [{{ otros }}]</h5>
+                                                <p *ngFor="let otros of cartasOtros">
+                                                    {{ otros.cantidad - otros.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(otros.name)" name="{{ otros.name }}">{{ otros.name }}</a><br />
+                                                </p>
+
+                                                <h5 *ngIf="tierras>0">Tierras [{{ tierras }}]</h5>
+                                                <p *ngFor="let tierra of cartasTierras">
+                                                    {{ tierra.cantidad - tierra.side }} <a class="text-success" [routerLink]="" (click)="redireccionExterna(tierra.name)" name="{{ tierra.name }}">{{ tierra.name }}</a><br />
+                                                </p>
+                                            </td>
+                                            <!-- Sideboard -->
+                                            <td id="sideboard" scope="hide" valign="top" style="padding:10px;background:white;">
+                                                <p *ngFor="let side of cartasSideboard">
+                                                    {{ side.side }} <a class="text-danger" [routerLink]="" (click)="redireccionExterna(side.name)" name="{{ side.name }}">{{ side.name }}</a><br />
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
 
                                 <div *ngIf="!loading && baraja != ''">
@@ -85,7 +156,7 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-lg-4 text-center">Valor medio de la baraja:</th>
-                                                <td class="col-lg-8 text-black-50">
+                                                <td class="col-lg-8 text-success" style="font-weight: bold">
                                                     <span *ngIf="importeBarajaNm>importeBarajaEx">{{ importeBarajaEx | number:'1.0-2' }} - {{ importeBarajaNm | number:'1.0-2' }} €</span>
                                                     <span *ngIf="importeBarajaEx>importeBarajaNm">{{ importeBarajaNm | number:'1.0-2' }} - {{ importeBarajaEx | number:'1.0-2' }} €</span>
                                                 </td>
@@ -164,8 +235,8 @@
                                             <tr *ngIf="importeFaltaBarajaEx>0">
                                                 <th class="col-lg-4 text-center">Coste de inversión estimado:</th>
                                                 <td class="col-lg-8 text-success" style="font-weight: bold">
-                                                    <h5 *ngIf="importeFaltaBarajaMn>importeFaltaBarajaEx">{{ importeFaltaBarajaEx | number:'1.0-2' }} - {{ importeFaltaBarajaMn | number:'1.0-2' }} €</h5>
-                                                    <h5 *ngIf="importeFaltaBarajaEx>importeFaltaBarajaMn">{{ importeFaltaBarajaMn | number:'1.0-2' }} - {{ importeFaltaBarajaEx | number:'1.0-2' }} €</h5>
+                                                    <span *ngIf="importeFaltaBarajaMn>importeFaltaBarajaEx">{{ importeFaltaBarajaEx | number:'1.0-2' }} - {{ importeFaltaBarajaMn | number:'1.0-2' }} €</span>
+                                                    <span *ngIf="importeFaltaBarajaEx>importeFaltaBarajaMn">{{ importeFaltaBarajaMn | number:'1.0-2' }} - {{ importeFaltaBarajaEx | number:'1.0-2' }} €</span>
                                                 </td>
                                             </tr>
                                             <tr>

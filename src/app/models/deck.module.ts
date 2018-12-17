@@ -16,4 +16,6 @@ export class DeckModule {
   public color: string;
   public rareza: string;
   public cmc: string;
+  public importeEx: number;
+  public importeNm: number;
  }

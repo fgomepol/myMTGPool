@@ -128,7 +128,7 @@ export class CartasMazoComponent implements OnInit {
   constructor(
     private storageService: StorageService,
     private routerActivated: ActivatedRoute,
-    private servicioEditor: DeckEditorService,
+    private servicioEditor: DeckEditorService
   ) { }
 
   ngOnInit() {
@@ -144,7 +144,7 @@ export class CartasMazoComponent implements OnInit {
           this.arquetipo = data.json()['arquetipo'];
           this.codigoBaraja = params['id'];
 
-          this.servicioEditor.listaCartasFormato( '', data.json()['formato'], params['id']).subscribe( data2 => {
+          this.servicioEditor.listaCartasFormato( '', data.json()['formato'], params['id'], 'misBarajas').subscribe( data2 => {
             this.cartasFormato.push(data2.json());
 
             const cartasDeck: any[] = [];
@@ -161,7 +161,9 @@ export class CartasMazoComponent implements OnInit {
                 tipo: obj.type,
                 color: obj.colors,
                 rareza: obj.rarity,
-                cmc: obj.cmc
+                cmc: obj.cmc,
+                importeEx: obj.importeEx,
+                importeNm: obj.importeNm
               };
 
               this.cartasBaraja.push(carta);
@@ -194,8 +196,8 @@ export class CartasMazoComponent implements OnInit {
 
         if (this.cartasFaltan.length > 0) {
           for (const item of this.cartasFaltan) {
-            this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + parseFloat(item.importeEx);
-            this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + parseFloat(item.importeNm);
+            this.importeFaltaBarajaEx = this.importeFaltaBarajaEx + (parseFloat(item.importeEx) * item.cantidad);
+            this.importeFaltaBarajaMn = this.importeFaltaBarajaMn + (parseFloat(item.importeNm) * item.cantidad);
           }
         }
         this.loading = false;

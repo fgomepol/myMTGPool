@@ -188,9 +188,9 @@
 
                                         <tr *ngFor="let carta of cartasColeccion | paginate: { itemsPerPage: 25, currentPage: page }; let i = index;  let impar = odd;let par = even;">
                                             <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }"><i class="ss ss-{{ carta.icon }} ss-2x ss-{{ carta.rarity }}"></i></td>
-                                            <td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
-                                                <!--<img src="{{ carta.imagen }}" width="50%" height="50%">-->
-                                            </td>
+                                            <!--<td class="text-center" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
+                                                <img src="{{ carta.imagen }}" width="120" height="170">
+                                            </td>-->
                                             <td class="text-center align-middle small" [ngClass]="{ 'nth-child1': par, 'nth-child2': impar }">
                                                 <h5><a [routerLink]="" (click)="redireccionExterna(carta.scryfallUri)">{{ carta.name }}</a></h5>
                                             </td>

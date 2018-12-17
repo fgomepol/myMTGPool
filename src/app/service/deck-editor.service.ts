@@ -11,8 +11,8 @@ export class DeckEditorService {
 
   constructor(private http: Http) { }
 
-  listaCartasFormato(item: Object, formato: string, codBaraja: 0) {
-    return this.http.post(`${this.baseUrl}?opcion=listaCartasFormato`, [item, formato, codBaraja]);
+  listaCartasFormato(item: Object, formato: string, codBaraja: 0, sitio: string) {
+    return this.http.post(`${this.baseUrl}?opcion=listaCartasFormato`, [item, formato, codBaraja, sitio]);
   }
 
   listadoArquetipos(formato: string) {

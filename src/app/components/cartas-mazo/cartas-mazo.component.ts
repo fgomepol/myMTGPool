@@ -148,33 +148,28 @@ export class CartasMazoComponent implements OnInit {
           this.arquetipo = data.json()['arquetipo'];
           this.codigoBaraja = params['id'];
 
-          this.servicioEditor.listaCartasFormato( '', data.json()['formato'], params['id'], 'misBarajas').subscribe( data2 => {
-            this.cartasFormato.push(data2.json());
+          const cartasDeck: any[] = [];
+          cartasDeck.push(data.json()['baraja']);
 
-            const cartasDeck: any[] = [];
-            cartasDeck.push(data.json()['baraja']);
+          for (const cartaDeck of cartasDeck[0]) {
 
-            for (const cartaDeck of cartasDeck[0]) {
-              const obj = this.cartasFormato[0].find(obj => obj.UID == cartaDeck.UID);
+            const carta = {
+              UID: cartaDeck.UID,
+              name: cartaDeck.name,
+              cantidad: parseFloat(cartaDeck.cantidad),
+              side: parseFloat(cartaDeck.side),
+              tipo: cartaDeck.tipo,
+              color: cartaDeck.color,
+              rareza: cartaDeck.rareza,
+              cmc: cartaDeck.cmc,
+              importeEx: cartaDeck.importeEx,
+              importeNm: cartaDeck.importeNm
+            };
 
-              const carta = {
-                UID: cartaDeck.UID,
-                name: obj.name,
-                cantidad: parseFloat(cartaDeck.cantidad),
-                side: parseFloat(cartaDeck.side),
-                tipo: obj.type,
-                color: obj.colors,
-                rareza: obj.rarity,
-                cmc: obj.cmc,
-                importeEx: obj.importeEx,
-                importeNm: obj.importeNm
-              };
+            this.cartasBaraja.push(carta);
+          }
 
-              this.cartasBaraja.push(carta);
-            }
-
-            this.compruebaBaraja();
-          });
+          this.compruebaBaraja();
 
         } else {
           this.error = 'Los tados introducidos no pertenecen a nunguna baraja';
@@ -189,6 +184,7 @@ export class CartasMazoComponent implements OnInit {
 
     if ($event === true) {
       this.cartasFaltan.splice(0);
+
       this.servicioEditor.comparacionColeccion(this.cartasBaraja, this.user).subscribe(data => {
 
         if (data['_body'] !== 'no hay datos') {
@@ -251,6 +247,7 @@ export class CartasMazoComponent implements OnInit {
     const coste = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     for (let i = 0; i < this.cartasBaraja.length; i++) {
+
       switch (this.cartasBaraja[i].rareza) {
         case 'common':
           this.comunes = this.comunes + this.cartasBaraja[i].cantidad;

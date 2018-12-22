@@ -1,0 +1,11 @@
+table.tabla_sin {
+    border-collapse: collapse;
+    border: none;
+    padding: 0;
+}
+
+td.celda_sin {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}

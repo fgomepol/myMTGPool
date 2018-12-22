@@ -333,6 +333,8 @@ export class EditorMazosComponent implements OnInit {
 
       this.valorMainAdd = data.json()['0'].UID;
       this.valorSideAdd = data.json()['0'].UID;
+
+      this.cambiaImagen(data.json()['0'].UID, 'baraja');
       this.loading = false;
     });
   }

@@ -169,19 +169,18 @@ export class CartasBarajaComponent implements OnInit {
             cartasDeck.push(data.json()['baraja']);
 
             for (const cartaDeck of cartasDeck[0]) {
-              const obj = this.cartasFormato[0].find(obj => obj.UID == cartaDeck.UID);
 
               const carta = {
                 UID: cartaDeck.UID,
-                name: obj.name,
+                name: cartaDeck.name,
                 cantidad: parseFloat(cartaDeck.cantidad),
                 side: parseFloat(cartaDeck.side),
-                tipo: obj.type,
-                color: obj.colors,
-                rareza: obj.rarity,
-                cmc: obj.cmc,
-                importeEx: obj.importeEx,
-                importeNm: obj.importeNm
+                tipo: cartaDeck.tipo,
+                color: cartaDeck.color,
+                rareza: cartaDeck.rareza,
+                cmc: cartaDeck.cmc,
+                importeEx: cartaDeck.importeEx,
+                importeNm: cartaDeck.importeNm
               };
 
               this.cartasBaraja.push(carta);
@@ -462,7 +461,8 @@ export class CartasBarajaComponent implements OnInit {
 
       this.sumaTotal = this.sumaTotal + this.cartasBaraja[i].cantidad;
       this.importeBarajaEx = this.importeBarajaEx + (this.cartasBaraja[i].importeEx * this.cartasBaraja[i].cantidad);
-      this.importeBarajaNm = this.importeBarajaNm + (this.cartasBaraja[i].importeNm  * this.cartasBaraja[i].cantidad);
+      this.importeBarajaNm = this.importeBarajaNm + (this.cartasBaraja[i].importeNm * this.cartasBaraja[i].cantidad);
+
     }
 
     this.doughnutChartData = [this.rojas, this.azules, this.verdes, this.negras, this.blancas, this.incoloras, this.tierras];

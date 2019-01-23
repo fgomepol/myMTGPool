@@ -162,8 +162,7 @@ export class CartasBarajaComponent implements OnInit {
           this.posicion = data.json()['posicion'];
 
           this.servicioEditor.listaCartasFormato('', this.formato, params['id3'], 'barajasTorneo').subscribe( data2 => {
-
-			this.cartasFormato.push(data2.json());
+            this.cartasFormato.push(data2.json());
 
             const cartasDeck: any[] = [];
             cartasDeck.push(data.json()['baraja']);

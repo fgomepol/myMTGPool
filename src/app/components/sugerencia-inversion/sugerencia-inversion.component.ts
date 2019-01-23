@@ -66,7 +66,7 @@ export class SugerenciaInversionComponent implements OnInit {
 
     this.servicio.buscarBarajasInverir( this.forma.value, this.user ).subscribe( data => {
 
-      if (data['_body'] !== 'no hay datos') {
+	if (data['_body'] !== 'no hay datos') {
         this.barajasBuscadas = data.json();
         this.formularioRelleno = true;
       } else {
